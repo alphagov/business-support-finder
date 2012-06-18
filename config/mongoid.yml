@@ -1,11 +1,11 @@
 development:
   host: govuk
-  database: finance_finder_development
+  database: business_support_finder_development
   persist_in_safe_mode: true
 
 test:
   host: localhost
-  database: finance_finder_test
+  database: business_support_finder_test
   autocreate_indexes: true
 
 # set these environment variables on your prod server

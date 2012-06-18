@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-FinanceFinder::Application.load_tasks
+BusinessSupportFinder::Application.load_tasks
