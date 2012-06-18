@@ -12,6 +12,10 @@ gem 'rails', '3.2.3'
 group :assets do
 end
 
+group :development, :test do
+  gem 'rspec-rails', '~> 2.10.0'
+end
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
