@@ -13,6 +13,22 @@ class BusinessSupport
   field :purposes, type: Array, default: []
   field :support_types, type: Array, default: []
   field :business_sectors, type: Array, default: []
+
+  field :website_url, type: String
+  field :contact_details, type: String
+  field :organiser, type: String
+
+  field :min_turnover, type: Integer
+  field :max_turnover, type: Integer
+  field :min_grant_value, type: Integer
+  field :max_grant_value, type: Integer
+  field :min_age, type: Integer
+  field :max_age, type: Integer
+  field :min_employees, type: Integer
+  field :max_employees, type: Integer
+
+
+
   #field :region, type: Array
 
   BUSINESS_STAGES = ["Pre-startup", "Start-up", "Grow and sustain", "Exiting a business"]
@@ -39,4 +55,23 @@ class BusinessSupport
   validates_array_inclusion :purposes, PURPOSES
   validates_array_inclusion :support_types, SUPPORT_TYPES
   validates_array_inclusion :business_sectors, BUSINESS_SECTORS
+
+  validate :min_less_than_max
+
+  private
+  def min_less_than_max
+    test_min_max(:turnover)
+    test_min_max(:grant_value)
+    test_min_max(:age)
+    test_min_max(:employees)
+  end
+  def test_min_max(name)
+    min = send("min_#{name}".to_sym)
+    max = send("max_#{name}".to_sym)
+    pretty_name = name.to_s.sub(/_/, ' ')
+    if min.present? and max.present? and min > max
+      errors["min_#{name}".to_sym] << "Min #{pretty_name} must be smaller than #{pretty_name}"
+      errors["max_#{name}".to_sym] << "Max #{pretty_name} must be larger than #{pretty_name}"
+    end
+  end
 end
