@@ -15,6 +15,9 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+# If changing this, make sure the asset_prefix is also changed in the deploy scripts.
+# APP_SLUG = 'finance-finder' unless defined? APP_SLUG
+
 module BusinessSupportFinder
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
