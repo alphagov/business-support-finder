@@ -4,6 +4,7 @@ task :import => :environment do
   counter = 0
   File.open(Rails.root.join("data", "business-support-options.json")).each_line do |line|
     item = JSON.parse(line)
+    begin
     BusinessSupport.safely.create!(
       title: item['title'],
       description: "Invalid description", # this will be filled in when we get the full schema through
@@ -26,5 +27,7 @@ task :import => :environment do
     )
     counter += 1
     print("#{counter}\r")
+    rescue
+    end
   end
 end

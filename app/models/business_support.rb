@@ -48,6 +48,7 @@ class BusinessSupport
   ]
 
   validates :title, presence: true
+  validates_uniqueness_of :title
   validates :description, presence: true
 
   validates_array_inclusion :business_stages, BUSINESS_STAGES
