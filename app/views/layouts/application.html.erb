@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>BusinessSupportFinder</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<%= yield %>
-
-</body>
+  <head>
+    <title><%= content_for?(:page_title) ? yield(:page_title) : "Finance Finder" %> | GOV.UK</title>
+    <meta name="description" content="Find out which licences you might need for your activity or business.">
+    <%= stylesheet_link_tag "finance-finder" %>
+    <%= javascript_include_tag 'finance-finder', defer: true %>
+    <meta name="x-section-name" content="Business" />
+    <meta name="x-section-link" content="/browse/business" />
+    <meta name="x-section-format" content="finance_finder" />
+    <%= yield :head %>
+  </head>
+  <body class="citizen">
+    <div id="wrapper" class="answer finance-finder <%= yield :page_class %>">
+      <section id="content">
+        <header class="page-header group">
+          <hgroup>
+            <h1><span>Quick answer</span> Finance finder</h1>
+          </hgroup>
+        </header>
+        <%= yield %>
+      </section>
+    </div>
+  </body>
 </html>
