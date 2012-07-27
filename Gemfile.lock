@@ -103,10 +103,6 @@ GEM
       json (~> 1.4)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    router-client (3.0.2)
-      activesupport
-      builder
-      null_logger
     rspec (2.10.0)
       rspec-core (~> 2.10.0)
       rspec-expectations (~> 2.10.0)
@@ -155,7 +151,6 @@ DEPENDENCIES
   gds-api-adapters (~> 0.2.0)
   mongoid (~> 2.4)
   rails (= 3.2.3)
-  router-client (~> 3.0.1)
   rspec-rails (~> 2.10.0)
   rummageable (~> 0.1.3)
   slimmer (~> 1.1.45)
