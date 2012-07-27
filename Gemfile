@@ -8,6 +8,26 @@ gem 'rails', '3.2.3'
 gem "mongoid", "~> 2.4"
 gem "bson_ext", "~> 1.5"
 
+gem 'router-client', '~> 3.0.1', :require => 'router'
+
+if ENV['API_DEV']
+  gem 'gds-api-adapters', :path => '../gds-api-adapters'
+else
+  gem 'gds-api-adapters', '~> 0.2.0'
+end
+
+gem 'rummageable', '~> 0.1.3'
+
+if ENV['SLIMMER_DEV']
+  gem "slimmer", :path => '../slimmer'
+else
+  gem "slimmer", '~> 1.1.45'
+end
+
+gem 'aws-ses', :require => 'aws/ses' # Needed by exception_notification
+gem 'exception_notification'
+
+
 
 # Gems used only for assets and not required
 # in production environments by default.

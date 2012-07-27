@@ -1,5 +1,5 @@
 development:
-  host: govuk
+  host: localhost
   database: business_support_finder_development
   persist_in_safe_mode: true
 
