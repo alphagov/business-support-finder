@@ -120,7 +120,7 @@ GEM
       json
       plek
       rest-client
-    slimmer (1.1.45)
+    slimmer (1.2.3)
       gds-api-adapters (>= 0.0.33, < 0.3.0)
       json
       nokogiri (~> 1.5.0)
@@ -153,4 +153,4 @@ DEPENDENCIES
   rails (= 3.2.3)
   rspec-rails (~> 2.10.0)
   rummageable (~> 0.1.3)
-  slimmer (~> 1.1.45)
+  slimmer (= 1.2.3)
