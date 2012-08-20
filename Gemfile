@@ -19,7 +19,7 @@ gem 'rummageable', '~> 0.1.3'
 if ENV['SLIMMER_DEV']
   gem "slimmer", :path => '../slimmer'
 else
-  gem "slimmer", '1.2.3'
+  gem "slimmer", '1.2.4'
 end
 
 gem 'aws-ses', :require => 'aws/ses' # Needed by exception_notification
