@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>BusinessSupportFinder</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<%= yield %>
-
-</body>
+  <head>
+    <title><%= content_for?(:page_title) ? yield(:page_title) : "Business finance and support finder" %> | GOV.UK</title>
+    <%= yield :head %>
+  </head>
+  <body class="mainstream">
+    <div id="wrapper" class="answer business-support-finder <%= yield :page_class %>">
+      <section id="content">
+        <header class="page-header group">
+          <hgroup>
+            <h1><span>Quick answer</span> Business finance and support finder</h1>
+          </hgroup>
+        </header>
+        <%= yield %>
+      </section>
+    </div>
+  </body>
 </html>
