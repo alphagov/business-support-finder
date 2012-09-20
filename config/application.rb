@@ -68,5 +68,8 @@ module BusinessSupportFinder
     config.assets.version = '1.0'
 
     config.assets.prefix = 'businesssupportfinder' # this has to match the path configured in puppet and deploy scripts.
+
+    # Disable Rack::Cache
+    config.action_dispatch.rack_cache = nil
   end
 end
