@@ -1,4 +1,4 @@
 BusinessSupportFinder::Application.routes.draw do
 
-  root :to => redirect("/business-finance-support-finder", :status => 302)
+  root :to => redirect("/#{APP_SLUG}", :status => 302)
 end
