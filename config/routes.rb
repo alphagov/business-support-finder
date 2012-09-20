@@ -1,7 +1,4 @@
 BusinessSupportFinder::Application.routes.draw do
-
-  get "finance-finder" => "finance_finder#index", :as => :start
-  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
