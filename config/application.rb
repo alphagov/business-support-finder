@@ -15,8 +15,7 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-# If changing this, make sure the asset_prefix is also changed in the deploy scripts.
-# APP_SLUG = 'finance-finder' unless defined? APP_SLUG
+APP_SLUG = 'business-finance-support-finder'
 
 module BusinessSupportFinder
   class Application < Rails::Application
@@ -48,6 +47,9 @@ module BusinessSupportFinder
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
+    # Enable escaping HTML in JSON.
+    config.active_support.escape_html_entities_in_json = true
+
     # Use SQL instead of Active Record's schema dumper when creating the database.
     # This is necessary if your schema can't be completely dumped by the schema dumper,
     # like if you have constraints or database-specific column types
@@ -64,5 +66,10 @@ module BusinessSupportFinder
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    config.assets.prefix = 'businesssupportfinder' # this has to match the path configured in puppet and deploy scripts.
+
+    # Disable Rack::Cache
+    config.action_dispatch.rack_cache = nil
   end
 end

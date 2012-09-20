@@ -1,3 +1,0 @@
-== Business Support Finder 
-
-Faceted search application for finding business support and finance options.
