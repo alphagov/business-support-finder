@@ -4,6 +4,7 @@ gem 'rails', '3.2.8'
 
 gem 'slimmer', '3.3.2'
 gem 'plek', '0.4.0'
+gem 'gds-api-adapters', '2.5.0'
 
 gem 'exception_notification'
 gem 'aws-ses', :require => 'aws/ses'
