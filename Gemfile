@@ -24,4 +24,5 @@ group :development, :test do
   gem 'capybara', '1.1.2'
   gem 'simplecov'
   gem 'simplecov-rcov'
+  gem 'webmock', :require => false
 end
