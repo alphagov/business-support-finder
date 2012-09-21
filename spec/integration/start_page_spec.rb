@@ -19,6 +19,7 @@ describe "Start page" do
       end
 
       page.should have_selector(".article-container #test-report_a_problem")
+      page.should have_selector("#test-related")
     end
   end
 end
