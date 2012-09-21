@@ -9,6 +9,8 @@ gem 'gds-api-adapters', '2.5.0'
 gem 'exception_notification'
 gem 'aws-ses', :require => 'aws/ses'
 
+gem 'lograge'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
