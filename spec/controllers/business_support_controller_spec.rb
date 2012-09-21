@@ -1,11 +1,39 @@
 require 'spec_helper'
 
 describe BusinessSupportController do
+  before :each do
+    @question1 = "What is your activity or business?"
+    @question2 = "What stage is your business at?"
+    @question3 = "How is your business structured?"
+    @question4 = "Where will you be located?"
+  end
 
   describe "GET 'start'" do
     it "returns http success" do
       get 'start'
       response.should be_success
+    end
+  end
+
+  describe "GET 'sectors'" do
+    it "returns http success" do
+      get :sectors
+      response.should be_success
+    end
+
+    it "should assign all sectors" do
+      Sector.should_receive(:all).and_return(:some_sectors)
+      get :sectors
+
+      assigns[:sectors].should == :some_sectors
+    end
+
+    it "sets up the questions correctly" do
+      get :sectors
+      assigns[:current_question_number].should == 1
+      assigns[:completed_questions].should == []
+      assigns[:current_question].should == @question1
+      assigns[:upcoming_questions].should == [@question2, @question3, @question4]
     end
   end
 

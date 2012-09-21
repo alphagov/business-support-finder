@@ -1,0 +1,29 @@
+
+<%= current_question do %>
+  <div class="browse-container">
+    <div id="business-sectors" class="search-picker">
+      <h3>Choose your area of business:</h3>
+
+      <ul id="sector-navigation">
+        <% @sectors.each do |sector| %>
+          <li>
+            <span class="sector-name"><%= sector.name %></span>
+            <a href="#" class="add">Add</a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <div class="business-sector-picked picked-items" aria-live="polite">
+    <h3>Your chosen areas of interest</h3>
+    <p class="hint">Your chosen areas will appear here</p>
+    <ul id="picked-business-sectors"></ul>
+
+    <div class="button-container hidden">
+      <a href="step-02.html" class="button medium" id="next-step">Next step</a>
+    </div>
+  </div>
+<% end %>
+
+<%= render :partial => 'upcoming_questions' %>

@@ -15,6 +15,8 @@ describe "Finding support options" do
       page.should have_content("What is your activity or business?")
     end
 
+    pending "completion of sectors page"
+
     click_add_link "Education"
     click_add_link "Hospitality and Catering"
 
