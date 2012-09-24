@@ -23,7 +23,7 @@
 
     <% if @picked_sectors.any? %>
       <div class="button-container">
-        <%= link_to 'Next step', '#', :id => "next-step", :class => "button medium" %>
+        <%= link_to 'Next step', stage_path(:sectors => params[:sectors]), :id => "next-step", :class => "button medium" %>
       </div>
     <% end %>
   </div>

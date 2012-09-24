@@ -31,4 +31,8 @@ class Sector < OpenStruct
       slugs.include?(sector.slug)
     end
   end
+
+  def to_s
+    name
+  end
 end

@@ -53,6 +53,39 @@ describe BusinessSupportController do
     end
   end
 
+  describe "GET 'stage'" do
+    context "with some sectors specified" do
+      def do_get
+        get :stage, :sectors => "health_manufacturing"
+      end
+
+      it "returns http success" do
+        do_get
+        response.should be_success
+      end
+
+      it "loads the given sectors and assigns them to @sectors" do
+        Sector.should_receive(:find_by_slugs).with(%w(health manufacturing)).and_return(:some_sectors)
+        do_get
+        assigns[:sectors].should == :some_sectors
+      end
+
+      it "sets up the questions correctly" do
+        Sector.stub(:find_by_slugs).and_return(:some_sectors)
+        do_get
+        assigns[:current_question_number].should == 2
+        assigns[:completed_questions].should == [[@question1, :some_sectors, 'sectors']]
+        assigns[:current_question].should == @question2
+        assigns[:upcoming_questions].should == [@question3, @question4]
+      end
+    end
+
+    it "should 404 with no sectors specified" do
+      get :stage
+      response.should be_not_found
+    end
+  end
+
   describe "common stuff for all actions" do
     controller(BusinessSupportController) do
       def index

@@ -37,6 +37,19 @@ module CustomMatchers
     check_add_remove_links_in_order("Remove", labels)
   end
 
+  def assert_completed_questions(questions)
+    within '.done-questions' do
+      page.all(:xpath, ".//h3[contains(@class, 'question')]/span").map(&:text).map(&:strip).reject(&:blank?).should == questions.keys.map(&:to_s)
+      page.all(:xpath, ".//h3[contains(@class, 'question')]/text()").map(&:text).map(&:strip).reject(&:blank?).should == questions.values.map(&:first)
+    end
+    questions.each do |number, details|
+      answers = details.last
+      within_section "completed question #{number}" do
+        page.all('.answer li').map(&:text).should == answers
+      end
+    end
+  end
+
   def assert_current_question(number, title)
     within '.current-question h2' do
       page.should have_content(number.to_s)

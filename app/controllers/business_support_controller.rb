@@ -14,6 +14,7 @@ class BusinessSupportController < ApplicationController
   ACTIONS = %w(sectors)
 
   before_filter :load_artefact
+  before_filter :load_and_validate_sectors, :only => [:stage]
   after_filter :send_slimmer_headers
 
   def start
@@ -23,6 +24,10 @@ class BusinessSupportController < ApplicationController
     @sectors = Sector.all
     @picked_sectors = Sector.find_by_slugs(params[:sectors].to_s.split("_"))
     setup_questions
+  end
+
+  def stage
+    setup_questions [@sectors]
   end
 
   private
@@ -36,6 +41,13 @@ class BusinessSupportController < ApplicationController
 
   def load_artefact
     @artefact = content_api.artefact(APP_SLUG)
+  end
+
+  def load_and_validate_sectors
+    @sectors = Sector.find_by_slugs(params[:sectors].to_s.split("_"))
+    if @sectors.empty?
+      render :status => :not_found, :text => ""
+    end
   end
 
   def send_slimmer_headers

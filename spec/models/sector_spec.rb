@@ -35,4 +35,8 @@ describe Sector do
       sectors.should == []
     end
   end
+
+  it "should return the name for to_s" do
+    Sector.new(:name => "Fooey").to_s.should == "Fooey"
+  end
 end

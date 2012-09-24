@@ -75,9 +75,7 @@ describe "selecting business sectors" do
           "Hospitality and Catering",
         ]
 
-        pending "creating Business Stage page"
-
-        page.should have_link("Next step", :href => "/#{APP_SLUG}/stage")
+        page.should have_link("Next step", :href => "/#{APP_SLUG}/stage?sectors=education_hospitality-and-catering")
       end
     end
   end
