@@ -27,4 +27,5 @@ group :development, :test do
   gem 'simplecov'
   gem 'simplecov-rcov'
   gem 'webmock', :require => false
+  gem 'nokogiri'
 end

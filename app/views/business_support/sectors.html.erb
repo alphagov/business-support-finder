@@ -6,10 +6,7 @@
 
       <ul id="sector-navigation">
         <% @sectors.each do |sector| %>
-          <li>
-            <span class="sector-name"><%= sector.name %></span>
-            <a href="#" class="add">Add</a>
-          </li>
+          <%= link_to_add sector, :existing_items => @picked_sectors %>
         <% end %>
       </ul>
     </div>
