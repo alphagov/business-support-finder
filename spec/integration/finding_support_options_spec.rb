@@ -15,12 +15,12 @@ describe "Finding support options" do
       page.should have_content("What is your activity or business?")
     end
 
-    pending "completion of sectors page"
-
     click_add_link "Education"
     click_add_link "Hospitality and Catering"
 
     click_on "Next step"
+
+    pending "completion of stage page"
 
     i_should_be_on "/#{APP_SLUG}/stage", :ignore_query => true
 

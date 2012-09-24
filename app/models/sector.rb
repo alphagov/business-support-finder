@@ -1,28 +1,34 @@
 require 'ostruct'
 
 class Sector < OpenStruct
-  HARDCODED_SECTORS = [
-    "Agriculture",
-    "Business and Finance",
-    "Construction",
-    "Education",
-    "Health",
-    "Hospitality and Catering",
-    "Information, Communication and Media",
-    "Manufacturing",
-    "Mining",
-    "Real Estate",
-    "Science and Technology",
-    "Service Industries",
-    "Transport and Distribution",
-    "Travel and Leisure",
-    "Utilities",
-    "Wholesale and Retail",
-  ]
+  HARDCODED_SECTORS = {
+    "agriculture"=>"Agriculture",
+    "business-and-finance"=>"Business and Finance",
+    "construction"=>"Construction",
+    "education"=>"Education",
+    "health"=>"Health",
+    "hospitality-and-catering"=>"Hospitality and Catering",
+    "information-communication-and-media"=>"Information, Communication and Media",
+    "manufacturing"=>"Manufacturing",
+    "mining"=>"Mining",
+    "real-estate"=>"Real Estate",
+    "science-and-technology"=>"Science and Technology",
+    "service-industries"=>"Service Industries",
+    "transport-and-distribution"=>"Transport and Distribution",
+    "travel-and-leisure"=>"Travel and Leisure",
+    "utilities"=>"Utilities",
+    "wholesale-and-retail"=>"Wholesale and Retail"
+  }.map do |slug, name|
+    new(:slug => slug, :name => name)
+  end
 
   def self.all
-    HARDCODED_SECTORS.map do |name|
-      new(:slug => name.parameterize, :name => name)
+    HARDCODED_SECTORS
+  end
+
+  def self.find_by_slugs(slugs)
+    HARDCODED_SECTORS.select do |sector|
+      slugs.include?(sector.slug)
     end
   end
 end

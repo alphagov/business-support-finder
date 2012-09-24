@@ -21,6 +21,7 @@ class BusinessSupportController < ApplicationController
 
   def sectors
     @sectors = Sector.all
+    @picked_sectors = Sector.find_by_slugs(params[:sectors].to_s.split("_"))
     setup_questions
   end
 

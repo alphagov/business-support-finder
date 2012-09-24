@@ -44,8 +44,6 @@ describe "selecting business sectors" do
       4 => "Where will you be located?"
     )
 
-    pending "Hooking up Add links"
-
     click_add_link "Education"
     click_add_link "Hospitality and Catering"
 
@@ -72,10 +70,12 @@ describe "selecting business sectors" do
       end
 
       within '.business-sector-picked' do
-        i_should_see_remove_links [
+        i_should_see_remove_links_in_order [
           "Education",
           "Hospitality and Catering",
         ]
+
+        pending "creating Business Stage page"
 
         page.should have_link("Next step", :href => "/#{APP_SLUG}/stage")
       end

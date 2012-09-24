@@ -22,10 +22,11 @@ describe BusinessSupportController do
     end
 
     it "should assign all sectors" do
-      Sector.should_receive(:all).and_return(:some_sectors)
+      sector = Sector.new(:slug => 'something', :name => 'Something')
+      Sector.should_receive(:all).and_return([sector])
       get :sectors
 
-      assigns[:sectors].should == :some_sectors
+      assigns[:sectors].should == [sector]
     end
 
     it "sets up the questions correctly" do
@@ -34,6 +35,21 @@ describe BusinessSupportController do
       assigns[:completed_questions].should == []
       assigns[:current_question].should == @question1
       assigns[:upcoming_questions].should == [@question2, @question3, @question4]
+    end
+
+    describe "assigning picked sectors" do
+      it "should assign picked sectors if some given" do
+        Sector.should_receive(:find_by_slugs).with(["alpha", "bravo"]).and_return(:the_picked_sectors)
+        get :sectors, :sectors => "alpha_bravo"
+
+        assigns[:picked_sectors].should == :the_picked_sectors
+      end
+
+      it "should assign empty array if no sectors given" do
+        get :sectors, :sectors => ""
+
+        assigns[:picked_sectors].should == []
+      end
     end
   end
 
