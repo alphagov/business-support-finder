@@ -5,6 +5,12 @@ module CustomActions
     find(:xpath, "//li[span/text() = '#{label}']//a[text() = 'Add']").click
   end
 
+  def click_remove_link(label)
+    # find an anchor with 'Remove' for the text in the same list element as a
+    # span around the provided label
+    find(:xpath, "//li[span/text() = '#{label}']//a[text() = 'Remove']").click
+  end
+
   # Click on the change link for the Nth previously answered question
   def click_change_answer(index)
     find(:xpath, "//li[@class = 'done'][#{index}]//a[contains(text(), 'Change')]").click

@@ -82,4 +82,67 @@ describe "selecting business sectors" do
     end
   end
 
+  specify "visiting the page with some sectors pre-selected, and removing a sector" do
+    visit "/#{APP_SLUG}/sectors?sectors=health_travel-and-leisure"
+
+    within '.current-question' do
+      within '#business-sectors' do
+        i_should_see_add_links_in_order [
+          "Agriculture",
+          "Business and Finance",
+          "Construction",
+          "Education",
+          "Hospitality and Catering",
+          "Information, Communication and Media",
+          "Manufacturing",
+          "Mining",
+          "Real Estate",
+          "Science and Technology",
+          "Service Industries",
+          "Transport and Distribution",
+          "Utilities",
+          "Wholesale and Retail",
+        ]
+      end
+
+      within '.business-sector-picked' do
+        i_should_see_remove_links_in_order [
+          "Health",
+          "Travel and Leisure",
+        ]
+      end
+    end
+
+    click_remove_link('Health')
+
+    i_should_be_on "/#{APP_SLUG}/sectors", :ignore_query => true
+
+    within '.current-question' do
+      within '#business-sectors' do
+        i_should_see_add_links_in_order [
+          "Agriculture",
+          "Business and Finance",
+          "Construction",
+          "Education",
+          "Health",
+          "Hospitality and Catering",
+          "Information, Communication and Media",
+          "Manufacturing",
+          "Mining",
+          "Real Estate",
+          "Science and Technology",
+          "Service Industries",
+          "Transport and Distribution",
+          "Utilities",
+          "Wholesale and Retail",
+        ]
+      end
+
+      within '.business-sector-picked' do
+        i_should_see_remove_links_in_order [
+          "Travel and Leisure",
+        ]
+      end
+    end
+  end
 end
