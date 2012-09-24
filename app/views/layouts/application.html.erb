@@ -2,6 +2,7 @@
 <html>
   <head>
     <title><%= content_for?(:page_title) ? yield(:page_title) : "Business finance and support finder" %> | GOV.UK</title>
+    <%= stylesheet_link_tag 'business-support-finder.css' %>
     <%= yield :head %>
   </head>
   <body class="mainstream">

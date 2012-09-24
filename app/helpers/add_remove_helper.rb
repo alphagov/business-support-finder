@@ -25,6 +25,6 @@ module AddRemoveHelper
     key_name = model.class.name.underscore
     new_params = params.select {|k, v| %w(controller sectors).include? k.to_s }
     new_params[key_name.pluralize] = items.map(&:slug).sort.uniq.join("_")
-    link_to(action.capitalize, url_for(new_params.merge(:action => key_name.pluralize)), "aria-labelledby" => "#{key_name}-#{model.slug}")
+    link_to(action.capitalize, url_for(new_params.merge(:action => key_name.pluralize)), :class => action, "aria-labelledby" => "#{key_name}-#{model.slug}")
   end
 end
