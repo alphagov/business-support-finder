@@ -20,7 +20,7 @@ describe "Business location page" do
         'Scotland',
         'Wales',
         'Northern Ireland',
-      ], :selected => nil)
+      ])
 
       page.should have_button("Find support")
     end
@@ -32,5 +32,19 @@ describe "Business location page" do
     click_on "Find support"
 
     i_should_be_on "/#{APP_SLUG}/support-options", :ignore_query => true
+  end
+
+  specify "with a location already selected" do
+    visit "/#{APP_SLUG}/location?sectors=health_manufacturing&stage=start-up&structure=partnership&location=wales"
+
+    within '.current-question' do
+      page.should have_select("Select a location", :options => [
+        'Select one...',
+        'England',
+        'Scotland',
+        'Wales',
+        'Northern Ireland',
+      ], :selected => 'Wales')
+    end
   end
 end

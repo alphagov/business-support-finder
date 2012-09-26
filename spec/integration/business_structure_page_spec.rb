@@ -21,7 +21,7 @@ describe "Business structure page" do
         'Sole trader',
         'Social enterprise',
         'Charity',
-      ], :selected => nil)
+      ])
 
       page.should have_button("Next step")
     end
@@ -35,5 +35,21 @@ describe "Business structure page" do
     click_on "Next step"
 
     i_should_be_on "/#{APP_SLUG}/location", :ignore_query => true
+  end
+
+  specify "with a structure already selected" do
+    visit "/#{APP_SLUG}/structure?sectors=health_manufacturing&stage=start-up&structure=sole-trader"
+
+    within '.current-question' do
+      page.should have_select("Select a structure", :options => [
+        'Select one...',
+        'Private company',
+        'Partnership',
+        'Public limited company',
+        'Sole trader',
+        'Social enterprise',
+        'Charity',
+      ], :selected => 'Sole trader')
+    end
   end
 end

@@ -7,7 +7,7 @@
     <%= hidden_field_tag :structure, params[:structure] %>
     <div class="select-container find-location-for-service">
       <label for="select-location">Select a location
-        <%= select_tag :location, options_from_collection_for_select(@locations, :slug, :name), :prompt => 'Select one...', :id => "select-location" %>
+        <%= select_tag :location, options_from_collection_for_select(@locations, :slug, :name, params[:location]), :prompt => 'Select one...', :id => "select-location" %>
       </label>
     </div>
     <%= submit_tag "Find support", :class => "button medium" %>

@@ -6,7 +6,7 @@
     <%= hidden_field_tag :stage, params[:stage] %>
     <div class="select-container">
       <label for="select-structure">Select a structure
-        <%= select_tag :structure, options_from_collection_for_select(@structures, :slug, :name), :prompt => 'Select one...', :id => "select-structure" %>
+        <%= select_tag :structure, options_from_collection_for_select(@structures, :slug, :name, params[:structure]), :prompt => 'Select one...', :id => "select-structure" %>
       </label>
     </div>
     <%= submit_tag "Next step", :class => "button medium" %>

@@ -18,7 +18,7 @@ describe "Business stage page" do
         'Start-up',
         'Grow and sustain',
         'Exiting a business',
-      ], :selected => nil)
+      ])
 
       page.should have_button("Next step")
     end
@@ -33,5 +33,19 @@ describe "Business stage page" do
     click_on "Next step"
 
     i_should_be_on "/#{APP_SLUG}/structure", :ignore_query => true
+  end
+
+  specify "with a stage already selected" do
+    visit "/#{APP_SLUG}/stage?sectors=health_manufacturing&stage=grow-and-sustain"
+
+    within '.current-question' do
+      page.should have_select("Select a stage", :options => [
+        'Select one...',
+        'Pre-startup',
+        'Start-up',
+        'Grow and sustain',
+        'Exiting a business',
+      ], :selected => 'Grow and sustain')
+    end
   end
 end
