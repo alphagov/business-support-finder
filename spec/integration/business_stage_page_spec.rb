@@ -25,7 +25,7 @@ describe "Business stage page" do
 
     assert_upcoming_questions(
       3 => "How is your business structured?",
-      4 => "Where will you be located?"
+      4 => "Where is your business located?"
     )
 
     select "Grow and sustain", :from => "Select a stage"

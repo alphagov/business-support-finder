@@ -27,7 +27,7 @@ describe "Business structure page" do
     end
 
     assert_upcoming_questions(
-      4 => "Where will you be located?"
+      4 => "Where is your business located?"
     )
 
     select "Sole trader", :from => "Select a structure"

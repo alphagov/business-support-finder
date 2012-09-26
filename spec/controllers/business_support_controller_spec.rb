@@ -5,7 +5,7 @@ describe BusinessSupportController do
     @question1 = "What is your activity or business?"
     @question2 = "What stage is your business at?"
     @question3 = "How is your business structured?"
-    @question4 = "Where will you be located?"
+    @question4 = "Where is your business located?"
   end
 
   describe "GET 'start'" do

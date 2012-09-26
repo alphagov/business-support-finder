@@ -9,7 +9,7 @@ class BusinessSupportController < ApplicationController
     "What is your activity or business?",
     "What stage is your business at?",
     "How is your business structured?",
-    "Where will you be located?",
+    "Where is your business located?",
   ]
   ACTIONS = %w(sectors stage)
 
