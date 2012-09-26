@@ -11,16 +11,17 @@ describe "Business stage page" do
 
     assert_current_question(2, "What stage is your business at?")
 
-    #within '.current-question' do
+    within '.current-question' do
+      page.should have_select("Select a stage", :options => [
+        'Select one...',
+        'Pre-startup',
+        'Start-up',
+        'Grow and sustain',
+        'Exiting a business',
+      ], :selected => nil)
 
-      #page.should have_select("Select a stage", :options => [
-        #'',
-        #'Pre-startup',
-        #'Start-up',
-        #'Grow and sustain',
-        #'Exiting a business',
-      #])
-    #end
+      page.should have_button("Next step")
+    end
 
     assert_upcoming_questions(
       3 => "How is your business structured?",

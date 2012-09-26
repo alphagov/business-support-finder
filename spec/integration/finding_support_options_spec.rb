@@ -30,10 +30,10 @@ describe "Finding support options" do
     within '.current-question' do
       page.should have_content("What stage is your business at?")
 
-      pending "completion of stage page"
+      select 'Start-up', :from => 'Select a stage'
 
-      select 'Start-up', :from => 'Choose a stage'
-      click_on 'Next stage'
+      pending "completion of stage page"
+      click_on 'Next step'
     end
 
     pending "completion of structure page"
@@ -52,7 +52,7 @@ describe "Finding support options" do
       page.should have_content("How is your business structured?")
 
       select 'Public limited company', :from => "Choose a structure"
-      click_on 'Next stage'
+      click_on 'Next step'
     end
 
     i_should_be_on "/#{APP_SLUG}/location", :ignore_query => true

@@ -64,6 +64,12 @@ describe BusinessSupportController do
         response.should be_success
       end
 
+      it "assigns all the business stages" do
+        Stage.should_receive(:all).and_return(:some_stages)
+        do_get
+        assigns[:stages].should == :some_stages
+      end
+
       it "loads the given sectors and assigns them to @sectors" do
         Sector.should_receive(:find_by_slugs).with(%w(health manufacturing)).and_return(:some_sectors)
         do_get
@@ -82,6 +88,11 @@ describe BusinessSupportController do
 
     it "should 404 with no sectors specified" do
       get :stage
+      response.should be_not_found
+    end
+
+    it "should 404 with no valid sectors specified" do
+      get :stage, :sectors => "non-existent"
       response.should be_not_found
     end
   end

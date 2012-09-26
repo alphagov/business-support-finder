@@ -27,6 +27,7 @@ class BusinessSupportController < ApplicationController
   end
 
   def stage
+    @stages = Stage.all
     setup_questions [@sectors]
   end
 

@@ -1,6 +1,14 @@
 <%= render :partial => 'completed_questions' %>
 
 <%= current_question do %>
+  <%= form_tag stage_path do %>
+    <div class="select-container">
+      <label for="select-stage">Select a stage
+        <%= select_tag :stage, options_from_collection_for_select(@stages, :slug, :name), :prompt => 'Select one...', :id => "select-stage" %>
+      </label>
+    </div>
+    <%= submit_tag "Next step", :class => "button medium" %>
+  <% end %>
 <% end %>
 
 <%= render :partial => 'upcoming_questions' %>
