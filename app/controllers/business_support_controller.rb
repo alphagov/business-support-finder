@@ -14,8 +14,8 @@ class BusinessSupportController < ApplicationController
   ACTIONS = %w(sectors stage)
 
   before_filter :load_artefact
-  before_filter :load_and_validate_sectors, :only => [:stage, :stage_submit, :structure]
-  before_filter :load_and_validate_stage, :only => [:structure]
+  before_filter :load_and_validate_sectors, :only => [:stage, :stage_submit, :structure, :structure_submit]
+  before_filter :load_and_validate_stage, :only => [:structure, :structure_submit]
   after_filter :send_slimmer_headers
 
   def start
@@ -33,7 +33,6 @@ class BusinessSupportController < ApplicationController
   end
 
   def stage_submit
-    next_params = {:sectors => @sectors.map(&:slug).join('_')}
     if Stage.find_by_slug(params[:stage])
       redirect_to next_params.merge(:action => 'structure', :stage => params[:stage])
     else
@@ -46,6 +45,14 @@ class BusinessSupportController < ApplicationController
     setup_questions [@sectors, [@stage]]
   end
 
+  def structure_submit
+    if Structure.find_by_slug(params[:structure])
+      redirect_to next_params.merge(:action => 'location', :structure => params[:structure])
+    else
+      redirect_to next_params.merge(:action => 'structure')
+    end
+  end
+
   private
 
   def setup_questions(answers=[])
@@ -53,6 +60,13 @@ class BusinessSupportController < ApplicationController
     @completed_questions = QUESTIONS[0...(@current_question_number - 1)].zip(answers, ACTIONS)
     @current_question = QUESTIONS[@current_question_number - 1]
     @upcoming_questions = QUESTIONS[@current_question_number..-1]
+  end
+
+  def next_params
+    p = {}
+    p[:sectors] = @sectors.map(&:slug).join('_') if @sectors
+    p[:stage] = @stage.slug if @stage
+    p
   end
 
   def load_artefact

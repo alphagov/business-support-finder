@@ -196,6 +196,51 @@ describe BusinessSupportController do
     end
   end
 
+  describe "POST 'structure_submit'" do
+    context "with valid sectors, and stage" do
+      context "with a valid structure" do
+        it "should redirect to the location page, passing through necessary params" do
+          post :structure_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader"
+          response.should redirect_to(location_path(:sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader"))
+        end
+      end
+
+      context "with an invalid structure" do
+        it "should redirect back to the form preserving the sectors and stage" do
+          post :structure_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "non-existent"
+          response.should redirect_to(structure_path(:sectors => "health_manufacturing", :stage => "pre-startup"))
+        end
+      end
+
+      context "with no structure" do
+        it "should redirect back to the form preserving the sectors and stage" do
+          post :structure_submit, :sectors => "health_manufacturing", :stage => "pre-startup"
+          response.should redirect_to(structure_path(:sectors => "health_manufacturing", :stage => "pre-startup"))
+        end
+      end
+    end
+
+    it "should 404 with no sectors specified" do
+      post :structure_submit, :stage => "start-up", :structure => 'partnership'
+      response.should be_not_found
+    end
+
+    it "should 404 with no valid sectors specified" do
+      post :structure_submit, :sectors => "non-existent", :stage => "start-up", :structure => 'partnership'
+      response.should be_not_found
+    end
+
+    it "should 404 with an invalid stage" do
+      post :structure_submit, :sectors => "health_manufacturing", :stage => "non-existent", :structure => 'partnership'
+      response.should be_not_found
+    end
+
+    it "should 404 with no stage specified" do
+      post :structure_submit, :sectors => "health_manufacturing", :structure => 'partnership'
+      response.should be_not_found
+    end
+  end
+
   describe "common stuff for all actions" do
     controller(BusinessSupportController) do
       def index

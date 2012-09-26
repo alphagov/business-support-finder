@@ -3,6 +3,7 @@
 <%= current_question do %>
   <%= form_tag structure_path do %>
     <%= hidden_field_tag :sectors, params[:sectors] %>
+    <%= hidden_field_tag :stage, params[:stage] %>
     <div class="select-container">
       <label for="select-structure">Select a structure
         <%= select_tag :structure, options_from_collection_for_select(@structures, :slug, :name), :prompt => 'Select one...', :id => "select-structure" %>
