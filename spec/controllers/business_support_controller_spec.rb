@@ -132,6 +132,70 @@ describe BusinessSupportController do
     end
   end
 
+  describe "GET 'structure'" do
+    context "with some sectors specified and a stage" do
+      def do_get
+        get :structure, :sectors => "health_manufacturing", :stage => "start-up"
+      end
+
+      it "returns http success" do
+        do_get
+        response.should be_success
+      end
+
+      it "assigns all the business structures" do
+        Structure.should_receive(:all).and_return(:some_structures)
+        do_get
+        assigns[:structures].should == :some_structures
+      end
+
+      it "loads the given sectors and assigns them to @sectors" do
+        Sector.should_receive(:find_by_slugs).with(%w(health manufacturing)).and_return(:some_sectors)
+        do_get
+        assigns[:sectors].should == :some_sectors
+      end
+
+      it "loads the given stage and assigns it to @stage" do
+        Stage.should_receive(:find_by_slug).with('start-up').and_return(:a_stage)
+        do_get
+        assigns[:stage].should == :a_stage
+      end
+
+      it "sets up the questions correctly" do
+        Sector.stub(:find_by_slugs).and_return(:some_sectors)
+        Stage.stub(:find_by_slug).and_return(:a_stage)
+        do_get
+        assigns[:current_question_number].should == 3
+        assigns[:completed_questions].should == [
+          [@question1, :some_sectors, 'sectors'],
+          [@question2, [:a_stage], 'stage'],
+        ]
+        assigns[:current_question].should == @question3
+        assigns[:upcoming_questions].should == [@question4]
+      end
+    end
+
+    it "should 404 with no sectors specified" do
+      get :structure, :stage => "start-up"
+      response.should be_not_found
+    end
+
+    it "should 404 with no valid sectors specified" do
+      get :structure, :sectors => "non-existent", :stage => "start-up"
+      response.should be_not_found
+    end
+
+    it "should 404 with an invalid stage" do
+      get :structure, :sectors => "health_manufacturing", :stage => "non-existent"
+      response.should be_not_found
+    end
+
+    it "should 404 with no stage specified" do
+      get :structure, :sectors => "health_manufacturing"
+      response.should be_not_found
+    end
+  end
+
   describe "common stuff for all actions" do
     controller(BusinessSupportController) do
       def index

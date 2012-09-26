@@ -11,10 +11,11 @@ class BusinessSupportController < ApplicationController
     "How is your business structured?",
     "Where will you be located?",
   ]
-  ACTIONS = %w(sectors)
+  ACTIONS = %w(sectors stage)
 
   before_filter :load_artefact
-  before_filter :load_and_validate_sectors, :only => [:stage, :stage_submit]
+  before_filter :load_and_validate_sectors, :only => [:stage, :stage_submit, :structure]
+  before_filter :load_and_validate_stage, :only => [:structure]
   after_filter :send_slimmer_headers
 
   def start
@@ -40,6 +41,11 @@ class BusinessSupportController < ApplicationController
     end
   end
 
+  def structure
+    @structures = Structure.all
+    setup_questions [@sectors, [@stage]]
+  end
+
   private
 
   def setup_questions(answers=[])
@@ -56,6 +62,13 @@ class BusinessSupportController < ApplicationController
   def load_and_validate_sectors
     @sectors = Sector.find_by_slugs(params[:sectors].to_s.split("_"))
     if @sectors.empty?
+      render :status => :not_found, :text => ""
+    end
+  end
+
+  def load_and_validate_stage
+    @stage = Stage.find_by_slug(params[:stage])
+    unless @stage
       render :status => :not_found, :text => ""
     end
   end

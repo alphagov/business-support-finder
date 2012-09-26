@@ -35,8 +35,6 @@ describe "Finding support options" do
       click_on 'Next step'
     end
 
-    pending "completion of structure page"
-
     i_should_be_on "/#{APP_SLUG}/structure", :ignore_query => true
 
     within_section 'completed question 1' do
@@ -50,9 +48,11 @@ describe "Finding support options" do
     within '.current-question' do
       page.should have_content("How is your business structured?")
 
-      select 'Public limited company', :from => "Choose a structure"
+      select 'Public limited company', :from => "Select a structure"
       click_on 'Next step'
     end
+
+    pending "completion of location page"
 
     i_should_be_on "/#{APP_SLUG}/location", :ignore_query => true
 
