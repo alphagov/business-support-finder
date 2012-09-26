@@ -1,7 +1,7 @@
 require 'ostruct'
 
 class Structure < OpenStruct
-  HARDCODED_STAGES = {
+  HARDCODED_DATA = {
     "private-company" => "Private company",
     "partnership" => "Partnership",
     "public-limited-company" => "Public limited company",
@@ -13,11 +13,11 @@ class Structure < OpenStruct
   end
 
   def self.all
-    HARDCODED_STAGES
+    HARDCODED_DATA
   end
 
   def self.find_by_slug(slug)
-    HARDCODED_STAGES.find do |stage|
+    HARDCODED_DATA.find do |stage|
       stage.slug == slug
     end
   end
