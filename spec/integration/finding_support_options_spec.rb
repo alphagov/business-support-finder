@@ -52,8 +52,6 @@ describe "Finding support options" do
       click_on 'Next step'
     end
 
-    pending "completion of location page"
-
     i_should_be_on "/#{APP_SLUG}/location", :ignore_query => true
 
     within_section 'completed question 1' do

@@ -11,11 +11,12 @@ class BusinessSupportController < ApplicationController
     "How is your business structured?",
     "Where is your business located?",
   ]
-  ACTIONS = %w(sectors stage)
+  ACTIONS = %w(sectors stage structure location)
 
   before_filter :load_artefact
-  before_filter :load_and_validate_sectors, :only => [:stage, :stage_submit, :structure, :structure_submit]
-  before_filter :load_and_validate_stage, :only => [:structure, :structure_submit]
+  before_filter :load_and_validate_sectors, :only => [:stage, :stage_submit, :structure, :structure_submit, :location]
+  before_filter :load_and_validate_stage, :only => [:structure, :structure_submit, :location]
+  before_filter :load_and_validate_structure, :only => [:location]
   after_filter :send_slimmer_headers
 
   def start
@@ -53,6 +54,11 @@ class BusinessSupportController < ApplicationController
     end
   end
 
+  def location
+    @locations = Location.all
+    setup_questions [@sectors, [@stage], [@structure]]
+  end
+
   private
 
   def setup_questions(answers=[])
@@ -83,6 +89,13 @@ class BusinessSupportController < ApplicationController
   def load_and_validate_stage
     @stage = Stage.find_by_slug(params[:stage])
     unless @stage
+      render :status => :not_found, :text => ""
+    end
+  end
+
+  def load_and_validate_structure
+    @structure = Structure.find_by_slug(params[:structure])
+    unless @structure
       render :status => :not_found, :text => ""
     end
   end
