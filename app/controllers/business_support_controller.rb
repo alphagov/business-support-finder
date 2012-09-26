@@ -14,9 +14,9 @@ class BusinessSupportController < ApplicationController
   ACTIONS = %w(sectors stage structure location)
 
   before_filter :load_artefact
-  before_filter :load_and_validate_sectors, :only => [:stage, :stage_submit, :structure, :structure_submit, :location]
-  before_filter :load_and_validate_stage, :only => [:structure, :structure_submit, :location]
-  before_filter :load_and_validate_structure, :only => [:location]
+  before_filter :load_and_validate_sectors, :only => [:stage, :stage_submit, :structure, :structure_submit, :location, :location_submit]
+  before_filter :load_and_validate_stage, :only => [:structure, :structure_submit, :location, :location_submit]
+  before_filter :load_and_validate_structure, :only => [:location, :location_submit]
   after_filter :send_slimmer_headers
 
   def start
@@ -59,6 +59,14 @@ class BusinessSupportController < ApplicationController
     setup_questions [@sectors, [@stage], [@structure]]
   end
 
+  def location_submit
+    if Location.find_by_slug(params[:location])
+      redirect_to next_params.merge(:action => 'support_options', :location => params[:location])
+    else
+      redirect_to next_params.merge(:action => 'location')
+    end
+  end
+
   private
 
   def setup_questions(answers=[])
@@ -72,6 +80,7 @@ class BusinessSupportController < ApplicationController
     p = {}
     p[:sectors] = @sectors.map(&:slug).join('_') if @sectors
     p[:stage] = @stage.slug if @stage
+    p[:structure] = @structure.slug if @structure
     p
   end
 

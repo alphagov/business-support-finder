@@ -323,6 +323,61 @@ describe BusinessSupportController do
     end
   end
 
+  describe "POST 'location_submit'" do
+    context "with valid sectors, stage and structure" do
+      context "with a valid location" do
+        it "should redirect to the support options page, passing through necessary params" do
+          post :location_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :location => 'england'
+          response.should redirect_to(support_options_path(:sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :location => 'england'))
+        end
+      end
+
+      context "with an invalid location" do
+        it "should redirect back to the form preserving the sectors and stage" do
+          post :location_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :location => "non-existent"
+          response.should redirect_to(location_path(:sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader"))
+        end
+      end
+
+      context "with no location" do
+        it "should redirect back to the form preserving the sectors and stage" do
+          post :location_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader"
+          response.should redirect_to(location_path(:sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader"))
+        end
+      end
+    end
+
+    it "should 404 with no sectors specified" do
+      post :location_submit, :stage => "start-up", :structure => 'partnership', :location => 'england'
+      response.should be_not_found
+    end
+
+    it "should 404 with no valid sectors specified" do
+      post :location_submit, :sectors => "non-existent", :stage => "start-up", :structure => 'partnership', :location => 'england'
+      response.should be_not_found
+    end
+
+    it "should 404 with an invalid stage" do
+      post :location_submit, :sectors => "health_manufacturing", :stage => "non-existent", :structure => 'partnership', :location => 'england'
+      response.should be_not_found
+    end
+
+    it "should 404 with no stage specified" do
+      post :location_submit, :sectors => "health_manufacturing", :structure => 'partnership', :location => 'england'
+      response.should be_not_found
+    end
+
+    it "should 404 with an invalid structure" do
+      post :location_submit, :sectors => "health_manufacturing", :stage => "start-up", :structure => 'non-existent', :location => 'england'
+      response.should be_not_found
+    end
+
+    it "should 404 with no structure specified" do
+      post :location_submit, :sectors => "health_manufacturing", :stage => 'start-up', :location => 'england'
+      response.should be_not_found
+    end
+  end
+
   describe "common stuff for all actions" do
     controller(BusinessSupportController) do
       def index
