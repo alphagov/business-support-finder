@@ -14,9 +14,10 @@ class BusinessSupportController < ApplicationController
   ACTIONS = %w(sectors stage structure location)
 
   before_filter :load_artefact
-  before_filter :load_and_validate_sectors, :only => [:stage, :stage_submit, :structure, :structure_submit, :location, :location_submit]
-  before_filter :load_and_validate_stage, :only => [:structure, :structure_submit, :location, :location_submit]
-  before_filter :load_and_validate_structure, :only => [:location, :location_submit]
+  before_filter :load_and_validate_sectors, :only => [:stage, :stage_submit, :structure, :structure_submit, :location, :location_submit, :support_options]
+  before_filter :load_and_validate_stage, :only => [:structure, :structure_submit, :location, :location_submit, :support_options]
+  before_filter :load_and_validate_structure, :only => [:location, :location_submit, :support_options]
+  before_filter :load_and_validate_location, :only => [:support_options]
   after_filter :send_slimmer_headers
 
   def start
@@ -67,6 +68,10 @@ class BusinessSupportController < ApplicationController
     end
   end
 
+  def support_options
+    setup_questions [@sectors, [@stage], [@structure], [@location]]
+  end
+
   private
 
   def setup_questions(answers=[])
@@ -105,6 +110,13 @@ class BusinessSupportController < ApplicationController
   def load_and_validate_structure
     @structure = Structure.find_by_slug(params[:structure])
     unless @structure
+      render :status => :not_found, :text => ""
+    end
+  end
+
+  def load_and_validate_location
+    @location = Location.find_by_slug(params[:location])
+    unless @location
       render :status => :not_found, :text => ""
     end
   end

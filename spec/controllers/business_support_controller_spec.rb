@@ -378,6 +378,97 @@ describe BusinessSupportController do
     end
   end
 
+  describe "GET 'support_options'" do
+    context "with some sectors, a stage, a structure and location specified" do
+      def do_get
+        get :support_options, :sectors => "health_manufacturing", :stage => "start-up", :structure => "partnership", :location => 'wales'
+      end
+
+      it "returns http success" do
+        do_get
+        response.should be_success
+      end
+
+      it "loads the given sectors and assigns them to @sectors" do
+        Sector.should_receive(:find_by_slugs).with(%w(health manufacturing)).and_return(:some_sectors)
+        do_get
+        assigns[:sectors].should == :some_sectors
+      end
+
+      it "loads the given stage and assigns it to @stage" do
+        Stage.should_receive(:find_by_slug).with('start-up').and_return(:a_stage)
+        do_get
+        assigns[:stage].should == :a_stage
+      end
+
+      it "loads the given structure and assigns it to @structure" do
+        Structure.should_receive(:find_by_slug).with('partnership').and_return(:a_structure)
+        do_get
+        assigns[:structure].should == :a_structure
+      end
+
+      it "loads the given location and assigns it to @location" do
+        Location.should_receive(:find_by_slug).with('wales').and_return(:a_location)
+        do_get
+        assigns[:location].should == :a_location
+      end
+
+      it "sets up the questions correctly" do
+        Sector.stub(:find_by_slugs).and_return(:some_sectors)
+        Stage.stub(:find_by_slug).and_return(:a_stage)
+        Structure.stub(:find_by_slug).and_return(:a_structure)
+        Location.stub(:find_by_slug).and_return(:a_location)
+        do_get
+        assigns[:completed_questions].should == [
+          [@question1, :some_sectors, 'sectors'],
+          [@question2, [:a_stage], 'stage'],
+          [@question3, [:a_structure], 'structure'],
+          [@question4, [:a_location], 'location'],
+        ]
+      end
+    end
+
+    it "should 404 with no sectors specified" do
+      get :support_options, :stage => "start-up", :structure => 'partnership', :location => 'wales'
+      response.should be_not_found
+    end
+
+    it "should 404 with no valid sectors specified" do
+      get :support_options, :sectors => "non-existent", :stage => "start-up", :structure => 'partnership', :location => 'wales'
+      response.should be_not_found
+    end
+
+    it "should 404 with an invalid stage" do
+      get :support_options, :sectors => "health_manufacturing", :stage => "non-existent", :structure => 'partnership', :location => 'wales'
+      response.should be_not_found
+    end
+
+    it "should 404 with no stage specified" do
+      get :support_options, :sectors => "health_manufacturing", :structure => 'partnership', :location => 'wales'
+      response.should be_not_found
+    end
+
+    it "should 404 with an invalid structure" do
+      get :support_options, :sectors => "health_manufacturing", :stage => "start-up", :structure => 'non-existent', :location => 'wales'
+      response.should be_not_found
+    end
+
+    it "should 404 with no structure specified" do
+      get :support_options, :sectors => "health_manufacturing", :stage => 'start-up', :location => 'wales'
+      response.should be_not_found
+    end
+
+    it "should 404 with an invalid location" do
+      get :support_options, :sectors => "health_manufacturing", :stage => "start-up", :structure => 'partnership', :location => 'non-existent'
+      response.should be_not_found
+    end
+
+    it "should 404 with no location specified" do
+      get :support_options, :sectors => "health_manufacturing", :stage => 'start-up', :structure => 'partnership'
+      response.should be_not_found
+    end
+  end
+
   describe "common stuff for all actions" do
     controller(BusinessSupportController) do
       def index

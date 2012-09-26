@@ -8,6 +8,7 @@ BusinessSupportFinder::Application.routes.draw do
   post "/#{APP_SLUG}/structure" => "business_support#structure_submit"
   get "/#{APP_SLUG}/location" => "business_support#location", :as => :location
   post "/#{APP_SLUG}/location" => "business_support#location_submit"
+  get "/#{APP_SLUG}/support-options" => "business_support#support_options", :as => :support_options
 
   root :to => redirect("/#{APP_SLUG}", :status => 302)
 end
