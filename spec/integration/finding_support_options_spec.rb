@@ -32,7 +32,6 @@ describe "Finding support options" do
 
       select 'Start-up', :from => 'Select a stage'
 
-      pending "completion of stage page"
       click_on 'Next step'
     end
 

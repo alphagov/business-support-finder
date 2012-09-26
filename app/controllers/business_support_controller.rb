@@ -14,7 +14,7 @@ class BusinessSupportController < ApplicationController
   ACTIONS = %w(sectors)
 
   before_filter :load_artefact
-  before_filter :load_and_validate_sectors, :only => [:stage]
+  before_filter :load_and_validate_sectors, :only => [:stage, :stage_submit]
   after_filter :send_slimmer_headers
 
   def start
@@ -29,6 +29,15 @@ class BusinessSupportController < ApplicationController
   def stage
     @stages = Stage.all
     setup_questions [@sectors]
+  end
+
+  def stage_submit
+    next_params = {:sectors => @sectors.map(&:slug).join('_')}
+    if Stage.find_by_slug(params[:stage])
+      redirect_to next_params.merge(:action => 'structure', :stage => params[:stage])
+    else
+      redirect_to next_params.merge(:action => 'stage')
+    end
   end
 
   private

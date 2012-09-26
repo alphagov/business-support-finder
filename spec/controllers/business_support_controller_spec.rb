@@ -97,6 +97,41 @@ describe BusinessSupportController do
     end
   end
 
+  describe "POST 'stage_submit'" do
+    context "with valid sectors" do
+      context "with a valid stage" do
+        it "should redirect to the structure page, passing through necessary params" do
+          post :stage_submit, :sectors => "health_manufacturing", :stage => "pre-startup"
+          response.should redirect_to(structure_path(:sectors => "health_manufacturing", :stage => "pre-startup"))
+        end
+      end
+
+      context "with an invalid stage" do
+        it "should redirect back to the form preserving the sectors" do
+          post :stage_submit, :sectors => "health_manufacturing", :stage => "non-existent"
+          response.should redirect_to(stage_path(:sectors => "health_manufacturing"))
+        end
+      end
+
+      context "with no stage" do
+        it "should redirect back to the form preserving the sectors" do
+          post :stage_submit, :sectors => "health_manufacturing"
+          response.should redirect_to(stage_path(:sectors => "health_manufacturing"))
+        end
+      end
+    end
+
+    it "should 404 with no sectors specified" do
+      post :stage_submit, :stage => "pre-startup"
+      response.should be_not_found
+    end
+
+    it "should 404 with no valid sectors specified" do
+      post :stage_submit, :sectors => "non-existent", :stage => "pre-startup"
+      response.should be_not_found
+    end
+  end
+
   describe "common stuff for all actions" do
     controller(BusinessSupportController) do
       def index

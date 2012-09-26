@@ -28,5 +28,10 @@ describe "Business stage page" do
       4 => "Where will you be located?"
     )
 
+    select "Grow and sustain", :from => "Select a stage"
+
+    click_on "Next step"
+
+    i_should_be_on "/#{APP_SLUG}/structure", :ignore_query => true
   end
 end
