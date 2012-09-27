@@ -14,7 +14,7 @@
 
   <div class="business-sector-picked picked-items" aria-live="polite">
     <h3>Your chosen areas of interest</h3>
-    <p class="hint">Your chosen areas will appear here</p>
+    <%= content_tag :p, "Your chosen areas will appear here", :class => @picked_sectors.any? ? "hidden" : "hint" %>
     <ul id="picked-business-sectors">
       <% @picked_sectors.each do |sector| %>
         <%= link_to_remove sector, :existing_items => @picked_sectors %>

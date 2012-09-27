@@ -34,7 +34,8 @@ describe "selecting business sectors" do
       end
 
       within '.business-sector-picked' do
-        page.should have_content("Your chosen areas will appear here")
+        page.should have_selector("p.hint", :text => "Your chosen areas will appear here")
+        page.should_not have_link("Next step")
       end
     end
 
@@ -75,6 +76,7 @@ describe "selecting business sectors" do
           "Hospitality and Catering",
         ]
 
+        page.should have_selector("p.hidden", :text => "Your chosen areas will appear here")
         page.should have_link("Next step", :href => "/#{APP_SLUG}/stage?sectors=education_hospitality-and-catering")
       end
     end
