@@ -390,41 +390,57 @@ describe BusinessSupportController do
       end
 
       it "loads the given sectors and assigns them to @sectors" do
-        Sector.should_receive(:find_by_slugs).with(%w(health manufacturing)).and_return(:some_sectors)
+        sectors = [Sector.new(:slug => 'a-sector')]
+        Sector.should_receive(:find_by_slugs).with(%w(health manufacturing)).and_return(sectors)
         do_get
-        assigns[:sectors].should == :some_sectors
+        assigns[:sectors].should == sectors
       end
 
       it "loads the given stage and assigns it to @stage" do
-        Stage.should_receive(:find_by_slug).with('start-up').and_return(:a_stage)
+        stage = Stage.new(:slug => 'a-stage')
+        Stage.should_receive(:find_by_slug).with('start-up').and_return(stage)
         do_get
-        assigns[:stage].should == :a_stage
+        assigns[:stage].should == stage
       end
 
       it "loads the given structure and assigns it to @structure" do
-        Structure.should_receive(:find_by_slug).with('partnership').and_return(:a_structure)
+        structure = Structure.new(:slug => 'a-structure')
+        Structure.should_receive(:find_by_slug).with('partnership').and_return(structure)
         do_get
-        assigns[:structure].should == :a_structure
+        assigns[:structure].should == structure
       end
 
       it "loads the given location and assigns it to @location" do
-        Location.should_receive(:find_by_slug).with('wales').and_return(:a_location)
+        location = Location.new(:slug => 'a-location')
+        Location.should_receive(:find_by_slug).with('wales').and_return(location)
         do_get
-        assigns[:location].should == :a_location
+        assigns[:location].should == location
       end
 
       it "sets up the questions correctly" do
-        Sector.stub(:find_by_slugs).and_return(:some_sectors)
-        Stage.stub(:find_by_slug).and_return(:a_stage)
-        Structure.stub(:find_by_slug).and_return(:a_structure)
-        Location.stub(:find_by_slug).and_return(:a_location)
+        sectors = [Sector.new(:slug => 'a-sector')]
+        stage = Stage.new(:slug => 'a-stage')
+        structure = Structure.new(:slug => 'a-structure')
+        location = Location.new(:slug => 'a-location')
+        Sector.stub(:find_by_slugs).and_return(sectors)
+        Stage.stub(:find_by_slug).and_return(stage)
+        Structure.stub(:find_by_slug).and_return(structure)
+        Location.stub(:find_by_slug).and_return(location)
         do_get
         assigns[:completed_questions].should == [
-          [@question1, :some_sectors, 'sectors'],
-          [@question2, [:a_stage], 'stage'],
-          [@question3, [:a_structure], 'structure'],
-          [@question4, [:a_location], 'location'],
+          [@question1, sectors, 'sectors'],
+          [@question2, [stage], 'stage'],
+          [@question3, [structure], 'structure'],
+          [@question4, [location], 'location'],
         ]
+      end
+
+      it "queries imminence for the available support options, and assigns them to @support_options" do
+        GdsApi::Imminence.any_instance.should_receive(:business_support_schemes).
+          with(:sectors => "health,manufacturing", :stages => "start-up", :business_types => "partnership", :locations => "wales").
+          and_return(stub("GdsApi::Response", :results => :some_schemes))
+        do_get
+        assigns[:support_options].should == :some_schemes
       end
     end
 

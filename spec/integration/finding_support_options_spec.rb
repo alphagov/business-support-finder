@@ -3,6 +3,15 @@ require 'spec_helper'
 describe "Finding support options" do
 
   specify "Happy path through the app" do
+    imminence_has_business_support_schemes(
+      {"sectors" => "education,hospitality-and-catering", "stages" => "start-up", "business_types" => "public-limited-company", "locations" => "wales"},
+      [
+        {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
+        {"title" => "High Potential Starts", "business_support_identifier" => "high-potential-starts"},
+        {"title" => "Manufacturing Services - Wales", "business_support_identifier" => "manufacturing-services-wales"},
+      ]
+    )
+
     visit "/#{APP_SLUG}"
 
     page.should have_link("Get started")
@@ -74,6 +83,10 @@ describe "Finding support options" do
 
     i_should_be_on "/#{APP_SLUG}/support-options", :ignore_query => true
 
-    page.should have_content("Available support")
+    within '.results' do
+      page.should have_content("Available support")
+
+      page.all("li a").map(&:text).should == ["Graduate start-up", "High Potential Starts", "Manufacturing Services - Wales"]
+    end
   end
 end

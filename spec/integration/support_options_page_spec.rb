@@ -3,6 +3,15 @@ require 'spec_helper'
 describe "Support options page" do
 
   specify "inspecting the support options page" do
+    imminence_has_business_support_schemes(
+      {"sectors" => "health,manufacturing", "stages" => "start-up", "business_types" => "partnership", "locations" => "england"},
+      [
+        {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
+        {"title" => "High Potential Starts", "business_support_identifier" => "high-potential-starts"},
+        {"title" => "Manufacturing Services - Wales", "business_support_identifier" => "manufacturing-services-wales"},
+      ]
+    )
+
     visit "/#{APP_SLUG}/support-options?sectors=health_manufacturing&stage=start-up&structure=partnership&location=england"
 
     assert_completed_questions(
@@ -14,7 +23,11 @@ describe "Support options page" do
 
     page.should_not have_selector('.completed-questions')
 
-    page.should have_content("Available support")
+    within '.results' do
+      page.should have_content("Available support")
+
+      page.all("li a").map(&:text).should == ["Graduate start-up", "High Potential Starts", "Manufacturing Services - Wales"]
+    end
   end
 
   specify "inspecting the 'change this answer' links" do

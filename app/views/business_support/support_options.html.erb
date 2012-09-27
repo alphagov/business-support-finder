@@ -5,17 +5,12 @@
     <div class="results-wrapper">
       <h2>Available support</h2>
       <ul class="results-list">
-        <li>
-          <a href="#">Dummy result 1</a>
-          <p>Consultancy support for manufacturing businesses</p>
-        </li>
-
-        <li>
-          <a href="#">Dummy result 2</a>
-          <p>Provides guarantees to help small businesses access loans</p>
-        </li>
+        <% @support_options.each do |support_option| %>
+          <li>
+            <a><%= support_option.title %></a>
+          </li>
+        <% end %>
       </ul>
-
     </div>
   </div>
 </div>

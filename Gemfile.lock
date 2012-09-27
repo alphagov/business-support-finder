@@ -57,7 +57,7 @@ GEM
     faye-websocket (0.4.6)
       eventmachine (>= 0.12.0)
     ffi (1.1.5)
-    gds-api-adapters (2.5.0)
+    gds-api-adapters (2.9.0)
       lrucache (~> 0.1.1)
       null_logger
       plek
@@ -180,7 +180,7 @@ DEPENDENCIES
   aws-ses
   capybara (= 1.1.2)
   exception_notification
-  gds-api-adapters (= 2.5.0)
+  gds-api-adapters (= 2.9.0)
   lograge
   nokogiri
   plek (= 0.4.0)
