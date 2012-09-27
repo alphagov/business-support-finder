@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module CustomActions
   def click_add_link(label)
     # find an anchor with 'Add' for the text in the same list element as a
@@ -14,6 +16,12 @@ module CustomActions
   # Click on the change link for the Nth previously answered question
   def click_change_answer(index)
     find(:xpath, "//li[@class = 'done'][#{index}]//a[contains(text(), 'Change')]").click
+  end
+
+  def dismiss_beta_popup
+    if page.find('#popup')
+      click_on "Thanks, I’ve read the warning"
+    end
   end
 end
 

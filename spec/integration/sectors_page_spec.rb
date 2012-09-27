@@ -145,4 +145,115 @@ describe "selecting business sectors" do
       end
     end
   end
+
+  specify "adding and removing sectors with js enabled", :js => true do
+    visit "/#{APP_SLUG}/sectors"
+
+    dismiss_beta_popup
+
+    within '.current-question' do
+      within '.search-picker' do
+        page.should have_content("Choose your area of business")
+
+        i_should_see_add_links_in_order [
+          "Agriculture",
+          "Business and Finance",
+          "Construction",
+          "Education",
+          "Health",
+          "Hospitality and Catering",
+          "Information, Communication and Media",
+          "Manufacturing",
+          "Mining",
+          "Real Estate",
+          "Science and Technology",
+          "Service Industries",
+          "Transport and Distribution",
+          "Travel and Leisure",
+          "Utilities",
+          "Wholesale and Retail",
+        ]
+      end
+
+      within '.picked-items' do
+        page.should have_selector("p.hint", :text => "Your chosen areas will appear here")
+        page.should_not have_link("Next step")
+      end
+    end
+
+    click_add_link "Service Industries"
+    click_add_link "Health"
+    click_add_link "Mining"
+
+    within '.current-question' do
+      within '.search-picker' do
+        i_should_see_add_links_in_order [
+          "Agriculture",
+          "Business and Finance",
+          "Construction",
+          "Education",
+          "Hospitality and Catering",
+          "Information, Communication and Media",
+          "Manufacturing",
+          "Real Estate",
+          "Science and Technology",
+          "Transport and Distribution",
+          "Travel and Leisure",
+          "Utilities",
+          "Wholesale and Retail",
+        ]
+      end
+
+      within '.picked-items' do
+        i_should_see_remove_links_in_order [
+          "Health",
+          "Mining",
+          "Service Industries",
+        ]
+        page.should have_selector("p.hidden", :text => "Your chosen areas will appear here")
+        page.should have_link("Next step")
+        page.should have_link("Next step", :href => "/#{APP_SLUG}/stage?sectors=health_mining_service-industries")
+      end
+    end
+
+    click_remove_link "Mining"
+    click_remove_link "Health"
+    click_add_link "Mining"
+
+
+    within '.current-question' do
+      within '.search-picker' do
+        i_should_see_add_links_in_order [
+          "Agriculture",
+          "Business and Finance",
+          "Construction",
+          "Education",
+          "Health",
+          "Hospitality and Catering",
+          "Information, Communication and Media",
+          "Manufacturing",
+          "Real Estate",
+          "Science and Technology",
+          "Transport and Distribution",
+          "Travel and Leisure",
+          "Utilities",
+          "Wholesale and Retail",
+        ]
+      end
+
+      within '.picked-items' do
+        i_should_see_remove_links_in_order [
+          "Mining",
+          "Service Industries",
+        ]
+        page.should have_selector("p.hidden", :text => "Your chosen areas will appear here")
+        page.should have_link("Next step")
+        page.should have_link("Next step", :href => "/#{APP_SLUG}/stage?sectors=mining_service-industries")
+      end
+    end
+
+    click_on "Next step"
+
+    i_should_be_on "/#{APP_SLUG}/stage?sectors=mining_service-industries"
+  end
 end
