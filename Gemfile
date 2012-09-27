@@ -28,4 +28,5 @@ group :development, :test do
   gem 'simplecov-rcov'
   gem 'webmock', :require => false
   gem 'nokogiri'
+  gem 'poltergeist', '0.7.0'
 end
