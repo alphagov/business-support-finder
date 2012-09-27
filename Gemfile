@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'
 
-gem 'slimmer', '3.3.2'
+gem 'slimmer', '3.3.3'
 gem 'plek', '0.4.0'
 gem 'gds-api-adapters', '2.5.0'
 
@@ -28,4 +28,6 @@ group :development, :test do
   gem 'simplecov'
   gem 'simplecov-rcov'
   gem 'webmock', :require => false
+  gem 'nokogiri'
+  gem 'poltergeist', '0.7.0'
 end
