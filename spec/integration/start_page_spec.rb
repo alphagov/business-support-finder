@@ -14,11 +14,12 @@ describe "Start page" do
 
       within 'article[role=article]' do
         within 'section.intro' do
-          page.should have_link("Get started", :href => '#')
+          page.should have_link("Get started", :href => "/#{APP_SLUG}/sectors")
         end
       end
 
       page.should have_selector(".article-container #test-report_a_problem")
+      page.should have_selector("#test-related")
     end
   end
 end

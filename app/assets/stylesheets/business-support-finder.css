@@ -1,0 +1,51 @@
+/*
+ *= require licence-finder
+ */
+
+.select-container {
+  margin: 1.2em 0;
+}
+
+.business-support-finder .business-support-container {
+  background-color: #fff;
+  padding: 1em 2.5em 1em 2.5em;
+}
+
+/* Results
+============================================================================ */
+.business-support-finder .results {
+  padding: 0;
+  /*margin-left: -20em;*/
+  float: right;
+  width: 100%;
+}
+
+.business-support-finder .results-wrapper {
+  padding: 0;
+  /*margin-left: 20em;*/
+}
+
+.business-support-finder .results-list {
+  padding: 0; margin: 0;
+  list-style: none;
+}
+
+.business-support-finder .results-list li {
+  display: block;
+  list-style: none;
+  margin-bottom: 1.5em;
+  max-width: 32.5em;
+  padding: 0;
+  overflow: hidden;
+}
+
+.business-support-finder .results-list li a {
+  margin: 0; padding: 0;
+  font-size: 1.1875em;
+}
+
+.business-support-finder .results-list li p {
+  margin: 0;
+  width: auto;
+  font-size: 1em;
+}
