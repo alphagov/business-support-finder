@@ -70,7 +70,7 @@ module BusinessSupportFinder
     config.assets.prefix = 'businesssupportfinder' # this has to match the path configured in puppet and deploy scripts.
 
     # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-    config.assets.precompile += %w( business-support-finder.css )
+    config.assets.precompile += %w( business-support-finder.css business-support-finder.js )
 
     # Disable Rack::Cache
     config.action_dispatch.rack_cache = nil
