@@ -14,5 +14,6 @@ RSpec.configure do |config|
   config.before(:each, :type => :request) do
     stub_content_api_default_artefact
     stub_imminence_default_business_support_schemes
+    setup_content_api_business_support_schemes_stubs
   end
 end

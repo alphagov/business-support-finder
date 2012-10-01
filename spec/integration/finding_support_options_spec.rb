@@ -7,9 +7,24 @@ describe "Finding support options" do
       {"sectors" => "education,hospitality-and-catering", "stages" => "start-up", "business_types" => "public-limited-company", "locations" => "wales"},
       [
         {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
-        {"title" => "High Potential Starts", "business_support_identifier" => "high-potential-starts"},
         {"title" => "Manufacturing Services - Wales", "business_support_identifier" => "manufacturing-services-wales"},
       ]
+    )
+    content_api_has_business_support_scheme(
+      "title" => "Graduate start-up scheme",
+      "web_url" => "https://www.gov.uk/graduate-start-up",
+      "details" => {
+        "business_support_identifier" => "graduate-start-up",
+        "short_description" => "Some blurb abour the Graduate start-up scheme",
+      }
+    )
+    content_api_has_business_support_scheme(
+      "title" => "Manufacturing Services scheme - Wales",
+      "web_url" => "https://www.gov.uk/wales/manufacturing-services-scheme",
+      "details" => {
+        "business_support_identifier" => "manufacturing-services-wales",
+        "short_description" => "Some blurb abour the welsh Manufacturing services scheme",
+      }
     )
 
     visit "/#{APP_SLUG}"
@@ -86,7 +101,7 @@ describe "Finding support options" do
     within '.results' do
       page.should have_content("Available support")
 
-      page.all("li a").map(&:text).should == ["Graduate start-up", "High Potential Starts", "Manufacturing Services - Wales"]
+      page.all("li a").map(&:text).should == ["Graduate start-up scheme", "Manufacturing Services scheme - Wales"]
     end
   end
 end
