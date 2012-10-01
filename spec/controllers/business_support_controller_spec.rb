@@ -380,6 +380,10 @@ describe BusinessSupportController do
 
   describe "GET 'support_options'" do
     context "with some sectors, a stage, a structure and location specified" do
+      before :each do
+        Scheme.stub(:lookup).and_return([])
+      end
+
       def do_get
         get :support_options, :sectors => "health_manufacturing", :stage => "start-up", :structure => "partnership", :location => 'wales'
       end
@@ -390,55 +394,53 @@ describe BusinessSupportController do
       end
 
       it "loads the given sectors and assigns them to @sectors" do
-        sectors = [Sector.new(:slug => 'a-sector')]
-        Sector.should_receive(:find_by_slugs).with(%w(health manufacturing)).and_return(sectors)
+        Sector.should_receive(:find_by_slugs).with(%w(health manufacturing)).and_return(:some_sectors)
         do_get
-        assigns[:sectors].should == sectors
+        assigns[:sectors].should == :some_sectors
       end
 
       it "loads the given stage and assigns it to @stage" do
-        stage = Stage.new(:slug => 'a-stage')
-        Stage.should_receive(:find_by_slug).with('start-up').and_return(stage)
+        Stage.should_receive(:find_by_slug).with('start-up').and_return(:a_stage)
         do_get
-        assigns[:stage].should == stage
+        assigns[:stage].should == :a_stage
       end
 
       it "loads the given structure and assigns it to @structure" do
-        structure = Structure.new(:slug => 'a-structure')
-        Structure.should_receive(:find_by_slug).with('partnership').and_return(structure)
+        Structure.should_receive(:find_by_slug).with('partnership').and_return(:a_structure)
         do_get
-        assigns[:structure].should == structure
+        assigns[:structure].should == :a_structure
       end
 
       it "loads the given location and assigns it to @location" do
-        location = Location.new(:slug => 'a-location')
-        Location.should_receive(:find_by_slug).with('wales').and_return(location)
+        Location.should_receive(:find_by_slug).with('wales').and_return(:a_location)
         do_get
-        assigns[:location].should == location
+        assigns[:location].should == :a_location
       end
 
       it "sets up the questions correctly" do
-        sectors = [Sector.new(:slug => 'a-sector')]
-        stage = Stage.new(:slug => 'a-stage')
-        structure = Structure.new(:slug => 'a-structure')
-        location = Location.new(:slug => 'a-location')
-        Sector.stub(:find_by_slugs).and_return(sectors)
-        Stage.stub(:find_by_slug).and_return(stage)
-        Structure.stub(:find_by_slug).and_return(structure)
-        Location.stub(:find_by_slug).and_return(location)
+        Sector.stub(:find_by_slugs).and_return(:some_sectors)
+        Stage.stub(:find_by_slug).and_return(:a_stage)
+        Structure.stub(:find_by_slug).and_return(:a_structure)
+        Location.stub(:find_by_slug).and_return(:a_location)
         do_get
         assigns[:completed_questions].should == [
-          [@question1, sectors, 'sectors'],
-          [@question2, [stage], 'stage'],
-          [@question3, [structure], 'structure'],
-          [@question4, [location], 'location'],
+          [@question1, :some_sectors, 'sectors'],
+          [@question2, [:a_stage], 'stage'],
+          [@question3, [:a_structure], 'structure'],
+          [@question4, [:a_location], 'location'],
         ]
       end
 
-      it "queries imminence for the available support options, and assigns them to @support_options" do
-        GdsApi::Imminence.any_instance.should_receive(:business_support_schemes).
-          with(:sectors => "health,manufacturing", :stages => "start-up", :business_types => "partnership", :locations => "wales").
-          and_return(stub("GdsApi::Response", :results => :some_schemes))
+      it "looks up the available support schemes, and assigns them to @support_options" do
+        Sector.stub(:find_by_slugs).and_return(:some_sectors)
+        Stage.stub(:find_by_slug).and_return(:a_stage)
+        Structure.stub(:find_by_slug).and_return(:a_structure)
+        Location.stub(:find_by_slug).and_return(:a_location)
+
+        Scheme.should_receive(:lookup).
+          with(:sectors => :some_sectors, :stage => :a_stage, :structure => :a_structure, :location => :a_location).
+          and_return(:some_schemes)
+
         do_get
         assigns[:support_options].should == :some_schemes
       end

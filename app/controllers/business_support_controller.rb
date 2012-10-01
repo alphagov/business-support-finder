@@ -69,13 +69,12 @@ class BusinessSupportController < ApplicationController
   end
 
   def support_options
-    results = imminence_api.business_support_schemes(
-      :sectors => @sectors.map(&:slug).join(','),
-      :stages => @stage.slug,
-      :business_types => @structure.slug,
-      :locations => @location.slug
+    @support_options = Scheme.lookup(
+      :sectors => @sectors,
+      :stage => @stage,
+      :structure => @structure,
+      :location => @location
     )
-    @support_options = results.results
     setup_questions [@sectors, [@stage], [@structure], [@location]]
   end
 
