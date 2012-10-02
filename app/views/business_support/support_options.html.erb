@@ -7,7 +7,8 @@
       <ul class="results-list">
         <% @support_options.each do |support_option| %>
           <li>
-            <a><%= support_option.title %></a>
+            <%= link_to support_option.title, support_option.web_url %>
+            <p><%= support_option.short_description %></p>
           </li>
         <% end %>
       </ul>
