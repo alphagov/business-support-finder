@@ -7,7 +7,7 @@ gem 'plek', '0.4.0'
 if ENV['API_DEV']
   gem 'gds-api-adapters', :path => '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '2.9.0'
+  gem 'gds-api-adapters', '2.11.0'
 end
 
 gem 'exception_notification'
