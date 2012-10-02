@@ -11,9 +11,9 @@ class Scheme < OpenStruct
       :business_types => facets[:structure].slug,
       :locations => facets[:location].slug
     )
-    schemes = content_api.business_support_schemes(possible_schemes.results.map {|s| s["business_support_identifier"] } )
+    schemes = content_api.business_support_schemes(possible_schemes["results"].map {|s| s["business_support_identifier"] } )
 
-    schemes.results.map do |s|
+    schemes["results"].map do |s|
       self.new(s)
     end
   end

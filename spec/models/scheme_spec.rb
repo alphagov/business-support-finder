@@ -8,8 +8,8 @@ describe Scheme do
       @stage = Stage.find_by_slug('start-up')
       @structure = Structure.find_by_slug('partnership')
       @location = Location.find_by_slug('wales')
-      GdsApi::Imminence.any_instance.stub(:business_support_schemes).and_return(stub("GdsApi::Response", :results => []))
-      GdsApi::ContentApi.any_instance.stub(:business_support_schemes).and_return(stub("GdsApi::Response", :results => []))
+      GdsApi::Imminence.any_instance.stub(:business_support_schemes).and_return("results" => [])
+      GdsApi::ContentApi.any_instance.stub(:business_support_schemes).and_return("results" => [])
     end
 
     after :each do
@@ -22,27 +22,27 @@ describe Scheme do
     it "should lookup available schemes in imminence" do
       GdsApi::Imminence.any_instance.should_receive(:business_support_schemes).
         with(:sectors => "health,manufacturing", :stages => "start-up", :business_types => "partnership", :locations => "wales").
-        and_return(stub("GdsApi::Response", :results => []))
+        and_return("results" => [])
 
       Scheme.lookup(:sectors => @sectors, :stage => @stage, :structure => @structure, :location => @location)
     end
 
     it "should fetch the imminence schemes from content_api" do
       GdsApi::Imminence.any_instance.stub(:business_support_schemes).
-        and_return(stub("GdsApi::Response", :results => [
+        and_return("results" => [
                           {"business_support_identifier" => "scheme-1"},
                           {"business_support_identifier" => "scheme-3"},
                           {"business_support_identifier" => "scheme-2"},
-                        ]))
+                        ])
       GdsApi::ContentApi.any_instance.should_receive(:business_support_schemes).with(%w(scheme-1 scheme-3 scheme-2)).
-        and_return(stub("GdsApi::Response", :results => []))
+        and_return("results" => [])
 
       Scheme.lookup(:sectors => @sectors, :stage => @stage, :structure => @structure, :location => @location)
     end
 
     it "should construct instances of Scheme for each result and return them" do
       GdsApi::ContentApi.any_instance.stub(:business_support_schemes).
-        and_return(stub("GdsApi::Response", :results => [:artefact1, :artefact2]))
+        and_return("results" => [:artefact1, :artefact2])
       Scheme.should_receive(:new).with(:artefact1).and_return(:scheme1)
       Scheme.should_receive(:new).with(:artefact2).and_return(:scheme2)
 
