@@ -41,6 +41,8 @@ describe Scheme do
     end
 
     it "should construct instances of Scheme for each result and return them" do
+      GdsApi::Imminence.any_instance.stub(:business_support_schemes).
+        and_return("results" => [{"business_support_identifier" => "scheme-1"}])
       GdsApi::ContentApi.any_instance.stub(:business_support_schemes).
         and_return("results" => [:artefact1, :artefact2])
       Scheme.should_receive(:new).with(:artefact1).and_return(:scheme1)
@@ -48,6 +50,14 @@ describe Scheme do
 
       schemes = Scheme.lookup(:sectors => @sectors, :stage => @stage, :structure => @structure, :location => @location)
       schemes.should == [:scheme1, :scheme2]
+    end
+
+    it "should return empty array without calling content_api if imminence returns no results" do
+      GdsApi::Imminence.any_instance.stub(:business_support_schemes).and_return("results" => [])
+      GdsApi::ContentApi.any_instance.should_not_receive(:business_support_schemes)
+
+      schemes = Scheme.lookup(:sectors => @sectors, :stage => @stage, :structure => @structure, :location => @location)
+      schemes.should == []
     end
   end
 

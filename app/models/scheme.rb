@@ -11,6 +11,7 @@ class Scheme < OpenStruct
       :business_types => facets[:structure].slug,
       :locations => facets[:location].slug
     )
+    return [] if possible_schemes["results"].empty?
     schemes = content_api.business_support_schemes(possible_schemes["results"].map {|s| s["business_support_identifier"] } )
 
     schemes["results"].map do |s|
