@@ -380,6 +380,10 @@ describe BusinessSupportController do
 
   describe "GET 'support_options'" do
     context "with some sectors, a stage, a structure and location specified" do
+      before :each do
+        Scheme.stub(:lookup).and_return([])
+      end
+
       def do_get
         get :support_options, :sectors => "health_manufacturing", :stage => "start-up", :structure => "partnership", :location => 'wales'
       end
@@ -425,6 +429,20 @@ describe BusinessSupportController do
           [@question3, [:a_structure], 'structure'],
           [@question4, [:a_location], 'location'],
         ]
+      end
+
+      it "looks up the available support schemes, and assigns them to @support_options" do
+        Sector.stub(:find_by_slugs).and_return(:some_sectors)
+        Stage.stub(:find_by_slug).and_return(:a_stage)
+        Structure.stub(:find_by_slug).and_return(:a_structure)
+        Location.stub(:find_by_slug).and_return(:a_location)
+
+        Scheme.should_receive(:lookup).
+          with(:sectors => :some_sectors, :stage => :a_stage, :structure => :a_structure, :location => :a_location).
+          and_return(:some_schemes)
+
+        do_get
+        assigns[:support_options].should == :some_schemes
       end
     end
 

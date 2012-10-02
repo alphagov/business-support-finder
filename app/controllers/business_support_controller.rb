@@ -69,6 +69,12 @@ class BusinessSupportController < ApplicationController
   end
 
   def support_options
+    @support_options = Scheme.lookup(
+      :sectors => @sectors,
+      :stage => @stage,
+      :structure => @structure,
+      :location => @location
+    )
     setup_questions [@sectors, [@stage], [@structure], [@location]]
   end
 
