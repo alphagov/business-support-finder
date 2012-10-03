@@ -1,8 +1,8 @@
 module AddRemoveHelper
   def link_to_add_remove(action, model, options = {})
     key_name = model.class.name.underscore
-    content_tag :li, :id => "#{key_name}-#{model.slug}", "data-slug" => model.slug do
-      html = content_tag(:span, model.name, :class => "#{key_name}-name") + "\n"
+    content_tag :li, "data-slug" => model.slug do
+      html = content_tag(:span, model.name, :class => "#{key_name}-name", :id => "#{key_name}-#{model.slug}") + "\n"
       html << create_add_remove_link(action, model, options)
     end
   end
