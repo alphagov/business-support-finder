@@ -43,6 +43,19 @@ GOVUK.BusinessSupportFinder = (function () {
 
   return {
     init: function () {
+      var checkExisting = function () {
+        var $pickedItems = $('.picked-items ul li');
+        if ($pickedItems.length) {
+          $pickedItems.each(function (idx) {
+            var id = $(this).data('slug');
+
+            selectedItems.add(id);
+          });
+        }
+      };
+
+      checkExisting();
+
       $(".search-picker").on("click", "li[data-slug] a.add", {
         linkText: "Remove",
         action: "add"
@@ -50,7 +63,7 @@ GOVUK.BusinessSupportFinder = (function () {
       }, GOVUK.BusinessSupportFinder.swapper);
 
       // event handler to remove a list item from the picked list.
-      $(".picked-items").on("click", "li[data-slug] a.remove", {
+      $(".picked-items, .search-picker").on("click", "li[data-slug] a.remove", {
         linkText: "Add",
         action: "remove"
       }, GOVUK.BusinessSupportFinder.swapper);
