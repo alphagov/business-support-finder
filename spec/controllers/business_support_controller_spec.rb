@@ -506,7 +506,7 @@ describe BusinessSupportController do
     it "should set the slimmer format header" do
       get :index
 
-      response.headers["#{Slimmer::Headers::HEADER_PREFIX}-Format"].should == "business-support-finder"
+      response.headers["#{Slimmer::Headers::HEADER_PREFIX}-Format"].should == "finder"
     end
   end
 end
