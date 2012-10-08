@@ -68,6 +68,14 @@ describe "selecting business sectors" do
           "Utilities",
           "Wholesale and Retail",
         ]
+        i_should_see_remove_links_in_order [
+          "Education",
+          "Hospitality and Catering",
+        ]
+        i_should_see_selected_sector_links [
+          "Education",
+          "Hospitality and Catering",
+        ]
       end
 
       within '.business-sector-picked' do
@@ -103,6 +111,14 @@ describe "selecting business sectors" do
           "Utilities",
           "Wholesale and Retail",
         ]
+        i_should_see_remove_links_in_order [
+          "Health",
+          "Travel and Leisure",
+        ]
+        i_should_see_selected_sector_links [
+          "Health",
+          "Travel and Leisure",
+        ]
       end
 
       within '.business-sector-picked' do
@@ -135,6 +151,12 @@ describe "selecting business sectors" do
           "Transport and Distribution",
           "Utilities",
           "Wholesale and Retail",
+        ]
+        i_should_see_remove_links_in_order [
+          "Travel and Leisure",
+        ]
+        i_should_see_selected_sector_links [
+          "Travel and Leisure",
         ]
       end
 
@@ -202,6 +224,16 @@ describe "selecting business sectors" do
           "Utilities",
           "Wholesale and Retail",
         ]
+        i_should_see_remove_links_in_order [
+          "Health",
+          "Mining",
+          "Service Industries",
+        ]
+        i_should_see_selected_sector_links [
+          "Health",
+          "Mining",
+          "Service Industries",
+        ]
       end
 
       within '.picked-items' do
@@ -238,6 +270,14 @@ describe "selecting business sectors" do
           "Travel and Leisure",
           "Utilities",
           "Wholesale and Retail",
+        ]
+        i_should_see_remove_links_in_order [
+          "Mining",
+          "Service Industries",
+        ]
+        i_should_see_selected_sector_links [
+          "Mining",
+          "Service Industries",
         ]
       end
 

@@ -1,8 +1,10 @@
 module AddRemoveHelper
   def link_to_add_remove(action, model, options = {})
     key_name = model.class.name.underscore
-      model_slug = options[:model_slug]
+      id_sufix = options.delete(:id_sufix)
       item_class = options.delete(:item_class)
+      model_slug = "#{key_name}-#{model.slug}"
+      model_slug = "#{model_slug}-#{id_sufix}" unless id_sufix.nil?
       tag_options = {"data-slug"=> model.slug}
       tag_options["class"] = item_class unless item_class.nil?
       content_tag :li, tag_options do
@@ -12,21 +14,16 @@ module AddRemoveHelper
   end
 
   def link_to_add(model, options = {})
-    key_name = model.class.name.underscore
-    options[:model_slug] = "#{key_name}-#{model.slug}"
     link_to_add_remove(:add, model, options)
   end
 
   def selected_link(model, options = {})
-    key_name = model.class.name.underscore
-    options[:model_slug] = "#{key_name}-#{model.slug}"
     options[:item_class] = "selected"
     link_to_add_remove(:remove, model, options)
   end
 
   def basket_link(model, options = {})
-    key_name = model.class.name.underscore
-    options[:model_slug] = "#{key_name}-#{model.slug}-selected"
+    options[:model_slug] = "-selected"
     link_to_add_remove(:remove, model, options)
   end
 

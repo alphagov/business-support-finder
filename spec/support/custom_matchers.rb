@@ -37,6 +37,10 @@ module CustomMatchers
     check_add_remove_links_in_order("Remove", labels)
   end
 
+  def i_should_see_selected_sector_links(ids)
+    check_selected_links(ids, "sector")
+  end
+
   def assert_completed_questions(questions)
     within '.done-questions' do
       page.all(:xpath, ".//h3[contains(@class, 'question')]/span").map(&:text).map(&:strip).reject(&:blank?).should == questions.keys.map(&:to_s)
@@ -67,9 +71,17 @@ module CustomMatchers
   private
 
   def check_add_remove_link(type, label)
-    element = find(:xpath, "//li[span/text() = '#{label}']")
+    element = find(:xpath, ".//li[span/text() = '#{label}']")
     element.should_not be_nil
     element.should have_xpath("a[text() = '#{type}']")
+  end
+
+  def check_selected_link(id, type)
+    id = id.downcase.gsub(/\s{1}/, '-')
+    label_id = "#{type}-#{id}"
+    element = find(:xpath, ".//li[@data-slug = '#{id}' and @class = 'selected']")
+    element.should_not be_nil
+    element.should have_xpath("span[@id = '#{label_id}']")
   end
 
   def check_add_remove_links(type, labels)
@@ -80,7 +92,13 @@ module CustomMatchers
 
   def check_add_remove_links_in_order(type, labels)
     check_add_remove_links(type, labels)
-    page.all(:xpath, "//li[a/text() = '#{type}']/span").map(&:text).should == labels
+    page.all(:xpath, ".//li[a/text() = '#{type}']/span").map(&:text).should == labels
+  end
+
+  def check_selected_links(ids, type)
+    ids.each do |id|
+      check_selected_link(id, type)
+    end
   end
 
 end
