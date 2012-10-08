@@ -129,7 +129,7 @@ class BusinessSupportController < ApplicationController
 
   def send_slimmer_headers
     set_slimmer_headers(
-      :format => 'business-support-finder'
+      :format => 'finder'
     )
     set_slimmer_artefact(@artefact)
   end
