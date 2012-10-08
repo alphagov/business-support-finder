@@ -1,7 +1,7 @@
 module AddRemoveHelper
   def link_to_add_remove(action, model, options = {})
     key_name = model.class.name.underscore
-      id_sufix = options.delete(:id_sufix)
+      id_sufix = options[:id_sufix]
       item_class = options.delete(:item_class)
       model_slug = "#{key_name}-#{model.slug}"
       model_slug = "#{model_slug}-#{id_sufix}" unless id_sufix.nil?
@@ -23,7 +23,7 @@ module AddRemoveHelper
   end
 
   def basket_link(model, options = {})
-    options[:model_slug] = "-selected"
+    options[:id_sufix] = "selected"
     link_to_add_remove(:remove, model, options)
   end
 
@@ -35,7 +35,9 @@ module AddRemoveHelper
       items -= [model]
     end
     key_name = model.class.name.underscore
-    model_slug= options[:model_slug]
+    id_sufix = options[:id_sufix]
+    model_slug = "#{key_name}-#{model.slug}"
+    model_slug = "#{model_slug}-#{id_sufix}" unless id_sufix.nil?
     new_params = params.select {|k, v| %w(controller sectors).include? k.to_s }
     new_params[key_name.pluralize] = items.map(&:slug).sort.uniq.join("_")
     link_to(action.capitalize, url_for(new_params.merge(:action => key_name.pluralize)), :class => action, "aria-labelledby" => "#{model_slug}")

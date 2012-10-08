@@ -73,6 +73,7 @@ GOVUK.BusinessSupportFinder = (function () {
 
       function createNextUrl() {
         var sector_slugs = selectedItems.get();
+        sector_slugs.sort();
         return window.location.pathname.replace(/\/[^\/]+$/, "/stage") + "?sectors=" + sector_slugs.join("_");
       }
 
