@@ -1,14 +1,14 @@
 module AddRemoveHelper
   def link_to_add_remove(action, model, options = {})
     key_name = model.class.name.underscore
-      id_sufix = options[:id_sufix]
-      item_class = options.delete(:item_class)
-      model_slug = "#{key_name}-#{model.slug}"
-      model_slug = "#{model_slug}-#{id_sufix}" unless id_sufix.nil?
-      tag_options = {"data-slug"=> model.slug}
-      tag_options["class"] = item_class unless item_class.nil?
-      content_tag :li, tag_options do
-        html = content_tag(:span, model.name, :class => "#{key_name}-name", :id => "#{model_slug}") + "\n"
+    id_sufix = options[:id_sufix]
+    item_class = options.delete(:item_class)
+    model_slug = "#{key_name}-#{model.slug}"
+    model_slug = "#{model_slug}-#{id_sufix}" unless id_sufix.nil?
+    tag_options = {"data-slug"=> model.slug}
+    tag_options["class"] = item_class unless item_class.nil?
+    content_tag :li, tag_options do
+      html = content_tag(:span, model.name, :class => "#{key_name}-name", :id => "#{model_slug}") + "\n"
       html << create_add_remove_link(action, model, options)
     end
   end

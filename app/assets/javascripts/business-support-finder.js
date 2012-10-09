@@ -26,15 +26,6 @@ GOVUK.BusinessSupportFinder = (function () {
 
         return found;
       },
-      contains: function(id) {
-        var idx = $.inArray(id, items);
-
-        if (idx === -1) {
-            return false
-        }
-
-        return true;
-      },
       get: function() {
         return items.slice(0);
       }
@@ -59,7 +50,6 @@ GOVUK.BusinessSupportFinder = (function () {
       $(".search-picker").on("click", "li[data-slug] a.add", {
         linkText: "Remove",
         action: "add"
-        
       }, GOVUK.BusinessSupportFinder.swapper);
 
       // event handler to remove a list item from the picked list.
@@ -90,7 +80,6 @@ GOVUK.BusinessSupportFinder = (function () {
           newlis;
 
       if (event.data.action === 'add') {
-
         li.addClass('selected')
           .find('a')
           .removeClass('add')
@@ -115,7 +104,6 @@ GOVUK.BusinessSupportFinder = (function () {
 
         selectedItems.add(itemId);
       } else {
-        
         itemId = $(this).attr('aria-labelledby').replace('-selected', '');
 
         $('#' + itemId + '-selected').parent('li').remove();
@@ -130,21 +118,17 @@ GOVUK.BusinessSupportFinder = (function () {
           $(".hidden", source).removeClass("hidden").addClass("hint");
           $("#next-step").remove();
         }
-
         selectedItems.remove(itemId.replace(prefix + '-', '')); 
       }
 
       if (selectedItems.get().length > 0) {
         // sort the target list
         newlis = $('>li', targetList);
-
         newlis.remove();
         newlis = $.makeArray(newlis).sort(function(a, b) {
           return $("span", a).text().localeCompare($("span", b).text());
         });
         targetList.append(newlis);
-
-        
       }
 
       // update Next link URL
