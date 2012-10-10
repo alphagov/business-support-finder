@@ -1,4 +1,3 @@
-
 var GOVUK = GOVUK || {};
 
 GOVUK.BusinessSupportFinder = (function () {
@@ -21,7 +20,6 @@ GOVUK.BusinessSupportFinder = (function () {
                 found = true;
             }
         }
-
         items = tmpArr;
 
         return found;
@@ -36,6 +34,7 @@ GOVUK.BusinessSupportFinder = (function () {
     init: function () {
       var checkExisting = function () {
         var $pickedItems = $('.picked-items ul li');
+
         if ($pickedItems.length) {
           $pickedItems.each(function (idx) {
             var id = $(this).data('slug');
@@ -63,6 +62,7 @@ GOVUK.BusinessSupportFinder = (function () {
 
       function createNextUrl() {
         var sector_slugs = selectedItems.get();
+        
         sector_slugs.sort();
         return window.location.pathname.replace(/\/[^\/]+$/, "/stage") + "?sectors=" + sector_slugs.join("_");
       }
@@ -118,6 +118,7 @@ GOVUK.BusinessSupportFinder = (function () {
           $(".hidden", source).removeClass("hidden").addClass("hint");
           $("#next-step").remove();
         }
+
         selectedItems.remove(itemId.replace(prefix + '-', '')); 
       }
 
