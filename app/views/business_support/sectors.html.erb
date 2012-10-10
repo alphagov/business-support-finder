@@ -5,8 +5,12 @@
       <h3>Choose your area of business:</h3>
 
       <ul id="sector-navigation">
-        <% (@sectors - @picked_sectors).each do |sector| %>
-          <%= link_to_add sector, :existing_items => @picked_sectors %>
+        <% (@sectors).each do |sector| %>
+          <% if @picked_sectors.include?(sector) %>
+            <%= selected_link sector, :existing_items => @picked_sectors %>
+          <% else %>
+            <%= link_to_add sector, :existing_items => @picked_sectors %>
+          <% end %>
         <% end %>
       </ul>
     </div>
@@ -17,7 +21,7 @@
     <%= content_tag :p, "Your chosen areas will appear here", :class => @picked_sectors.any? ? "hidden" : "hint" %>
     <ul id="picked-business-sectors">
       <% @picked_sectors.each do |sector| %>
-        <%= link_to_remove sector, :existing_items => @picked_sectors %>
+        <%= basket_link sector, :existing_items => @picked_sectors %>
       <% end %>
     </ul>
 
