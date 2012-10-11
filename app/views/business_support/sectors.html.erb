@@ -1,18 +1,20 @@
 
 <%= current_question do %>
   <div class="browse-container">
-    <div id="business-sectors" class="search-picker">
-      <h3>Choose your area of business:</h3>
+    <div class="inner">
+      <div id="business-sectors" class="search-picker">
+        <h3>Choose your area of business:</h3>
 
-      <ul id="sector-navigation">
-        <% (@sectors).each do |sector| %>
-          <% if @picked_sectors.include?(sector) %>
-            <%= selected_link sector, :existing_items => @picked_sectors %>
-          <% else %>
-            <%= link_to_add sector, :existing_items => @picked_sectors %>
+        <ul id="sector-navigation">
+          <% (@sectors).each do |sector| %>
+            <% if @picked_sectors.include?(sector) %>
+              <%= selected_link sector, :existing_items => @picked_sectors %>
+            <% else %>
+              <%= link_to_add sector, :existing_items => @picked_sectors %>
+            <% end %>
           <% end %>
-        <% end %>
-      </ul>
+        </ul>
+      </div>
     </div>
   </div>
 
