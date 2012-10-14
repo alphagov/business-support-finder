@@ -42,7 +42,8 @@ describe "selecting business sectors" do
     assert_upcoming_questions(
       2 => "What stage is your business at?",
       3 => "How is your business structured?",
-      4 => "Where is your business located?"
+      4 => "What type of support are you interested in?",
+      5 => "Where is your business located?"
     )
 
     click_add_link "Education"
