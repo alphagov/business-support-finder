@@ -88,6 +88,7 @@ class BusinessSupportController < ApplicationController
       :sectors => @sectors,
       :stage => @stage,
       :structure => @structure,
+      :types => @types,
       :location => @location
     )
     setup_questions [@sectors, [@stage], [@structure], [@types], [@location]]
