@@ -62,6 +62,31 @@ describe "Support options page" do
     end
   end
 
+  specify "inspecting the support options page with no results" do
+    imminence_has_business_support_schemes(
+      {
+        "sectors" => "health,manufacturing",
+        "stages" => "start-up",
+        "business_types" => "partnership",
+        "locations" => "england",
+        "types" => "award-scheme"
+      },
+      [
+        {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
+      ]
+    )
+
+    visit "/#{APP_SLUG}/support-options?sectors=health_manufacturing&stage=start-up&structure=partnership&location=england&types=finance"
+
+    within '.results' do
+      page.should have_content("No business support schemes were found that match your search.")
+
+      page.should have_link("Start again", :href => "/#{APP_SLUG}/sectors")
+
+      page.should_not have_content("Available support")
+    end
+  end
+
   specify "inspecting the 'change this answer' links" do
     visit "/#{APP_SLUG}/support-options?sectors=health_manufacturing&stage=start-up&structure=partnership&location=england&types=finance"
 
