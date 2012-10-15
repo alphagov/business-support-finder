@@ -27,14 +27,15 @@ describe "Business structure page" do
     end
 
     assert_upcoming_questions(
-      4 => "Where is your business located?"
+      4 => "What type of support are you interested in?",
+      5 => "Where is your business located?"
     )
 
     select "Sole trader", :from => "Select a structure"
 
     click_on "Next step"
 
-    i_should_be_on "/#{APP_SLUG}/location", :ignore_query => true
+    i_should_be_on "/#{APP_SLUG}/types", :ignore_query => true
   end
 
   specify "with a structure already selected" do

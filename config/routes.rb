@@ -6,6 +6,8 @@ BusinessSupportFinder::Application.routes.draw do
   post "/#{APP_SLUG}/stage" => "business_support#stage_submit"
   get "/#{APP_SLUG}/structure" => "business_support#structure", :as => :structure
   post "/#{APP_SLUG}/structure" => "business_support#structure_submit"
+  get "/#{APP_SLUG}/types" => "business_support#types", :as => :types
+  post "/#{APP_SLUG}/types" => "business_support#types_submit"
   get "/#{APP_SLUG}/location" => "business_support#location", :as => :location
   post "/#{APP_SLUG}/location" => "business_support#location_submit"
   get "/#{APP_SLUG}/support-options" => "business_support#support_options", :as => :support_options
