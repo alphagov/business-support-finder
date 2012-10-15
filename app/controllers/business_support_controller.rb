@@ -144,13 +144,6 @@ class BusinessSupportController < ApplicationController
     end
   end
 
-  def load_and_validate_types
-    @types = Types.find_by_slug(params[:types])
-    unless @types
-      render :status => :not_found, :text => ""
-    end
-  end
-
   def load_and_validate_location
     @location = Location.find_by_slug(params[:location])
     unless @location
