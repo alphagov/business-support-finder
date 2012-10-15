@@ -18,7 +18,7 @@ class Types < OpenStruct
     end
   end
   
-  def self.convert_to_types(slug)
+  def imminence_slug
     
     if slug == 'finance'
       business_support_types = 'finance,grant,loan,equity'
