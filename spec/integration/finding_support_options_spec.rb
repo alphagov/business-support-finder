@@ -4,7 +4,13 @@ describe "Finding support options" do
 
   specify "Happy path through the app" do
     imminence_has_business_support_schemes(
-      {"sectors" => "education,hospitality-and-catering", "stages" => "start-up", "business_types" => "public-limited-company", "locations" => "wales"},
+      {
+        "sectors" => "education,hospitality-and-catering",
+        "stages" => "start-up",
+        "business_types" => "public-limited-company",
+        "locations" => "wales",
+        "types" => "finance,grant,loan,equity"
+      },
       [
         {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
         {"title" => "Manufacturing Services - Wales", "business_support_identifier" => "manufacturing-services-wales"},
@@ -76,6 +82,26 @@ describe "Finding support options" do
       click_on 'Next step'
     end
 
+    i_should_be_on "/#{APP_SLUG}/types", :ignore_query => true
+
+    within_section 'completed question 1' do
+      page.should have_content("Education")
+      page.should have_content("Hospitality and Catering")
+    end
+    within_section 'completed question 2' do
+      page.should have_content("Start-up")
+    end
+    within_section 'completed question 3' do
+      page.should have_content("Public limited company")
+    end
+
+    within '.current-question' do
+      page.should have_content("What type of support are you interested in?")
+
+      select 'Finance, grants and loans', :from => "Select a type of business support"
+      click_on 'Next step'
+    end
+
     i_should_be_on "/#{APP_SLUG}/location", :ignore_query => true
 
     within_section 'completed question 1' do
@@ -87,6 +113,9 @@ describe "Finding support options" do
     end
     within_section 'completed question 3' do
       page.should have_content("Public limited company")
+    end
+    within_section 'completed question 4' do
+      page.should have_content("Finance, grants and loans")
     end
 
     within '.current-question' do

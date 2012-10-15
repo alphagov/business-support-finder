@@ -9,14 +9,16 @@ class BusinessSupportController < ApplicationController
     "What is your activity or business?",
     "What stage is your business at?",
     "How is your business structured?",
+    "What type of support are you interested in?",
     "Where is your business located?",
   ]
-  ACTIONS = %w(sectors stage structure location)
+  ACTIONS = %w(sectors stage structure types location)
 
   before_filter :load_artefact
-  before_filter :load_and_validate_sectors, :only => [:stage, :stage_submit, :structure, :structure_submit, :location, :location_submit, :support_options]
-  before_filter :load_and_validate_stage, :only => [:structure, :structure_submit, :location, :location_submit, :support_options]
-  before_filter :load_and_validate_structure, :only => [:location, :location_submit, :support_options]
+  before_filter :load_and_validate_sectors, :only => [:stage, :stage_submit, :structure, :structure_submit, :types, :types_submit, :location, :location_submit, :support_options]
+  before_filter :load_and_validate_stage, :only => [:structure, :structure_submit, :types, :types_submit, :location, :location_submit, :support_options]
+  before_filter :load_and_validate_structure, :only => [:types, :types_submit, :location, :location_submit, :support_options]
+  before_filter :load_and_validate_types, :only => [:location, :location_submit, :support_options]
   before_filter :load_and_validate_location, :only => [:support_options]
   after_filter :send_slimmer_headers
 
@@ -49,15 +51,28 @@ class BusinessSupportController < ApplicationController
 
   def structure_submit
     if Structure.find_by_slug(params[:structure])
-      redirect_to next_params.merge(:action => 'location', :structure => params[:structure])
+      redirect_to next_params.merge(:action => 'types', :structure => params[:structure])
     else
       redirect_to next_params.merge(:action => 'structure')
     end
   end
 
+  def types
+    @types = Types.all
+    setup_questions [@sectors, [@stage], [@structure]]
+  end
+
+  def types_submit
+    if Types.find_by_slug(params[:types])
+      redirect_to next_params.merge(:action => 'location', :types => params[:types])
+    else
+      redirect_to next_params.merge(:action => 'types')
+    end
+  end
+
   def location
     @locations = Location.all
-    setup_questions [@sectors, [@stage], [@structure]]
+    setup_questions [@sectors, [@stage], [@structure], [@types]]
   end
 
   def location_submit
@@ -73,9 +88,10 @@ class BusinessSupportController < ApplicationController
       :sectors => @sectors,
       :stage => @stage,
       :structure => @structure,
+      :types => @types,
       :location => @location
     )
-    setup_questions [@sectors, [@stage], [@structure], [@location]]
+    setup_questions [@sectors, [@stage], [@structure], [@types], [@location]]
   end
 
   private
@@ -92,6 +108,7 @@ class BusinessSupportController < ApplicationController
     p[:sectors] = @sectors.map(&:slug).join('_') if @sectors
     p[:stage] = @stage.slug if @stage
     p[:structure] = @structure.slug if @structure
+    p[:types] = @types.slug if @types
     p
   end
 
@@ -116,6 +133,13 @@ class BusinessSupportController < ApplicationController
   def load_and_validate_structure
     @structure = Structure.find_by_slug(params[:structure])
     unless @structure
+      render :status => :not_found, :text => ""
+    end
+  end
+
+  def load_and_validate_types
+    @types = Types.find_by_slug(params[:types])
+    unless @types
       render :status => :not_found, :text => ""
     end
   end

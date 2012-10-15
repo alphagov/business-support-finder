@@ -9,7 +9,8 @@ class Scheme < OpenStruct
       :sectors => facets[:sectors].map(&:slug).join(','),
       :stages => facets[:stage].slug,
       :business_types => facets[:structure].slug,
-      :locations => facets[:location].slug
+      :locations => facets[:location].slug,
+      :types => facets[:types].imminence_slug
     )
     return [] if possible_schemes["results"].empty?
     schemes = content_api.business_support_schemes(possible_schemes["results"].map {|s| s["business_support_identifier"] } )

@@ -1,0 +1,17 @@
+<%= render :partial => 'completed_questions' %>
+
+<%= current_question do %>
+  <%= form_tag types_path do %>
+    <%= hidden_field_tag :sectors, params[:sectors] %>
+    <%= hidden_field_tag :stage, params[:stage] %>
+    <%= hidden_field_tag :structure, params[:structure] %>
+    <div class="select-container">
+      <label for="select-types">Select a type of business support
+        <%= select_tag :types, options_from_collection_for_select(@types, :slug, :name, params[:types]), :prompt => 'Select one...', :id => "select-types" %>
+      </label>
+    </div>
+    <%= submit_tag "Next step", :class => "button medium" %>
+  <% end %>
+<% end %>
+
+<%= render :partial => 'upcoming_questions' %>
