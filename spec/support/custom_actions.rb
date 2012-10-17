@@ -17,12 +17,6 @@ module CustomActions
   def click_change_answer(index)
     find(:xpath, "//li[@class = 'done'][#{index}]//a[contains(text(), 'Change')]").click
   end
-
-  def dismiss_beta_popup
-    if page.find('#popup')
-      click_on "Thanks, I’ve read the warning"
-    end
-  end
 end
 
 RSpec.configuration.include CustomActions, :type => :request

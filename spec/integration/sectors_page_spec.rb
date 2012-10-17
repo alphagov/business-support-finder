@@ -172,8 +172,6 @@ describe "selecting business sectors" do
   specify "adding and removing sectors with js enabled", :js => true do
     visit "/#{APP_SLUG}/sectors"
 
-    dismiss_beta_popup
-
     within '.current-question' do
       within '.search-picker' do
         page.should have_content("Choose your area of business")
