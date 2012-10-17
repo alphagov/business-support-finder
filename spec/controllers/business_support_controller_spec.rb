@@ -14,12 +14,24 @@ describe BusinessSupportController do
       get 'start'
       response.should be_success
     end
+
+    it "should set correct expiry headers" do
+      get :start
+
+      response.headers["Cache-Control"].should == "max-age=1800, public"
+    end
   end
 
   describe "GET 'sectors'" do
     it "returns http success" do
       get :sectors
       response.should be_success
+    end
+
+    it "should set correct expiry headers" do
+      get :sectors
+
+      response.headers["Cache-Control"].should == "max-age=1800, public"
     end
 
     it "should assign all sectors" do
@@ -63,6 +75,12 @@ describe BusinessSupportController do
       it "returns http success" do
         do_get
         response.should be_success
+      end
+
+      it "should set correct expiry headers" do
+        do_get
+
+        response.headers["Cache-Control"].should == "max-age=1800, public"
       end
 
       it "assigns all the business stages" do
@@ -142,6 +160,12 @@ describe BusinessSupportController do
       it "returns http success" do
         do_get
         response.should be_success
+      end
+
+      it "should set correct expiry headers" do
+        do_get
+
+        response.headers["Cache-Control"].should == "max-age=1800, public"
       end
 
       it "assigns all the business structures" do
@@ -251,6 +275,12 @@ describe BusinessSupportController do
       it "returns http success" do
         do_get
         response.should be_success
+      end
+
+      it "should set correct expiry headers" do
+        do_get
+
+        response.headers["Cache-Control"].should == "max-age=1800, public"
       end
 
       it "assigns all the support types" do
@@ -388,6 +418,12 @@ describe BusinessSupportController do
       it "returns http success" do
         do_get
         response.should be_success
+      end
+
+      it "should set correct expiry headers" do
+        do_get
+
+        response.headers["Cache-Control"].should == "max-age=1800, public"
       end
 
       it "assigns all the business locations" do
@@ -557,6 +593,12 @@ describe BusinessSupportController do
       it "returns http success" do
         do_get
         response.should be_success
+      end
+
+      it "should set correct expiry headers" do
+        do_get
+
+        response.headers["Cache-Control"].should == "max-age=1800, public"
       end
 
       it "loads the given sectors and assigns them to @sectors" do
