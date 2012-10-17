@@ -20,6 +20,7 @@ class BusinessSupportController < ApplicationController
   before_filter :load_and_validate_structure, :only => [:types, :types_submit, :location, :location_submit, :support_options]
   before_filter :load_and_validate_types, :only => [:location, :location_submit, :support_options]
   before_filter :load_and_validate_location, :only => [:support_options]
+  before_filter :set_expiry, :only => [:start, :sectors, :stage, :structure, :types, :location, :support_options]
   after_filter :send_slimmer_headers
 
   def start
