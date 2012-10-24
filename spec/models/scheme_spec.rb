@@ -7,7 +7,7 @@ describe Scheme do
       @sectors = Sector.find_by_slugs(%w(health manufacturing))
       @stage = Stage.find_by_slug('start-up')
       @structure = Structure.find_by_slug('partnership')
-      @types = Types.find_by_slug('finance')
+      @types = Type.find_by_slugs(%w(finance loan))
       @location = Location.find_by_slug('wales')
       GdsApi::Imminence.any_instance.stub(:business_support_schemes).and_return("results" => [])
       GdsApi::ContentApi.any_instance.stub(:business_support_schemes).and_return("results" => [])
@@ -26,7 +26,7 @@ describe Scheme do
           :sectors => "health,manufacturing",
           :stages => "start-up",
           :business_types => "partnership",
-          :types => "finance,grant,loan,equity",
+          :types => "finance,loan",
           :locations => "wales").
         and_return("results" => [])
 
