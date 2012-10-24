@@ -59,13 +59,15 @@ class BusinessSupportController < ApplicationController
   end
 
   def types
-    @types = Types.all
+    @types = Type.all
+    @picked_types = Type.find_by_slugs(params[:types].to_s.split('_'))
     setup_questions [@sectors, [@stage], [@structure]]
   end
 
   def types_submit
-    if Types.find_by_slug(params[:types])
-      redirect_to next_params.merge(:action => 'location', :types => params[:types])
+    types = Type.find_by_slugs(params[:types] || [])
+    if types.any?
+      redirect_to next_params.merge(:action => 'location', :types => types.map(&:slug).join('_'))
     else
       redirect_to next_params.merge(:action => 'types')
     end
@@ -73,7 +75,7 @@ class BusinessSupportController < ApplicationController
 
   def location
     @locations = Location.all
-    setup_questions [@sectors, [@stage], [@structure], [@types]]
+    setup_questions [@sectors, [@stage], [@structure], @types]
   end
 
   def location_submit
@@ -92,7 +94,7 @@ class BusinessSupportController < ApplicationController
       :types => @types,
       :location => @location
     )
-    setup_questions [@sectors, [@stage], [@structure], [@types], [@location]]
+    setup_questions [@sectors, [@stage], [@structure], @types, [@location]]
   end
 
   private
@@ -109,7 +111,7 @@ class BusinessSupportController < ApplicationController
     p[:sectors] = @sectors.map(&:slug).join('_') if @sectors
     p[:stage] = @stage.slug if @stage
     p[:structure] = @structure.slug if @structure
-    p[:types] = @types.slug if @types
+    p[:types] = @types.map(&:slug).join('_') if @types
     p
   end
 
@@ -139,8 +141,8 @@ class BusinessSupportController < ApplicationController
   end
 
   def load_and_validate_types
-    @types = Types.find_by_slug(params[:types])
-    unless @types
+    @types = Type.find_by_slugs(params[:types].to_s.split('_'))
+    if @types.empty?
       render :status => :not_found, :text => ""
     end
   end
