@@ -14,11 +14,12 @@ describe "Types page" do
     assert_current_question(4, "What type of support are you interested in?")
 
     within '.current-question' do
-      page.should have_select("Select a type of business support", :options => [
-        'Select one...',
-        'Finance, grants and loans',
-        'Expertise, advice and finance'
-      ])
+      page.should have_field("Finance (any)", :type => :checkbox)
+      page.should have_field("Equity", :type => :checkbox)
+      page.should have_field("Grant", :type => :checkbox)
+      page.should have_field("Loan", :type => :checkbox)
+      page.should have_field("Expertise and Advice", :type => :checkbox)
+      page.should have_field("Recognition Award", :type => :checkbox)
 
       page.should have_button("Next step")
     end
@@ -27,22 +28,24 @@ describe "Types page" do
       5 => "Where is your business located?"
     )
 
-    select "Finance", :from => "Select a type of business support"
+    check "Finance (any)"
+    check "Loan"
 
     click_on "Next step"
 
     i_should_be_on "/#{APP_SLUG}/location", :ignore_query => true
   end
 
-  specify "with a type already selected" do
-    visit "/#{APP_SLUG}/types?sectors=health_manufacturing&stage=start-up&structure=sole-trader&types=finance"
+  specify "with types already selected" do
+    visit "/#{APP_SLUG}/types?sectors=health_manufacturing&stage=start-up&structure=sole-trader&types=loan_expertise-and-advice"
 
     within '.current-question' do
-      page.should have_select("Select a type of business support", :options => [
-        'Select one...',
-        'Finance, grants and loans',
-        'Expertise, advice and finance',
-      ], :selected => 'Finance, grants and loans')
+      page.should have_field("Finance (any)", :type => :checkbox, :checked => false)
+      page.should have_field("Equity", :type => :checkbox, :checked => false)
+      page.should have_field("Grant", :type => :checkbox, :checked => false)
+      page.should have_field("Loan", :type => :checkbox, :checked => true)
+      page.should have_field("Expertise and Advice", :type => :checkbox, :checked => true)
+      page.should have_field("Recognition Award", :type => :checkbox, :checked => false)
     end
   end
 end

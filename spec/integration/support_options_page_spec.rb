@@ -9,7 +9,7 @@ describe "Support options page" do
         "stages" => "start-up",
         "business_types" => "partnership",
         "locations" => "england",
-        "types" => "finance,grant,loan,equity"
+        "types" => "finance,grant,loan"
       },
       [
         {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
@@ -34,13 +34,13 @@ describe "Support options page" do
       }
     )
 
-    visit "/#{APP_SLUG}/support-options?sectors=health_manufacturing&stage=start-up&structure=partnership&location=england&types=finance"
+    visit "/#{APP_SLUG}/support-options?sectors=health_manufacturing&stage=start-up&structure=partnership&location=england&types=finance_grant_loan"
 
     assert_completed_questions(
       1 => ["What is your activity or business?", ["Health", "Manufacturing"]],
       2 => ["What stage is your business at?", ["Start-up"]],
       3 => ["How is your business structured?", ["Partnership"]],
-      4 => ["What type of support are you interested in?", ["Finance, grants and loans"]],
+      4 => ["What type of support are you interested in?", ["Finance (any)", "Grant", "Loan"]],
       5 => ["Where is your business located?", ["England"]]
     )
 
@@ -69,7 +69,7 @@ describe "Support options page" do
         "stages" => "start-up",
         "business_types" => "partnership",
         "locations" => "england",
-        "types" => "award-scheme"
+        "types" => "finance"
       },
       [
         {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
