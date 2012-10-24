@@ -44,7 +44,7 @@ describe "Support options page" do
       5 => ["Where is your business located?", ["England"]]
     )
 
-    page.should_not have_selector('.completed-questions')
+    page.should_not have_selector('.upcoming-questions')
 
     within '.results' do
       page.should have_content("Available support")

@@ -26,7 +26,7 @@ describe "Business location page" do
       page.should have_button("Find support")
     end
 
-    page.should_not have_selector('.completed-questions')
+    page.should_not have_selector('.upcoming-questions')
 
     select "England", :from => "Select a location"
 
