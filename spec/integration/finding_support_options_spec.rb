@@ -9,7 +9,7 @@ describe "Finding support options" do
         "stages" => "start-up",
         "business_types" => "public-limited-company",
         "locations" => "wales",
-        "types" => "finance,grant,loan,equity"
+        "types" => "finance,grant,loan"
       },
       [
         {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
@@ -98,7 +98,10 @@ describe "Finding support options" do
     within '.current-question' do
       page.should have_content("What type of support are you interested in?")
 
-      select 'Finance, grants and loans', :from => "Select a type of business support"
+      check "Finance (any)"
+      check "Grant"
+      check "Loan"
+
       click_on 'Next step'
     end
 
@@ -115,7 +118,9 @@ describe "Finding support options" do
       page.should have_content("Public limited company")
     end
     within_section 'completed question 4' do
-      page.should have_content("Finance, grants and loans")
+      page.should have_content("Finance (any)")
+      page.should have_content("Grant")
+      page.should have_content("Loan")
     end
 
     within '.current-question' do

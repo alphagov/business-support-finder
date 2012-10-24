@@ -268,8 +268,8 @@ describe BusinessSupportController do
 
   describe "GET 'types'" do
     context "with some sectors, a stage and a structure specified" do
-      def do_get
-        get :types, :sectors => "health_manufacturing", :stage => "start-up", :structure => "partnership"
+      def do_get(attrs = {})
+        get :types, {:sectors => "health_manufacturing", :stage => "start-up", :structure => "partnership"}.merge(attrs)
       end
 
       it "returns http success" do
@@ -284,7 +284,7 @@ describe BusinessSupportController do
       end
 
       it "assigns all the support types" do
-        Types.should_receive(:all).and_return(:some_types)
+        Type.should_receive(:all).and_return(:some_types)
         do_get
         assigns[:types].should == :some_types
       end
@@ -321,6 +321,14 @@ describe BusinessSupportController do
         assigns[:current_question].should == @question4
         assigns[:upcoming_questions].should == [@question5]
       end
+
+      context "with some pre-selected types" do
+        it "should assign the picked types" do
+          Type.should_receive(:find_by_slugs).with(%w(finance grant)).and_return(:some_picked_types)
+          do_get(:types => "finance_grant")
+          assigns[:picked_types].should == :some_picked_types
+        end
+      end
     end
 
     it "should 404 with no sectors specified" do
@@ -356,21 +364,21 @@ describe BusinessSupportController do
 
   describe "POST 'types_submit'" do
     context "with valid structure, sectors, and stage" do
-      context "with a valid type" do
+      context "with valid types" do
         it "should redirect to the location page, passing through necessary params" do
-          post :types_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :types => "finance"
-          response.should redirect_to(location_path(:sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :types => "finance"))
+          post :types_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :types => ["finance", "grant"]
+          response.should redirect_to(location_path(:sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :types => "finance_grant"))
         end
       end
 
-      context "with an invalid type" do
+      context "with no valid types" do
         it "should redirect back to the form preserving the structure, sectors and stage" do
-          post :types_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :types => "non-existent"
+          post :types_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :types => ["non-existent"]
           response.should redirect_to(types_path(:sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader"))
         end
       end
 
-      context "with no type" do
+      context "with no types" do
         it "should redirect back to the form preserving the structure, sectors and stage" do
           post :types_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader"
           response.should redirect_to(types_path(:sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader"))
@@ -412,7 +420,7 @@ describe BusinessSupportController do
   describe "GET 'location'" do
     context "with some sectors, a stage, a structure and a type specified" do
       def do_get
-        get :location, :sectors => "health_manufacturing", :stage => "start-up", :structure => "partnership", :types => "finance"
+        get :location, :sectors => "health_manufacturing", :stage => "start-up", :structure => "partnership", :types => "finance_grant"
       end
 
       it "returns http success" do
@@ -450,24 +458,24 @@ describe BusinessSupportController do
         assigns[:structure].should == :a_structure
       end
 
-      it "loads the given types and assigns it to @types" do
-        Types.should_receive(:find_by_slug).with('finance').and_return(:a_type)
+      it "loads the given types and assigns them to @types" do
+        Type.should_receive(:find_by_slugs).with(%w(finance grant)).and_return(:some_types)
         do_get
-        assigns[:types].should == :a_type
+        assigns[:types].should == :some_types
       end
 
       it "sets up the questions correctly" do
         Sector.stub(:find_by_slugs).and_return(:some_sectors)
         Stage.stub(:find_by_slug).and_return(:a_stage)
         Structure.stub(:find_by_slug).and_return(:a_structure)
-        Types.stub(:find_by_slug).and_return(:a_type)
+        Type.stub(:find_by_slugs).and_return(:some_types)
         do_get
         assigns[:current_question_number].should == 5
         assigns[:completed_questions].should == [
           [@question1, :some_sectors, 'sectors'],
           [@question2, [:a_stage], 'stage'],
           [@question3, [:a_structure], 'structure'],
-          [@question4, [:a_type], 'types'],
+          [@question4, :some_types, 'types'],
         ]
         assigns[:current_question].should == @question5
         assigns[:upcoming_questions].should == []
@@ -504,19 +512,19 @@ describe BusinessSupportController do
       response.should be_not_found
     end
 
-    it "should 404 with an invalid type" do
+    it "should 404 with no valid types" do
       get :location, :sectors => "health_manufacturing", :stage => "start-up", :structure => 'partnership', :types => 'non-existent'
       response.should be_not_found
     end
 
-    it "should 404 with no structure specified" do
+    it "should 404 with no types specified" do
       get :location, :sectors => "health_manufacturing", :stage => 'start-up', :structure => 'partnership'
       response.should be_not_found
     end
   end
 
   describe "POST 'location_submit'" do
-    context "with valid sectors, stage and structure" do
+    context "with valid sectors, stage, structure and types" do
       context "with a valid location" do
         it "should redirect to the support options page, passing through necessary params" do
           post :location_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :types => 'finance', :location => 'england'
@@ -569,25 +577,25 @@ describe BusinessSupportController do
       response.should be_not_found
     end
 
-    it "should 404 with an invalid type" do
+    it "should 404 with no valid types" do
       post :location_submit, :sectors => "health_manufacturing", :stage => "start-up", :structure => 'partnership', :types => 'non-existent', :location => 'england'
       response.should be_not_found
     end
 
-    it "should 404 with no type specified" do
+    it "should 404 with no types specified" do
       post :location_submit, :sectors => "health_manufacturing", :stage => 'start-up', :structure => 'partnership', :location => 'england'
       response.should be_not_found
     end
   end
 
   describe "GET 'support_options'" do
-    context "with some sectors, a stage, a structure, a type and location specified" do
+    context "with some sectors, a stage, a structure, types and location specified" do
       before :each do
         Scheme.stub(:lookup).and_return([])
       end
 
       def do_get
-        get :support_options, :sectors => "health_manufacturing", :stage => "start-up", :structure => "partnership", :types => 'finance', :location => 'wales'
+        get :support_options, :sectors => "health_manufacturing", :stage => "start-up", :structure => "partnership", :types => 'finance_equity', :location => 'wales'
       end
 
       it "returns http success" do
@@ -619,10 +627,10 @@ describe BusinessSupportController do
         assigns[:structure].should == :a_structure
       end
 
-      it "loads the given type and assigns it to @types" do
-        Types.should_receive(:find_by_slug).with('finance').and_return(:a_type)
+      it "loads the given types and assigns them to @types" do
+        Type.should_receive(:find_by_slugs).with(%w(finance equity)).and_return(:some_types)
         do_get
-        assigns[:types].should == :a_type
+        assigns[:types].should == :some_types
       end
 
       it "loads the given location and assigns it to @location" do
@@ -635,14 +643,14 @@ describe BusinessSupportController do
         Sector.stub(:find_by_slugs).and_return(:some_sectors)
         Stage.stub(:find_by_slug).and_return(:a_stage)
         Structure.stub(:find_by_slug).and_return(:a_structure)
-        Types.stub(:find_by_slug).and_return(:a_type)
+        Type.stub(:find_by_slugs).and_return(:some_types)
         Location.stub(:find_by_slug).and_return(:a_location)
         do_get
         assigns[:completed_questions].should == [
           [@question1, :some_sectors, 'sectors'],
           [@question2, [:a_stage], 'stage'],
           [@question3, [:a_structure], 'structure'],
-          [@question4, [:a_type], 'types'],
+          [@question4, :some_types, 'types'],
           [@question5, [:a_location], 'location'],
         ]
       end
@@ -651,11 +659,11 @@ describe BusinessSupportController do
         Sector.stub(:find_by_slugs).and_return(:some_sectors)
         Stage.stub(:find_by_slug).and_return(:a_stage)
         Structure.stub(:find_by_slug).and_return(:a_structure)
-        Types.stub(:find_by_slug).and_return(:a_type)
+        Type.stub(:find_by_slugs).and_return(:some_types)
         Location.stub(:find_by_slug).and_return(:a_location)
 
         Scheme.should_receive(:lookup).
-          with(:sectors => :some_sectors, :stage => :a_stage, :structure => :a_structure, :types => :a_type, :location => :a_location).
+          with(:sectors => :some_sectors, :stage => :a_stage, :structure => :a_structure, :types => :some_types, :location => :a_location).
           and_return(:some_schemes)
 
         do_get
@@ -693,7 +701,7 @@ describe BusinessSupportController do
       response.should be_not_found
     end
 
-    it "should 404 with an invalid type" do
+    it "should 404 with no valid types" do
       get :support_options, :sectors => "health_manufacturing", :stage => "start-up", :structure => 'partnership', :types => 'non-existent', :location => 'wales'
       response.should be_not_found
     end
