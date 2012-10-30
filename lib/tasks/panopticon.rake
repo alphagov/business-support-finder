@@ -12,7 +12,7 @@ namespace :panopticon do
     record = OpenStruct.new(
         slug: APP_SLUG,
         title: "Business finance and support finder",
-        description: "Business finance and support finder",
+        description: "Search for publicly-backed finance or support schemes based on basic information about your business including location and type",
         need_id: "B1017",
         prefixes: [APP_SLUG],
         state: "live",
