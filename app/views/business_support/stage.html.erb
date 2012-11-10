@@ -8,7 +8,7 @@
         <%= select_tag :stage, options_from_collection_for_select(@stages, :slug, :name, params[:stage]), :prompt => 'Select one...', :id => "select-stage" %>
       </label>
     </div>
-    <%= submit_tag "Next step", :class => "button medium" %>
+    <%= button_tag "Next step", :class => "button medium" %>
   <% end %>
 <% end %>
 
