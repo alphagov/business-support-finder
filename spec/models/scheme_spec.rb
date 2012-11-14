@@ -58,6 +58,32 @@ describe Scheme do
       schemes.should == [:scheme1, :scheme2]
     end
 
+    it "should order the schemes by the imminence api result order" do
+      
+      artefact1 = {"identifier" => "1", "title" => "artefact1"}
+      artefact2 = {"identifier" => "2", "title" => "artefact2"}
+      artefact3 = {"identifier" => "3", "title" => "artefact3"}
+      artefact4 = {"identifier" => "4", "title" => "artefact4"}
+
+      GdsApi::Imminence.any_instance.stub(:business_support_schemes).
+        and_return("results" => [
+                   {"business_support_identifier" => "4"},
+                   {"business_support_identifier" => "1"},
+                   {"business_support_identifier" => "3"},
+                   {"business_support_identifier" => "2"}])
+
+      GdsApi::ContentApi.any_instance.stub(:business_support_schemes).
+        and_return("results" => [artefact1, artefact2, artefact3, artefact4])
+
+      Scheme.should_receive(:new).with(artefact1).and_return(:scheme1)
+      Scheme.should_receive(:new).with(artefact2).and_return(:scheme2)
+      Scheme.should_receive(:new).with(artefact3).and_return(:scheme3)
+      Scheme.should_receive(:new).with(artefact4).and_return(:scheme4)
+
+      schemes = Scheme.lookup(:sectors => @sectors, :stage => @stage, :structure => @structure, :types => @types, :location => @location)
+      schemes.should == [:scheme4, :scheme1, :scheme3, :scheme2]
+    end
+
     it "should return empty array without calling content_api if imminence returns no results" do
       GdsApi::Imminence.any_instance.stub(:business_support_schemes).and_return("results" => [])
       GdsApi::ContentApi.any_instance.should_not_receive(:business_support_schemes)
