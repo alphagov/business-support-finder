@@ -13,9 +13,11 @@ class Scheme < OpenStruct
       :types => facets[:types].map(&:slug).join(',')
     )
     return [] if possible_schemes["results"].empty?
-    schemes = content_api.business_support_schemes(possible_schemes["results"].map {|s| s["business_support_identifier"] } )
 
-    schemes["results"].map do |s|
+    identifiers = possible_schemes["results"].map {|s| s["business_support_identifier"] }
+    schemes = content_api.business_support_schemes(identifiers)
+    
+    schemes["results"].sort_by { |s| identifiers.index(s["identifier"]) }.map do |s|
       self.new(s)
     end
   end
