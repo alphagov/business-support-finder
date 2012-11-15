@@ -6,10 +6,14 @@ describe Location do
     it "should return all the hardcoded locations with slugs" do
       locations = Location.all
 
-      locations.size.should == 4
+      locations.size.should == 13 
 
-      locations.map(&:name).should == ["England", "Scotland", "Wales", "Northern Ireland"]
-      locations.map(&:slug).should == ["england", "scotland", "wales", "northern-ireland"]
+      locations.map(&:name).should == ["England", "London", "North East (England)", "North West (England)",
+        "East Midlands (England)", "West Midlands (England)", "Yorkshire and the Humber", "South West (England)",
+        "East of England", "South East (England)", "Scotland", "Wales", "Northern Ireland"]
+      locations.map(&:slug).should == ["england", "london", "north-east", "north-west", "east-midlands",
+        "west-midlands", "yorkshire-and-the-humber", "south-west", "east-of-england", "south-east",
+        "scotland", "wales", "northern-ireland"]
     end
   end
 
