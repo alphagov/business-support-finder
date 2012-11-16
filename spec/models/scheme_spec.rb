@@ -29,7 +29,7 @@ describe Scheme do
           :types => "finance,loan",
           :locations => "wales").
         and_return("results" => [])
-
+      
       Scheme.lookup(:sectors => @sectors, :stage => @stage, :structure => @structure, :types => @types, :location => @location)
     end
 

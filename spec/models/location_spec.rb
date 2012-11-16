@@ -6,12 +6,10 @@ describe Location do
     it "should return all the hardcoded locations with slugs" do
       locations = Location.all
 
-      locations.size.should == 13 
+      locations.size.should == 4 
 
-      locations.map(&:name).should == ["England", "London", "North East (England)", "North West (England)",
-        "East Midlands (England)", "West Midlands (England)", "Yorkshire and the Humber", "South West (England)",
-        "East of England", "South East (England)", "Scotland", "Wales", "Northern Ireland"]
-      locations.map(&:slug).should == ["england", "london", "north-east", "north-west", "east-midlands",
+      locations.map(&:name).should == ["England", "Scotland", "Wales", "Northern Ireland"]
+      locations.map(&:regions).flatten.map(&:slug).should == ["england", "london", "north-east", "north-west", "east-midlands",
         "west-midlands", "yorkshire-and-the-humber", "south-west", "east-of-england", "south-east",
         "scotland", "wales", "northern-ireland"]
     end
@@ -32,4 +30,5 @@ describe Location do
   it "should return the name for to_s" do
     Location.new(:name => "Fooey").to_s.should == "Fooey"
   end
+
 end
