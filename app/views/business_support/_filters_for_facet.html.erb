@@ -1,9 +1,11 @@
-<h3 class="question"><%= facet_title %></h3>
-<ul>
-  <% facets.each do |facet| -%>
-  <li><label for="<%= facet_type %>[]">
-    <%= check_box_tag "#{facet_type}[]", facet.slug, nil %>
-    <%= facet.name %>
-  </label></li>
-  <% end -%>
-</ul>
+<div class="facet-filter">
+  <h3 class="question"><%= facet_title %></h3>
+  <ul>
+    <% facets.each do |facet| -%>
+    <li><label for="<%= facet_type %>[]">
+      <%= check_box_tag "#{facet_type}[]", facet.slug, facet_filters.include?(facet) %>
+      <%= facet.name %>
+    </label></li>
+    <% end -%>
+  </ul>
+</div>

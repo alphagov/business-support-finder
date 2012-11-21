@@ -1,10 +1,17 @@
-<div class="done-questions">
+<div class="facet-filters">
   <%= form_tag "/#{APP_SLUG}/filter-support", :method => :get do %>   
-  <%= render partial: 'filters_for_facet', locals: { facet_title: "Business type", facets: @structures, facet_type: "structures" } %>
-  <%= render partial: 'filters_for_facet', locals: { facet_title: "Location", facets: @locations, facet_type: "locations" } %>
-  <%= render partial: 'filters_for_facet', locals: { facet_title: "Sector", facets: @sectors, facet_type: "sectors" } %>
-  <%= render partial: 'filters_for_facet', locals: { facet_title: "Stage", facets: @structures, facet_type: "stages" } %>
-  <%= render partial: 'filters_for_facet', locals: { facet_title: "Support type", facets: @types, facet_type: "types" } %>
-  <%= submit_tag "Filter", :class => 'big-button' %>
+    <%= render partial: 'filters_for_facet', 
+      locals: { facet_title: "Business type", facets: @structures, facet_filters: @structure_filters, facet_type: "structures" } %>
+    <%= render partial: 'filters_for_facet', 
+      locals: { facet_title: "Location", facets: @locations, facet_filters: @location_filters, facet_type: "locations" } %>
+    <%= render partial: 'filters_for_facet', 
+      locals: { facet_title: "Sector", facets: @sectors, facet_filters: @sector_filters, facet_type: "sectors" } %>
+    <%= render partial: 'filters_for_facet', 
+      locals: { facet_title: "Stage", facets: @stages, facet_filters: @stage_filters, facet_type: "stages" } %>
+    <%= render partial: 'filters_for_facet', 
+      locals: { facet_title: "Support type", facets: @types, facet_filters: @type_filters, facet_type: "types" } %>
+    <div>
+      <%= submit_tag "Filter support options", :class => 'big button' %>
+    </div>
   <% end %>
 </div>
