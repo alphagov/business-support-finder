@@ -56,9 +56,10 @@
   background: #D5ECEA;
   border-bottom: solid 1px #B6D6D2;
   overflow: hidden;
-  padding: 0.5em 1.5em;
+  padding: 0.5em 1em;
 }
 .facet-filter { max-height: 12em; overflow:hidden; border-bottom: solid 1px #B6D6D2; padding-bottom: 1em; margin-bottom: 0.5em; }
 .facet-filter ul { list-style-type:none; }
 .facet-filter li { float:left; margin-right: 0.5em; }
+.facet-filter label { display:inline-block; width: 295px; }
 .facet-filters div input[type=submit] { margin: 1em; }
