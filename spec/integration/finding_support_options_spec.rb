@@ -39,103 +39,25 @@ describe "Finding support options" do
 
     click_on "Get started"
 
-    i_should_be_on "/#{APP_SLUG}/sectors"
+    i_should_be_on "/#{APP_SLUG}/support-options"
 
-    within '.current-question' do
-      page.should have_content("What is your activity or business?")
-    end
+    check "Education"
+    check "Hospitality and Catering"
 
-    click_add_link "Education"
-    click_add_link "Hospitality and Catering"
+    check "Finance (any)"
+    check "Grant"
+    check "Loan"
 
-    click_on "Next step"
+    check "Wales"
 
-    i_should_be_on "/#{APP_SLUG}/stage", :ignore_query => true
+    click_on "Filter"
 
-    within_section 'completed question 1' do
-      page.should have_content("Education")
-      page.should have_content("Hospitality and Catering")
-    end
+    i_should_be_on "/#{APP_SLUG}/support-options?locations=wales&sectors=education_hospitality-and-catering&types=finance_grant_loan"
 
-    within '.current-question' do
-      page.should have_content("What stage is your business at?")
+#    within '.results' do
+      #page.should have_content("Available support")
 
-      select 'Start-up', :from => 'Select a stage'
-
-      click_on 'Next step'
-    end
-
-    i_should_be_on "/#{APP_SLUG}/structure", :ignore_query => true
-
-    within_section 'completed question 1' do
-      page.should have_content("Education")
-      page.should have_content("Hospitality and Catering")
-    end
-    within_section 'completed question 2' do
-      page.should have_content("Start-up")
-    end
-
-    within '.current-question' do
-      page.should have_content("How is your business structured?")
-
-      select 'Public limited company', :from => "Select a structure"
-      click_on 'Next step'
-    end
-
-    i_should_be_on "/#{APP_SLUG}/types", :ignore_query => true
-
-    within_section 'completed question 1' do
-      page.should have_content("Education")
-      page.should have_content("Hospitality and Catering")
-    end
-    within_section 'completed question 2' do
-      page.should have_content("Start-up")
-    end
-    within_section 'completed question 3' do
-      page.should have_content("Public limited company")
-    end
-
-    within '.current-question' do
-      page.should have_content("What type of support are you interested in?")
-
-      check "Finance (any)"
-      check "Grant"
-      check "Loan"
-
-      click_on 'Next step'
-    end
-
-    i_should_be_on "/#{APP_SLUG}/location", :ignore_query => true
-
-    within_section 'completed question 1' do
-      page.should have_content("Education")
-      page.should have_content("Hospitality and Catering")
-    end
-    within_section 'completed question 2' do
-      page.should have_content("Start-up")
-    end
-    within_section 'completed question 3' do
-      page.should have_content("Public limited company")
-    end
-    within_section 'completed question 4' do
-      page.should have_content("Finance (any)")
-      page.should have_content("Grant")
-      page.should have_content("Loan")
-    end
-
-    within '.current-question' do
-      page.should have_content("Where is your business located?")
-
-      select 'Wales', :from => "Select a location"
-      click_on 'Find support'
-    end
-
-    i_should_be_on "/#{APP_SLUG}/support-options", :ignore_query => true
-
-    within '.results' do
-      page.should have_content("Available support")
-
-      page.all("li a").map(&:text).should == ["Graduate start-up scheme", "Manufacturing Services scheme - Wales"]
-    end
+      #page.all("li a").map(&:text).should == ["Graduate start-up scheme", "Manufacturing Services scheme - Wales"]
+    #end
   end
 end

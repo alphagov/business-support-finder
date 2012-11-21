@@ -14,7 +14,7 @@ describe "Start page" do
 
       within 'article[role=article]' do
         within 'section.intro' do
-          page.should have_link("Get started", :href => "/#{APP_SLUG}/sectors")
+          page.should have_link("Get started", :href => "/#{APP_SLUG}/support-options")
         end
       end
 

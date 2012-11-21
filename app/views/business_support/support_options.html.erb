@@ -1,4 +1,4 @@
-<%= render :partial => 'completed_questions' %>
+<%= render :partial => 'filters' %>
 
 <div class="business-support-container group">
   <div class="results">
@@ -8,7 +8,7 @@
           No business support schemes were found that match your search.
         </p>
         <p class="get-started">
-          <%= link_to sectors_path, :class => "big button" do %>
+          <%= link_to support_options_path, :class => "big button" do %>
             Start again <span class="indicator"></span>
           <% end %>
         </p>

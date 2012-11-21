@@ -5,153 +5,76 @@ class BusinessSupportController < ApplicationController
   include GdsApi::Helpers
   include Slimmer::Headers
 
-  QUESTIONS = [
-    "What is your activity or business?",
-    "What stage is your business at?",
-    "How is your business structured?",
-    "What type of support are you interested in?",
-    "Where is your business located?",
-  ]
-  ACTIONS = %w(sectors stage structure types location)
-
   before_filter :load_artefact
-  before_filter :load_and_validate_sectors, :only => [:stage, :stage_submit, :structure, :structure_submit, :types, :types_submit, :location, :location_submit, :support_options]
-  before_filter :load_and_validate_stage, :only => [:structure, :structure_submit, :types, :types_submit, :location, :location_submit, :support_options]
-  before_filter :load_and_validate_structure, :only => [:types, :types_submit, :location, :location_submit, :support_options]
-  before_filter :load_and_validate_types, :only => [:location, :location_submit, :support_options]
-  before_filter :load_and_validate_location, :only => [:support_options]
-  before_filter :set_expiry, :only => [:start, :sectors, :stage, :structure, :types, :location, :support_options]
+  before_filter :load_all_facets, :only => :support_options
+  before_filter :set_expiry, :only => [:start, :support_options]
   after_filter :send_slimmer_headers
 
   def start
+    
   end
 
-  def sectors
-    @sectors = Sector.all
-    @picked_sectors = Sector.find_by_slugs(params[:sectors].to_s.split("_"))
-    setup_questions
-  end
-
-  def stage
-    @stages = Stage.all
-    setup_questions [@sectors]
-  end
-
-  def stage_submit
-    if Stage.find_by_slug(params[:stage])
-      redirect_to next_params.merge(:action => 'structure', :stage => params[:stage])
-    else
-      redirect_to next_params.merge(:action => 'stage')
-    end
-  end
-
-  def structure
-    @structures = Structure.all
-    setup_questions [@sectors, [@stage]]
-  end
-
-  def structure_submit
-    if Structure.find_by_slug(params[:structure])
-      redirect_to next_params.merge(:action => 'types', :structure => params[:structure])
-    else
-      redirect_to next_params.merge(:action => 'structure')
-    end
-  end
-
-  def types
-    @types = Type.all
-    @picked_types = Type.find_by_slugs(params[:types].to_s.split('_'))
-    setup_questions [@sectors, [@stage], [@structure]]
-  end
-
-  def types_submit
-    types = Type.find_by_slugs(params[:types] || [])
-    if types.any?
-      redirect_to next_params.merge(:action => 'location', :types => types.map(&:slug).join('_'))
-    else
-      redirect_to next_params.merge(:action => 'types')
-    end
-  end
-
-  def location
-    @locations = Location.all
-    setup_questions [@sectors, [@stage], [@structure], @types]
-  end
-
-  def location_submit
-    if Location.find_by_slug(params[:location])
-      redirect_to next_params.merge(:action => 'support_options', :location => params[:location])
-    else
-      redirect_to next_params.merge(:action => 'location')
-    end
+  def filter_submit
+    p = {:action => 'support_options'}
+    p[:locations] = params[:locations].join('_') if params[:locations]
+    p[:sectors] = params[:sectors].join('_') if params[:sectors]
+    p[:stages] = params[:stages].join('_') if params[:stages]
+    p[:structures] = params[:structures].join('_') if params[:structures]
+    p[:types] = params[:types].join('_') if params[:types]
+    redirect_to p 
   end
 
   def support_options
+    load_and_validate_filters
     @support_options = Scheme.lookup(
-      :sectors => @sectors,
-      :stage => @stage,
-      :structure => @structure,
-      :types => @types,
-      :location => @location
+      :sectors => @sector_filters,
+      :stages => @stage_filters,
+      :structures => @structure_filters,
+      :types => @type_filters,
+      :locations => @location_filters
     )
-    setup_questions [@sectors, [@stage], [@structure], @types, [@location]]
   end
 
   private
-
-  def setup_questions(answers=[])
-    @current_question_number = answers.size + 1
-    @completed_questions = QUESTIONS[0...(@current_question_number - 1)].zip(answers, ACTIONS)
-    @current_question = QUESTIONS[@current_question_number - 1]
-    @upcoming_questions = QUESTIONS[@current_question_number..-1]
-  end
-
-  def next_params
-    p = {}
-    p[:sectors] = @sectors.map(&:slug).join('_') if @sectors
-    p[:stage] = @stage.slug if @stage
-    p[:structure] = @structure.slug if @structure
-    p[:types] = @types.map(&:slug).join('_') if @types
-    p
-  end
 
   def load_artefact
     @artefact = content_api.artefact(APP_SLUG)
   end
 
+  def load_all_facets
+    @sectors = Sector.all
+    @locations = Location.all
+    @stages = Stage.all
+    @structures = Structure.all
+    @types = Type.all
+  end
+
+  def load_and_validate_filters
+    load_and_validate_sectors
+    load_and_validate_stages
+    load_and_validate_structures
+    load_and_validate_types
+    load_and_validate_locations
+  end
+
   def load_and_validate_sectors
-    @sectors = Sector.find_by_slugs(params[:sectors].to_s.split("_"))
-    if @sectors.empty?
-      render :status => :not_found, :text => ""
-    end
+    @sector_filters = Sector.find_by_slugs(params[:sectors].to_s.split("_"))
   end
 
-  def load_and_validate_stage
-    @stage = Stage.find_by_slug(params[:stage])
-    unless @stage
-      render :status => :not_found, :text => ""
-    end
+  def load_and_validate_stages
+    @stage_filters = Stage.find_by_slugs(params[:stages].to_s.split("_"))
   end
 
-  def load_and_validate_structure
-    @structure = Structure.find_by_slug(params[:structure])
-    unless @structure
-      render :status => :not_found, :text => ""
-    end
+  def load_and_validate_structures
+    @structure_filters = Structure.find_by_slugs(params[:structures].to_s.split("_"))
   end
 
   def load_and_validate_types
-    @types = Type.find_by_slugs(params[:types].to_s.split('_'))
-    if @types.empty?
-      render :status => :not_found, :text => ""
-    end
+    @type_filters = Type.find_by_slugs(params[:types].to_s.split('_'))
   end
 
-  def load_and_validate_location
-    @location = Location.find_by_slug(params[:location])
-    unless @location
-      render :status => :not_found, :text => ""
-    end
+  def load_and_validate_locations
+    @location_filters = Location.find_by_slugs(params[:locations].to_s.split("_"))
   end
 
   def send_slimmer_headers
