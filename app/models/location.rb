@@ -14,9 +14,9 @@ class Location < OpenStruct
     HARDCODED_DATA
   end
 
-  def self.find_by_slug(slug)
-    HARDCODED_DATA.find do |stage|
-      stage.slug == slug
+  def self.find_by_slugs(slugs)
+    HARDCODED_DATA.select do |location|
+      slugs.include?(location.slug)
     end
   end
 

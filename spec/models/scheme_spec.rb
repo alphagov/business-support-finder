@@ -5,10 +5,10 @@ describe Scheme do
   describe "looking up schemes" do
     before :each do
       @sectors = Sector.find_by_slugs(%w(health manufacturing))
-      @stage = Stage.find_by_slug('start-up')
-      @structure = Structure.find_by_slug('partnership')
+      @stages = Stage.find_by_slugs(%w(start-up))
+      @structures = Structure.find_by_slugs(%w(partnership))
       @types = Type.find_by_slugs(%w(finance loan))
-      @location = Location.find_by_slug('wales')
+      @locations = Location.find_by_slugs(%w(wales))
       GdsApi::Imminence.any_instance.stub(:business_support_schemes).and_return("results" => [])
       GdsApi::ContentApi.any_instance.stub(:business_support_schemes).and_return("results" => [])
     end
@@ -30,7 +30,7 @@ describe Scheme do
           :locations => "wales").
         and_return("results" => [])
 
-      Scheme.lookup(:sectors => @sectors, :stage => @stage, :structure => @structure, :types => @types, :location => @location)
+      Scheme.lookup(:sectors => @sectors, :stages => @stages, :structures => @structures, :types => @types, :locations => @locations)
     end
 
     it "should fetch the imminence schemes from content_api" do
@@ -43,7 +43,7 @@ describe Scheme do
       GdsApi::ContentApi.any_instance.should_receive(:business_support_schemes).with(%w(scheme-1 scheme-3 scheme-2)).
         and_return("results" => [])
 
-      Scheme.lookup(:sectors => @sectors, :stage => @stage, :structure => @structure, :types => @types, :location => @location)
+      Scheme.lookup(:sectors => @sectors, :stages => @stages, :structures => @structures, :types => @types, :locations => @locations)
     end
 
     it "should construct instances of Scheme for each result and return them" do
@@ -54,7 +54,7 @@ describe Scheme do
       Scheme.should_receive(:new).with(:artefact1).and_return(:scheme1)
       Scheme.should_receive(:new).with(:artefact2).and_return(:scheme2)
 
-      schemes = Scheme.lookup(:sectors => @sectors, :stage => @stage, :structure => @structure, :types => @types, :location => @location)
+      schemes = Scheme.lookup(:sectors => @sectors, :stages => @stages, :structures => @structures, :types => @types, :locations => @locations)
       schemes.should == [:scheme1, :scheme2]
     end
 
@@ -80,7 +80,7 @@ describe Scheme do
       Scheme.should_receive(:new).with(artefact3).and_return(:scheme3)
       Scheme.should_receive(:new).with(artefact4).and_return(:scheme4)
 
-      schemes = Scheme.lookup(:sectors => @sectors, :stage => @stage, :structure => @structure, :types => @types, :location => @location)
+      schemes = Scheme.lookup(:sectors => @sectors, :stages => @stages, :structures => @structures, :types => @types, :locations => @locations)
       schemes.should == [:scheme4, :scheme1, :scheme3, :scheme2]
     end
 
@@ -88,7 +88,7 @@ describe Scheme do
       GdsApi::Imminence.any_instance.stub(:business_support_schemes).and_return("results" => [])
       GdsApi::ContentApi.any_instance.should_not_receive(:business_support_schemes)
 
-      schemes = Scheme.lookup(:sectors => @sectors, :stage => @stage, :structure => @structure, :types => @types, :location => @location)
+      schemes = Scheme.lookup(:sectors => @sectors, :stages => @stages, :structures => @structures, :types => @types, :locations => @locations)
       schemes.should == []
     end
   end

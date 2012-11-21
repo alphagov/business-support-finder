@@ -13,15 +13,20 @@ describe Location do
     end
   end
 
-  describe "find_by_slug" do
-    it "should return the instances that matches the slug" do
-      location = Location.find_by_slug('wales')
-
-      location.name.should == "Wales"
+  describe "find_by_slugs" do
+    it "should return the instances that match the slugs" do
+      locations = Location.find_by_slugs(%w(england wales))
+      locations.first.name.should == "England"
+      locations.last.name.should == "Wales"
     end
 
-    it "should return nil for a non-existing slug" do
-      Location.find_by_slug('non-existing').should == nil
+    it "should ignore non-existing values" do
+      locations = Location.find_by_slugs(%w(england toyland wales))
+      locations.map(&:name).should == ["England", "Wales"]
+    end
+
+    it "should return an empty array for non-existing slugs" do
+      Location.find_by_slugs(%w(non-existing)).should == []
     end
   end
 

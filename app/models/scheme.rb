@@ -5,13 +5,15 @@ class Scheme < OpenStruct
   extend GdsApi::Helpers
 
   def self.lookup(facets)
-    possible_schemes = imminence_api.business_support_schemes(
-      :sectors => facets[:sectors].map(&:slug).join(','),
-      :stages => facets[:stage].slug,
-      :business_types => facets[:structure].slug,
-      :locations => facets[:location].slug,
-      :types => facets[:types].map(&:slug).join(',')
-    )
+    facet_criteria = {}
+    facet_criteria[:business_types] = facets[:structures].map(&:slug).join(',') unless facets[:structures].empty?
+    facet_criteria[:locations] = facets[:locations].map(&:slug).join(',') unless facets[:locations].empty?
+    facet_criteria[:sectors] = facets[:sectors].map(&:slug).join(',') unless facets[:sectors].empty?
+    facet_criteria[:stages] = facets[:stages].map(&:slug).join(',') unless facets[:stages].empty?
+    facet_criteria[:types] = facets[:types].map(&:slug).join(',') unless facets[:types].empty?
+    
+    possible_schemes = imminence_api.business_support_schemes(facet_criteria)
+ 
     return [] if possible_schemes["results"].empty?
 
     identifiers = possible_schemes["results"].map {|s| s["business_support_identifier"] }

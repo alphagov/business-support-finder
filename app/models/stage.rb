@@ -14,9 +14,9 @@ class Stage < OpenStruct
     HARDCODED_STAGES
   end
 
-  def self.find_by_slug(slug)
-    HARDCODED_STAGES.find do |stage|
-      stage.slug == slug
+  def self.find_by_slugs(slugs)
+    HARDCODED_STAGES.select do |stage|
+      slugs.include?(stage.slug)
     end
   end
 
