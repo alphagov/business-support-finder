@@ -54,6 +54,15 @@ describe "Finding support options" do
 
     i_should_be_on "/#{APP_SLUG}/support-options?locations=wales&sectors=education_hospitality-and-catering&types=finance_grant_loan"
 
+    within '.facet-filters' do
+      page.has_checked_field?("Education").should == true
+      page.has_checked_field?("Hospitality and Catering").should == true
+      page.has_checked_field?("Finance (any)").should == true
+      page.has_checked_field?("Grant").should == true
+      page.has_checked_field?("Loan").should == true
+      page.has_checked_field?("Wales").should == true
+    end
+
 #    within '.results' do
       #page.should have_content("Available support")
 
