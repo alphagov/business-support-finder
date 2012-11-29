@@ -1,3 +1,4 @@
+require 'webmock'
 require 'gds_api/test_helpers/content_api'
 require 'gds_api/test_helpers/imminence'
 
