@@ -3,7 +3,7 @@ require 'ostruct'
 class Location < OpenStruct
   HARDCODED_DATA = {
     "England" => {
-      "england" => "England",
+      "england" => "All of England",
       "london" => "London",
       "north-east" => "North East",
       "north-west" => "North West",
@@ -14,9 +14,9 @@ class Location < OpenStruct
       "east-of-england" => "East of England",
       "south-east" => "South East",
     },
-    "Scotland" => { "scotland" => "Scotland" },
-    "Wales" => { "wales" => "Wales" },
-    "Northern Ireland" => { "northern-ireland" => "Northern Ireland" },
+    "Scotland" => { "scotland" => "All of Scotland" },
+    "Wales" => { "wales" => "All of Wales" },
+    "Northern Ireland" => { "northern-ireland" => "All of Northern Ireland" },
   }.map do |name, regions|
     new(:name => name, :regions => regions.map { |slug, name| 
       new(:slug => slug, :name => name) 

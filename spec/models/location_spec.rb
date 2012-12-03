@@ -19,7 +19,7 @@ describe Location do
     it "should return the instances that matches the slug" do
       location = Location.find_by_slug('wales')
 
-      location.name.should == "Wales"
+      location.name.should == "All of Wales"
     end
 
     it "should return nil for a non-existing slug" do

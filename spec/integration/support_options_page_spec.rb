@@ -41,7 +41,7 @@ describe "Support options page" do
       2 => ["What stage is your business at?", ["Start-up"]],
       3 => ["How is your business structured?", ["Partnership"]],
       4 => ["What type of support are you interested in?", ["Finance (any)", "Grant", "Loan"]],
-      5 => ["Where is your business located?", ["England"]]
+      5 => ["Where is your business located?", ["All of England"]]
     )
 
     page.should_not have_selector('.upcoming-questions')
