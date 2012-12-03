@@ -17,10 +17,19 @@ describe "Business location page" do
     within '.current-question' do
       page.should have_select("Select a location", :options => [
         'Select one...',
-        'England',
-        'Scotland',
-        'Wales',
-        'Northern Ireland',
+        'All of England',
+        'London',
+        'North East',
+        'North West',
+        'East Midlands',
+        'West Midlands',
+        'Yorkshire and the Humber',
+        'South West',
+        'East of England',
+        'South East',
+        'All of Scotland',
+        'All of Wales',
+        'All of Northern Ireland'
       ])
 
       page.should have_button("Find support")
@@ -28,7 +37,7 @@ describe "Business location page" do
 
     page.should_not have_selector('.upcoming-questions')
 
-    select "England", :from => "Select a location"
+    select "All of England", :from => "Select a location"
 
     click_on "Find support"
 
@@ -41,11 +50,20 @@ describe "Business location page" do
     within '.current-question' do
       page.should have_select("Select a location", :options => [
         'Select one...',
-        'England',
-        'Scotland',
-        'Wales',
-        'Northern Ireland',
-      ], :selected => 'Wales')
+        'All of England',
+        'London',
+        'North East',
+        'North West',
+        'East Midlands',
+        'West Midlands',
+        'Yorkshire and the Humber',
+        'South West',
+        'East of England',
+        'South East',
+        'All of Scotland',
+        'All of Wales',
+        'All of Northern Ireland'
+      ], :selected => 'All of Wales')
     end
   end
 end
