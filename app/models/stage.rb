@@ -5,7 +5,6 @@ class Stage < OpenStruct
     "pre-startup" => "Pre-startup",
     "start-up" => "Start-up",
     "grow-and-sustain" => "Grow and sustain",
-    "exiting-a-business" => "Exiting a business",
   }.map do |slug, name|
     new(:slug => slug, :name => name)
   end
