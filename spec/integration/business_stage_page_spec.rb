@@ -17,7 +17,6 @@ describe "Business stage page" do
         'Pre-startup',
         'Start-up',
         'Grow and sustain',
-        'Exiting a business',
       ])
 
       page.should have_button("Next step")
@@ -45,7 +44,6 @@ describe "Business stage page" do
         'Pre-startup',
         'Start-up',
         'Grow and sustain',
-        'Exiting a business',
       ], :selected => 'Grow and sustain')
     end
   end

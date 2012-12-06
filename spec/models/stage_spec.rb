@@ -6,10 +6,10 @@ describe Stage do
     it "should return all the hardcoded stages with slugs" do
       stages = Stage.all
 
-      stages.size.should == 4
+      stages.size.should == 3
 
-      stages.map(&:name).should == ["Pre-startup", "Start-up", "Grow and sustain", "Exiting a business"]
-      stages.map(&:slug).should == ["pre-startup", "start-up", "grow-and-sustain", "exiting-a-business"]
+      stages.map(&:name).should == ["Pre-startup", "Start-up", "Grow and sustain"]
+      stages.map(&:slug).should == ["pre-startup", "start-up", "grow-and-sustain"]
     end
   end
 
