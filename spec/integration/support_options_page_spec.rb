@@ -9,7 +9,7 @@ describe "Support options page" do
         "stages" => "start-up",
         "business_types" => "partnership",
         "locations" => "england",
-        "types" => "finance,grant,loan"
+        "support_types" => "finance,grant,loan"
       },
       [
         {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},

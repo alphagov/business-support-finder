@@ -9,7 +9,7 @@ describe "Finding support options" do
         "stages" => "start-up",
         "business_types" => "public-limited-company",
         "locations" => "wales",
-        "types" => "finance,grant,loan"
+        "support_types" => "finance,grant,loan"
       },
       [
         {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
