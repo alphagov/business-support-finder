@@ -26,7 +26,7 @@ describe Scheme do
           :sectors => "health,manufacturing",
           :stages => "start-up",
           :business_types => "partnership",
-          :types => "finance,loan",
+          :support_types => "finance,loan",
           :locations => "wales").
         and_return("results" => [])
       
