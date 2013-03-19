@@ -14,7 +14,7 @@ end
 gem 'exception_notification'
 gem 'aws-ses', :require => 'aws/ses'
 
-gem 'lograge'
+gem 'lograge', '0.2.0'
 gem 'unicorn'
 
 # Gems used only for assets and not required
