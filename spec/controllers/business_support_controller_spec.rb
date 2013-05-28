@@ -120,8 +120,8 @@ describe BusinessSupportController do
     context "with valid sectors" do
       context "with a valid stage" do
         it "should redirect to the structure page, passing through necessary params" do
-          post :stage_submit, :sectors => "health_manufacturing", :stage => "pre-startup"
-          response.should redirect_to(structure_path(:sectors => "health_manufacturing", :stage => "pre-startup"))
+          post :stage_submit, :sectors => "health_manufacturing", :stage => "pre-start"
+          response.should redirect_to(structure_path(:sectors => "health_manufacturing", :stage => "pre-start"))
         end
       end
 
@@ -141,12 +141,12 @@ describe BusinessSupportController do
     end
 
     it "should 404 with no sectors specified" do
-      post :stage_submit, :stage => "pre-startup"
+      post :stage_submit, :stage => "pre-start"
       response.should be_not_found
     end
 
     it "should 404 with no valid sectors specified" do
-      post :stage_submit, :sectors => "non-existent", :stage => "pre-startup"
+      post :stage_submit, :sectors => "non-existent", :stage => "pre-start"
       response.should be_not_found
     end
   end
@@ -225,22 +225,22 @@ describe BusinessSupportController do
     context "with valid sectors, and stage" do
       context "with a valid structure" do
         it "should redirect to the types page, passing through necessary params" do
-          post :structure_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader"
-          response.should redirect_to(types_path(:sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader"))
+          post :structure_submit, :sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader"
+          response.should redirect_to(types_path(:sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader"))
         end
       end
 
       context "with an invalid structure" do
         it "should redirect back to the form preserving the sectors and stage" do
-          post :structure_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "non-existent"
-          response.should redirect_to(structure_path(:sectors => "health_manufacturing", :stage => "pre-startup"))
+          post :structure_submit, :sectors => "health_manufacturing", :stage => "pre-start", :structure => "non-existent"
+          response.should redirect_to(structure_path(:sectors => "health_manufacturing", :stage => "pre-start"))
         end
       end
 
       context "with no structure" do
         it "should redirect back to the form preserving the sectors and stage" do
-          post :structure_submit, :sectors => "health_manufacturing", :stage => "pre-startup"
-          response.should redirect_to(structure_path(:sectors => "health_manufacturing", :stage => "pre-startup"))
+          post :structure_submit, :sectors => "health_manufacturing", :stage => "pre-start"
+          response.should redirect_to(structure_path(:sectors => "health_manufacturing", :stage => "pre-start"))
         end
       end
     end
@@ -366,22 +366,22 @@ describe BusinessSupportController do
     context "with valid structure, sectors, and stage" do
       context "with valid types" do
         it "should redirect to the location page, passing through necessary params" do
-          post :types_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :types => ["finance", "grant"]
-          response.should redirect_to(location_path(:sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :types => "finance_grant"))
+          post :types_submit, :sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader", :types => ["finance", "grant"]
+          response.should redirect_to(location_path(:sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader", :types => "finance_grant"))
         end
       end
 
       context "with no valid types" do
         it "should redirect back to the form preserving the structure, sectors and stage" do
-          post :types_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :types => ["non-existent"]
-          response.should redirect_to(types_path(:sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader"))
+          post :types_submit, :sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader", :types => ["non-existent"]
+          response.should redirect_to(types_path(:sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader"))
         end
       end
 
       context "with no types" do
         it "should redirect back to the form preserving the structure, sectors and stage" do
-          post :types_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader"
-          response.should redirect_to(types_path(:sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader"))
+          post :types_submit, :sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader"
+          response.should redirect_to(types_path(:sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader"))
         end
       end
     end
@@ -527,22 +527,22 @@ describe BusinessSupportController do
     context "with valid sectors, stage, structure and types" do
       context "with a valid location" do
         it "should redirect to the support options page, passing through necessary params" do
-          post :location_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :types => 'finance', :location => 'england'
-          response.should redirect_to(support_options_path(:sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :types => 'finance', :location => 'england'))
+          post :location_submit, :sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader", :types => 'finance', :location => 'england'
+          response.should redirect_to(support_options_path(:sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader", :types => 'finance', :location => 'england'))
         end
       end
 
       context "with an invalid location" do
         it "should redirect back to the form preserving the sectors and stage" do
-          post :location_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :types => 'finance', :location => "non-existent"
-          response.should redirect_to(location_path(:sectors => "health_manufacturing", :stage => "pre-startup", :types => 'finance', :structure => "sole-trader"))
+          post :location_submit, :sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader", :types => 'finance', :location => "non-existent"
+          response.should redirect_to(location_path(:sectors => "health_manufacturing", :stage => "pre-start", :types => 'finance', :structure => "sole-trader"))
         end
       end
 
       context "with no location" do
         it "should redirect back to the form preserving the sectors and stage" do
-          post :location_submit, :sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :types => 'finance'
-          response.should redirect_to(location_path(:sectors => "health_manufacturing", :stage => "pre-startup", :structure => "sole-trader", :types => 'finance'))
+          post :location_submit, :sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader", :types => 'finance'
+          response.should redirect_to(location_path(:sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader", :types => 'finance'))
         end
       end
     end
