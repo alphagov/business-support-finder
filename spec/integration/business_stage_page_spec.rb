@@ -14,9 +14,10 @@ describe "Business stage page" do
     within '.current-question' do
       page.should have_select("Select a stage", :options => [
         'Select one...',
-        'Pre-startup',
+        'Pre-start',
         'Start-up',
         'Grow and sustain',
+        'Exiting a business'
       ])
 
       page.should have_button("Next step")
@@ -41,9 +42,10 @@ describe "Business stage page" do
     within '.current-question' do
       page.should have_select("Select a stage", :options => [
         'Select one...',
-        'Pre-startup',
+        'Pre-start',
         'Start-up',
         'Grow and sustain',
+        'Exiting a business'
       ], :selected => 'Grow and sustain')
     end
   end

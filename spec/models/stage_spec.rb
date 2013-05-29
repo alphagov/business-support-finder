@@ -6,18 +6,18 @@ describe Stage do
     it "should return all the hardcoded stages with slugs" do
       stages = Stage.all
 
-      stages.size.should == 3
+      stages.size.should == 4
 
-      stages.map(&:name).should == ["Pre-startup", "Start-up", "Grow and sustain"]
-      stages.map(&:slug).should == ["pre-startup", "start-up", "grow-and-sustain"]
+      stages.map(&:name).should == ["Pre-start", "Start-up", "Grow and sustain", "Exiting a business"]
+      stages.map(&:slug).should == ["pre-start", "start-up", "grow-and-sustain", "exiting-a-business"]
     end
   end
 
   describe "find_by_slug" do
     it "should return the instances that matches the slug" do
-      stage = Stage.find_by_slug('pre-startup')
+      stage = Stage.find_by_slug('pre-start')
 
-      stage.name.should == "Pre-startup"
+      stage.name.should == "Pre-start"
     end
 
     it "should return nil for a non-existing slug" do

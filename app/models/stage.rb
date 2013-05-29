@@ -2,9 +2,10 @@ require 'ostruct'
 
 class Stage < OpenStruct
   HARDCODED_STAGES = {
-    "pre-startup" => "Pre-startup",
+    "pre-start" => "Pre-start",
     "start-up" => "Start-up",
     "grow-and-sustain" => "Grow and sustain",
+    "exiting-a-business" => "Exiting a business"
   }.map do |slug, name|
     new(:slug => slug, :name => name)
   end
