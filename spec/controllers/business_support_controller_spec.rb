@@ -669,6 +669,13 @@ describe BusinessSupportController do
         do_get
         assigns[:support_options].should == :some_schemes
       end
+
+      it "should 503 if the API call times out" do
+        Scheme.stub(:lookup).and_raise(GdsApi::TimedOutException)
+
+        do_get
+        response.status.should == 503
+      end
     end
 
     it "should 404 with no sectors specified" do
@@ -736,6 +743,13 @@ describe BusinessSupportController do
       get :index
 
       response.headers[Slimmer::Headers::ARTEFACT_HEADER].should == artefact_data.to_json
+    end
+
+    it "should 503 if content_api times out" do
+      WebMock.stub_request(:get, %r{\A#{GdsApi::TestHelpers::ContentApi::CONTENT_API_ENDPOINT}}).to_timeout
+
+      get :index
+      response.status.should == 503
     end
 
     it "should set the slimmer format header" do
