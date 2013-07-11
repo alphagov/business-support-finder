@@ -39,4 +39,4 @@ group :development, :test do
   gem 'poltergeist', '0.7.0'
 end
 
-gem 'govuk_frontend_toolkit', '0.2.1'
+gem 'govuk_frontend_toolkit', '0.32.2'
