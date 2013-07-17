@@ -14,6 +14,7 @@ class BusinessSupportController < ApplicationController
   ]
   ACTIONS = %w(sectors stage structure types location)
 
+  before_filter :html_only
   before_filter :load_artefact
   before_filter :load_and_validate_sectors, :only => [:stage, :stage_submit, :structure, :structure_submit, :types, :types_submit, :location, :location_submit, :support_options]
   before_filter :load_and_validate_stage, :only => [:structure, :structure_submit, :types, :types_submit, :location, :location_submit, :support_options]
@@ -22,6 +23,16 @@ class BusinessSupportController < ApplicationController
   before_filter :load_and_validate_location, :only => [:support_options]
   before_filter :set_expiry, :only => [:start, :sectors, :stage, :structure, :types, :location, :support_options]
   after_filter :send_slimmer_headers
+
+  def html_only
+    # By default, Rails' `respond_to` will give a 406 (Not Acceptable) response
+    # when it doesn't offer the requested format, but when someone is
+    # requesting, say, "/business-finance-support-finder.json", they're
+    # actually requesting a resource that doesn't exist.
+    unless request.format.html?
+      render :status => :not_found, :text => ""
+    end
+  end
 
   def start
   end

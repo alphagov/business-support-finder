@@ -15,6 +15,11 @@ describe BusinessSupportController do
       response.should be_success
     end
 
+    it "returns 404 for JSON requests" do
+      get 'start', :format => :json
+      response.should be_not_found
+    end
+
     it "should set correct expiry headers" do
       get :start
 
