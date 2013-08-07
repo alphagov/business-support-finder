@@ -121,37 +121,27 @@ class BusinessSupportController < ApplicationController
 
   def load_and_validate_sectors
     @sectors = Sector.find_by_slugs(params[:sectors].to_s.split("_"))
-    if @sectors.empty?
-      render :status => :not_found, :text => ""
-    end
+    error_404 if @sectors.empty?
   end
 
   def load_and_validate_stage
     @stage = Stage.find_by_slug(params[:stage])
-    unless @stage
-      render :status => :not_found, :text => ""
-    end
+    error_404 unless @stage
   end
 
   def load_and_validate_structure
     @structure = Structure.find_by_slug(params[:structure])
-    unless @structure
-      render :status => :not_found, :text => ""
-    end
+    error_404 unless @structure
   end
 
   def load_and_validate_types
     @types = Type.find_by_slugs(params[:types].to_s.split('_'))
-    if @types.empty?
-      render :status => :not_found, :text => ""
-    end
+    error_404 if @types.empty?
   end
 
   def load_and_validate_location
     @location = Location.find_by_slug(params[:location])
-    unless @location
-      render :status => :not_found, :text => ""
-    end
+    error_404 unless @location
   end
 
   def send_slimmer_headers
