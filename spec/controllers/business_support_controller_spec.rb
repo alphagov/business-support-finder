@@ -757,5 +757,11 @@ describe BusinessSupportController do
 
       response.headers["#{Slimmer::Headers::HEADER_PREFIX}-Format"].should == "finder"
     end
+
+    it "should return 404 for invalid UTF-8 in params" do
+      get :index, "sectors"=>"travel-and-leisure", "stage"=>"pre-start", "structure"=>"sole-trader", "types"=>"acux10764\xC0\xBEz1\xC0\xBCz2a\x90bcxuca10764"
+
+      response.status.should == 404
+    end
   end
 end
