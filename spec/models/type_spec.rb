@@ -7,7 +7,7 @@ describe Type do
       types = Type.all
 
       types.size.should == 6
-      types.map(&:name).should == ["Finance (any)", "Equity", "Grant", "Loan", "Expertise and Advice", "Recognition Award"]
+      types.map(&:name).should == ["Finance (any)", "Equity", "Grant", "Loan (including guarantees)", "Expertise and advice", "Recognition award"]
       types.map(&:slug).should == ["finance", "equity", "grant", "loan", "expertise-and-advice", "recognition-award"]
     end
   end
@@ -16,13 +16,13 @@ describe Type do
     it "should return type instances that match the slugs" do
       types = Type.find_by_slugs(%w(finance recognition-award))
 
-      types.map(&:name).should == ["Finance (any)", "Recognition Award"]
+      types.map(&:name).should == ["Finance (any)", "Recognition award"]
     end
 
     it "should ignore non-existing slugs" do
       types = Type.find_by_slugs(%w(finance non-existent recognition-award))
 
-      types.map(&:name).should == ["Finance (any)", "Recognition Award"]
+      types.map(&:name).should == ["Finance (any)", "Recognition award"]
     end
 
     it "should return empty array with no matching slugs" do
