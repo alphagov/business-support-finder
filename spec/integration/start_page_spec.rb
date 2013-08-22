@@ -6,7 +6,7 @@ describe "Start page" do
 
     visit "/#{APP_SLUG}"
 
-    within 'section#content' do
+    within '#content' do
       within 'header' do
         page.should have_content("Business finance and support finder")
         page.should have_content("Quick answer")
