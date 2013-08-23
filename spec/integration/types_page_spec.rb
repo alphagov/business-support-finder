@@ -17,9 +17,9 @@ describe "Types page" do
       page.should have_field("Finance (any)", :type => :checkbox)
       page.should have_field("Equity", :type => :checkbox)
       page.should have_field("Grant", :type => :checkbox)
-      page.should have_field("Loan", :type => :checkbox)
-      page.should have_field("Expertise and Advice", :type => :checkbox)
-      page.should have_field("Recognition Award", :type => :checkbox)
+      page.should have_field("Loan (including guarantees)", :type => :checkbox)
+      page.should have_field("Expertise and advice", :type => :checkbox)
+      page.should have_field("Recognition award", :type => :checkbox)
 
       page.should have_button("Next step")
     end
@@ -43,9 +43,9 @@ describe "Types page" do
       page.should have_field("Finance (any)", :type => :checkbox, :checked => false)
       page.should have_field("Equity", :type => :checkbox, :checked => false)
       page.should have_field("Grant", :type => :checkbox, :checked => false)
-      page.should have_field("Loan", :type => :checkbox, :checked => true)
-      page.should have_field("Expertise and Advice", :type => :checkbox, :checked => true)
-      page.should have_field("Recognition Award", :type => :checkbox, :checked => false)
+      page.should have_field("Loan (including guarantees)", :type => :checkbox, :checked => true)
+      page.should have_field("Expertise and advice", :type => :checkbox, :checked => true)
+      page.should have_field("Recognition award", :type => :checkbox, :checked => false)
     end
   end
 end
