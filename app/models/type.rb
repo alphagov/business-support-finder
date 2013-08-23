@@ -5,9 +5,9 @@ class Type < OpenStruct
     "finance" => "Finance (any)",
     "equity" => "Equity",
     "grant" => "Grant",
-    "loan" => "Loan",
-    "expertise-and-advice" => "Expertise and Advice",
-    "recognition-award" => "Recognition Award",
+    "loan" => "Loan (including guarantees)",
+    "expertise-and-advice" => "Expertise and advice",
+    "recognition-award" => "Recognition award",
   }.map do |slug, name|
     new(:slug => slug, :name => name)
   end

@@ -40,7 +40,7 @@ describe "Support options page" do
       1 => ["What is your activity or business?", ["Health", "Manufacturing"]],
       2 => ["What stage is your business at?", ["Start-up"]],
       3 => ["How is your business structured?", ["Partnership"]],
-      4 => ["What type of support are you interested in?", ["Finance (any)", "Grant", "Loan"]],
+      4 => ["What type of support are you interested in?", ["Finance (any)", "Grant", "Loan (including guarantees)"]],
       5 => ["Where is your business located?", ["All of England"]]
     )
 
