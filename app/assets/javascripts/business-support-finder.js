@@ -70,7 +70,6 @@ GOVUK.BusinessSupportFinder = (function () {
       event.preventDefault();
 
       var li = $(this).parent(), // the list item that is being moved
-          source = $(event.delegateTarget), // container for list that item is coming from
           target = $('.picked-items'), // container for list that item is going to
           targetList = $("ul", target),
           newli = li.clone(),
@@ -114,8 +113,8 @@ GOVUK.BusinessSupportFinder = (function () {
           .addClass('add')
           .text(event.data.linkText);
 
-        if (source.find("li").length === 0) { // removing an item
-          $(".hidden", source).removeClass("hidden").addClass("hint");
+        if (target.find("li").length === 0) { // removing an item
+          $(".hidden", target).removeClass("hidden").addClass("hint");
           $("#next-step").remove();
         }
 
