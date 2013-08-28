@@ -218,7 +218,7 @@ $right-to-left: false !default;
 
   .no-results {
     padding: $gutter 0 $gutter-half;
-    border-bottom: 1px solid $border-colour;
+    //border-bottom: 1px solid $border-colour;
     h2 {
       @include core-27;
     }
@@ -301,6 +301,7 @@ ul.results-list {
   
   list-style:none;
   margin:0; padding:0;
+  margin-bottom: 60px;
   
   li {
     margin:25px 0 0 0;
@@ -328,7 +329,7 @@ ul.results-list {
 
       @include media(tablet){
         padding:0; margin:0;
-        margin-top:2px;
+        margin-top:4px;
       }
 
       &.attributes {
@@ -380,6 +381,11 @@ ul.results-list {
   //   background-image: image-url('mail-icon-x2.png');
   //   background-size: $gutter-two-thirds 14px;
   // }
+}
+
+.pagination {
+  margin-bottom: 50px;
+  border: none;
 }
 
 
