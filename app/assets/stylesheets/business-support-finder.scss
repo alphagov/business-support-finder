@@ -1,51 +1,442 @@
-/*
- *= require licence-finder
- */
+// BASE Stylesheet
 
-.select-container {
-  margin: 1.2em 0;
+// govuk_frontend_toolkit mixins
+@import "_conditionals";
+@import "_typography";
+@import "_colours";
+@import "_css3";
+
+
+
+// STYLES BORROWED FROM WHITEHALL APP
+// FOR PROTOTYPE ONLY
+// --------------------->
+
+
+// VARS
+// ----
+$max-site-width: 960px;
+$gutter:            30px;
+$gutter-one-sixth:  $gutter*(1/6); // equivalent to 5px
+$gutter-one-third:  $gutter*(1/3); // equivalent to 10px
+$gutter-half:       $gutter*(1/2); // equivalent to 15px
+$gutter-two-thirds: $gutter*(2/3); // equivalent to 20px
+$right-to-left: false !default;
+
+
+// MIXINS
+// ------
+@mixin right-to-left {
+  @if $right-to-left {
+    @content;
+  }
+}
+@mixin left-to-right {
+  @if $right-to-left == false {
+    @content;
+  }
 }
 
-.business-support-finder .business-support-container {
-  background-color: #fff;
-  padding: 1em 2.5em 1em 2.5em;
+// Suitable for captions, buttons etc
+@mixin ig-core-14 {
+  font-family: $NTA-Light;
+  font-size: 14px;
+  line-height: 1.4285714286; // 20 / 14
+  font-weight: 400;
+  text-transform: none;
+  padding-top: 6px;
+  //padding-bottom: 4px;
+  @media (max-width: 640px) {
+    font-size: 12px;
+    line-height: (15/12);
+    padding-top: 4px;
+    padding-bottom: 1px;
+  }
 }
 
-/* Results
-============================================================================ */
-.business-support-finder .results {
-  padding: 0;
-  /*margin-left: -20em;*/
-  float: right;
-  width: 100%;
-}
+// STYLES
+// ------
 
-.business-support-finder .results-wrapper {
-  padding: 0;
-  /*margin-left: 20em;*/
-}
+.filter-block {
 
-.business-support-finder .results-list {
-  padding: 0; margin: 0;
-  list-style: none;
-}
+  .business-location {
+    margin:0 0 30px 0;
+  }
 
-.business-support-finder .results-list li {
   display: block;
-  list-style: none;
-  margin-bottom: 1.5em;
-  max-width: 32.5em;
-  padding: 0;
-  overflow: hidden;
+  padding-bottom:10em;
+
+  h2 {
+    @include core-16;
+    //padding-top: $gutter-one-third;
+  }
+
+  form {
+    padding: 0;
+    //border-top: 10px $light-blue solid;
+    //margin-top:1.5em;
+
+    fieldset {
+      position: relative;
+
+      .filter {
+        width: 100%;
+        margin-top: 22px;
+        @include media (tablet) {
+          margin-top: $gutter-half;
+        }
+      }
+    }
+  }
+
+  .sub-filter {
+    margin-top: $gutter-half;
+  }
+
+  label {
+    @include ig-core-14;
+
+    &.title {  
+      @include copy-19;
+      font-weight: bold;
+      display:block;
+      margin-bottom:2px;
+    }
+
+    &.sub-title {
+      @include core-19;
+    }
+  }
+
+  .hint {
+    @include ig-core-14;
+    margin:0 0 5px 0; padding:0;
+  }
+
+  input {
+    @include ig-core-14;
+    background: $white;
+    border: 1px solid $grey-3;
+    width: 100%;
+    margin: 0;
+    @include media (desktop) {
+      padding: $gutter-one-sixth 0;
+      text-indent: $gutter-one-third;
+    }
+
+    border-color: $border-colour;
+  }
+
+  select {
+    @include ig-core-14;
+    background: #fff;
+    line-height: 1.3;
+    width: 100%;
+  }
+
+  .checkbox input {
+    width: auto;
+  }
+
+  @include media (tablet) {
+    .single-row-select {
+      border: 1px solid #555;
+      padding: $gutter-one-sixth $gutter-one-sixth $gutter-one-sixth $gutter-one-third;
+      width: 100%;
+      background: #fff;
+      background-image: image-url('https://assets.digital.cabinet-office.gov.uk/government/assets/dropdown-arrow-small-a4f4e2df48e8d34de458bddf58e83a8a.png');
+      background-repeat: no-repeat;
+      background-position: right center;
+      border-color: $border-colour;
+      @include box-shadow(1px 1px 1px #fff);
+      @include border-radius($gutter-one-sixth);
+      @include appearance(none);
+    }
+  }
+
+  .date-range {
+    padding-bottom: $gutter-one-third;
+
+    h3 {
+      @include ig-core-14;
+      font-weight: bold;
+      display: inline;
+      padding-right: $gutter-half;
+    }
+
+    label {
+      position: relative;
+      @include ig-core-14;
+      padding-left: $gutter-two-thirds;
+      padding-right: $gutter-one-third;
+      &.visuallyhidden {
+        position: absolute;
+      }
+    }
+  }
+
+  .checkbox {
+    position: relative;
+    label {
+      @include ig-core-14;
+      display: block;
+      padding-left: $gutter-two-thirds;
+    }
+    input {
+      position: absolute;
+      top: $gutter-one-sixth;
+      left: 0;
+      @include media (tablet) {
+        top: $gutter * 0.25;
+      }
+    }
+  }
+
+  .submit {
+    padding: $gutter-two-thirds 0 $gutter-one-third;
+    margin: $gutter-one-sixth 0 0;
+
+    @include media (desktop) {
+      padding-bottom: 0;
+    }
+  }
+
+  
+
+  .disabled {
+    opacity: 0.3;
+    cursor: default;
+    @include ie-lte(7){
+      color: $secondary-text-colour;
+    }
+  }
 }
 
-.business-support-finder .results-list li a {
-  margin: 0; padding: 0;
-  font-size: 1.1875em;
+
+.filter-results {
+  padding-top: $gutter;
+
+  .no-results {
+    padding: $gutter 0 $gutter-half;
+    border-bottom: 1px solid $border-colour;
+    h2 {
+      @include core-27;
+    }
+    h3 {
+      @include core-19;
+      font-weight: bold;
+    }
+    p {
+      @include core-19;
+      margin: $gutter-half 0;
+    }
+  }
 }
 
-.business-support-finder .results-list li p {
-  margin: 0;
-  width: auto;
-  font-size: 1em;
+.filter-results-summary {
+  display: block;
+  padding:0;
+  margin:0;
+  border-bottom:1px solid $grey-2;
+
+  h3 {
+    @include copy-16;
+    //font-weight: bold;
+    display: inline-block;
+    padding-right: $gutter-one-third;
+    margin-top:0;
+
+    span {
+      @include heading-48;
+      font-weight: 600;
+      display: inline-block;
+      padding-top: 10px;
+      padding-bottom:0px;
+
+      @include media(tablet){
+        //padding-top: 7px;
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  .feeds {
+    margin:52px 0 0 0;
+    float:right;
+    display: block;
+  }
+
+  .count{
+    padding-bottom: 0;
+  }
+
+  .selections {
+    @include core-16;
+  }
+
+  .chosen {
+    margin-bottom: $gutter-one-third;
+    line-height: $gutter;
+
+    strong {
+      //@include bold;
+      background-color: $panel-colour;
+      padding: 0 $gutter-one-sixth;
+      @include border-radius(3px);
+
+      @include media (tablet) {
+        white-space: nowrap;
+      }
+
+      a {
+        position: relative;
+        top: 2px;
+        color: $link-colour;
+      }
+    }
+  }
+}
+
+ul.results-list {
+  
+  list-style:none;
+  margin:0; padding:0;
+  
+  li {
+    margin:25px 0 0 0;
+
+    h3 {
+      @include heading-24;
+      font-weight: bold;
+
+      @include media(tablet){
+        padding:0;
+        margin:0;
+      }
+
+      a {
+        text-decoration:none;
+      }
+
+      a:hover {
+        text-decoration:underline; 
+      }
+    }
+
+    p {
+      @include core-16;
+
+      @include media(tablet){
+        padding:0; margin:0;
+        margin-top:2px;
+      }
+
+      &.attributes {
+        @include ig-core-14;
+        color:$grey-1;
+
+        @include media(tablet){
+          padding:0; margin:0;
+          margin-top:6px;
+        }
+        
+      }
+    }
+  }
+}
+
+
+.inner-block {
+  padding: 0 $gutter-half;
+
+  @include media(tablet){
+    padding: 0 $gutter;
+  }
+
+  &.floated-children {
+    @extend %contain-floats;
+
+    padding: 0;
+
+    @include media(tablet){
+      padding: 0 $gutter-half;
+    }
+  }
+}
+
+
+.feed {
+  display: inline-block;
+  padding: 0 $gutter-one-third 0 $gutter-two-thirds;
+  font-weight: bold;
+  background: image-url('https://assets.digital.cabinet-office.gov.uk/government/assets/feed-icon-black-2797379a53d9064b97bc610ee4d3adae.png') 0 40% no-repeat;
+}
+.govdelivery {
+  display: inline-block;
+  padding: 0 $gutter-one-third 0 $gutter-two-thirds+$gutter-one-sixth;
+  font-weight: bold;
+  background: image-url('https://assets.digital.cabinet-office.gov.uk/government/assets/mail-icon-d0277821fbdd6977b32433de46f5fec7.png') 0 40% no-repeat;
+  // @include hidpi {
+  //   background-image: image-url('mail-icon-x2.png');
+  //   background-size: $gutter-two-thirds 14px;
+  // }
+}
+
+
+// <---------------------
+// STYLES BORROWED FROM WHITEHALL APP
+// FOR PROTOTYPE ONLY
+
+
+
+
+
+
+// CUSTOM STYLES AND OVERRIDES
+// WRITTEN FOR THIS PROTOTYPE
+main {
+  header.page-header {
+    div {
+      padding: 1em 2em 1em 2em;
+    }
+  }
+}
+
+.article-container {
+  margin-right:0; 
+  max-width:none;
+}
+
+.business-support-index {
+  @include media(tablet) {
+    .block-2 {
+      float: left;
+      width: 33.333%;
+      .inner-block {
+        padding: 0 $gutter*1.5 0 $gutter;
+      }
+
+      @include right-to-left {
+        float: right;
+        .inner-block {
+          padding: 0 $gutter 0 $gutter*1.5;
+        }
+      }
+    }
+
+    .block-4 {
+      float: left;
+      width: 66.666%;
+      .inner-block {
+        padding: $gutter-one-sixth $gutter 0 $gutter-half;
+      }
+
+      @include right-to-left {
+        float: right;
+        .inner-block {
+          padding: $gutter-one-sixth $gutter-half 0 $gutter;
+        }
+      }
+    }
+  }
 }
