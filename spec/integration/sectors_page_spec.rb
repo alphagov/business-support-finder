@@ -41,7 +41,7 @@ describe "selecting business sectors" do
 
     assert_upcoming_questions(
       2 => "What stage is your business at?",
-      3 => "How is your business structured?",
+      3 => "How many employees do you have?",
       4 => "What type of support are you interested in?",
       5 => "Where is your business located?"
     )

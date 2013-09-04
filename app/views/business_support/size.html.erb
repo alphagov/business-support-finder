@@ -1,12 +1,12 @@
 <%= render :partial => 'completed_questions' %>
 
 <%= current_question do %>
-  <%= form_tag structure_path do %>
+  <%= form_tag size_path do %>
     <%= hidden_field_tag :sectors, params[:sectors] %>
     <%= hidden_field_tag :stage, params[:stage] %>
     <div class="select-container">
-      <label for="select-structure">Select a structure
-        <%= select_tag :structure, options_from_collection_for_select(@structures, :slug, :name, params[:structure]), :prompt => 'Select one...', :id => "select-structure" %>
+      <label for="select-size">Select a size
+        <%= select_tag :size, options_from_collection_for_select(@sizes, :slug, :name, params[:size]), :prompt => 'Select one...', :id => "select-size" %>
       </label>
     </div>
     <%= button_tag "Next step", :class => "button medium" %>
