@@ -4,140 +4,123 @@
     <div class="inner-block">
       <div class="filter-block">
         <h2>You can use the filters to only show schemes that you are eligible for</h2>
-        
+          
         <form method="get" action="/government/announcements" id="document-filter" class="js-document-filter">
-        <fieldset>
-        <legend class="visuallyhidden">Filter available support</legend>
+          <fieldset>
+            <legend class="visuallyhidden">Filter available support</legend>
 
+            <!-- Available support -->
+            <div class="filter" id="support-filter">
+              <h3 class="title">Available support</h3>
 
-        <!-- Available support -->
-        <div class="filter" id="support-filter">
-        <label class="title">Available support</label>
+              <div class="filter-inner checkbox">
+                <label for="finance">Finance</label>
+                <input name="finance" id="finance" type="checkbox" value="0" checked="checked">
+              </div>
 
+              <div class="filter-inner checkbox">
+                <label for="equity">Equity</label>
+                <input name="equity" id="equity" type="checkbox" value="0" checked="checked">
+              </div>
 
-        <div class="filter-inner checkbox">
-        <label for="finance">Finance</label>
-        <input name="finance" id="finance" type="checkbox" value="0" checked="checked">
-        </div>
+              <div class="filter-inner checkbox">
+                <label for="grant">Grant</label>
+                <input name="grant" id="grant" type="checkbox" value="0" checked="checked">
+              </div>
 
-        <div class="filter-inner checkbox">
-        <label for="equity">Equity</label>
-        <input name="equity" id="equity" type="checkbox" value="0" checked="checked">
-        </div>
+              <div class="filter-inner checkbox">
+                <label for="loan">Loan</label>
+                <input name="loan" id="loan" type="checkbox" value="0" checked="checked">
+              </div>
 
-        <div class="filter-inner checkbox">
-        <label for="grant">Grant</label>
-        <input name="grant" id="grant" type="checkbox" value="0" checked="checked">
-        </div>
+              <div class="filter-inner checkbox">
+                <label for="expertise-and-advice">Expertise and advice</label>
+                <input name="expertise-and-advice" id="expertise-and-advice" type="checkbox" value="0" checked="checked">
+              </div>
 
-        <div class="filter-inner checkbox">
-        <label for="loan">Loan</label>
-        <input name="loan" id="loan" type="checkbox" value="0" checked="checked">
-        </div>
+              <div class="filter-inner checkbox">
+                <label for="recognition-award">Recognition award</label>
+                <input name="recognition-award" id="recognition-award" type="checkbox" value="0" checked="checked">
+              </div>
+            </div>
 
-        <div class="filter-inner checkbox">
-        <label for="expertise-and-advice">Expertise and advice</label>
-        <input name="expertise-and-advice" id="expertise-and-advice" type="checkbox" value="0" checked="checked">
-        </div>
+            <!-- Business location -->
+            <div class="filter business-location" id="location-filter">
+              <div class="filter-inner">
+                <label class="title" for="location">Business location</label>
+                <p class="hint">Enter a postcode, city or county</p>
+                <input id="location" name="location" placeholder="Location" type="text" value="">
+              </div>
+            </div>
 
-        <div class="filter-inner checkbox">
-        <label for="recognition-award">Recognition award</label>
-        <input name="recognition-award" id="recognition-award" type="checkbox" value="0" checked="checked">
-        </div>
-        </div>
+            <!-- Number of employees -->
+            <div class="filter" id="employee-count-filter">
+              <div class="filter-inner">
+                <label for="employee-count-option">Number of employees</label>
+                <select class="single-row-select" id="employee-count-option" name="employee-count-option"><option value="all" selected="">Any number of employees</option>
+                  <option value="0-10">0 – 9</option>
+                  <option value="11-249">10 – 249</option>
+                  <option value="250-499">250 – 499</option>
+                  <option value="500-999">500 – 999</option>
+                  <option value="over-1000">1000+</option>
+                </select>
+              </div>
+            </div>
 
+            <!-- Activity or business type -->
+            <div class="filter" id="business-type-filter">
+              <div class="filter-inner">
+                <label for="business-type-option">Activity or business type</label>
+                <select class="single-row-select" id="business-type-option" name="business-type-option"><option value="all" selected="">All activities and business types</option>
+                  <option value="">Agriculture</option>
+                  <option value="">Business and Finance</option>
+                  <option value="">Construction</option>
+                  <option value="">Education</option>
+                  <option value="">Health</option>
+                  <option value="">Hospitality and Catering</option>
+                  <option value="">Information, Communication and Media</option>
+                  <option value="">Manufacturing</option>
+                  <option value="">Mining</option>
+                  <option value="">Real Estate</option>
+                  <option value="">Science and Technology</option>
+                  <option value="">Service Industries</option>
+                  <option value="">Transport and Distribution</option>
+                  <option value="">Travel and Leisure</option>
+                  <option value="">Utilities</option>
+                  <option value="">Wholesale and Retail</option>
+                </select>
+              </div>
+            </div>
 
+            <!-- Business stage -->
+            <div class="filter" id="business-stage-filter">
+              <div class="filter-inner">
+                <label for="business-stage-option">Business stage</label>
+                <select class="single-row-select" id="business-stage-option" name="business-stage-option"><option value="all" selected="">All business stages</option>
+                  <option value="">Pre-start</option>
+                  <option value="">Start-up</option>
+                  <option value="">Grow and sustain</option>
+                  <option value="">Exiting a business</option>
+                </select>
+              </div>
+            </div>
 
-        <!-- Business location -->
-        <div class="filter business-location" id="location-filter">
-        <div class="filter-inner">
-        <label class="title" for="location">Business location</label>
-        <p class="hint">Enter a postcode, city or county</p>
-        <input id="location" name="location" placeholder="Location" type="text" value="">
-        </div>
-        </div>
+            <div class="filter" id="filter-submit">
+              <div class="filter-inner">
+                <div class="submit js-hidden">
+                  <input class="button" name="commit" type="submit" value="Refresh results">
+                </div>
+              </div>
+            </div>
 
-
-
-        <!-- Number of employees -->
-        <div class="filter" id="employee-count-filter">
-        <div class="filter-inner">
-        <label for="employee-count-option">Number of employees</label>
-        <select class="single-row-select" id="employee-count-option" name="employee-count-option"><option value="all" selected="">Any number of employees</option>
-        <option value="0-10">0 – 9</option>
-        <option value="11-249">10 – 249</option>
-        <option value="250-499">250 – 499</option>
-        <option value="500-999">500 – 999</option>
-        <option value="over-1000">1000+</option>
-        </select>
-        </div>
-        </div>
-
-
-
-        <!-- Activity or business type -->
-        <div class="filter" id="business-type-filter">
-        <div class="filter-inner">
-        <label for="business-type-option">Activity or business type</label>
-        <select class="single-row-select" id="business-type-option" name="business-type-option"><option value="all" selected="">All activities and business types</option>
-        <option value="">Agriculture</option>
-        <option value="">Business and Finance</option>
-        <option value="">Construction</option>
-        <option value="">Education</option>
-        <option value="">Health</option>
-        <option value="">Hospitality and Catering</option>
-        <option value="">Information, Communication and Media</option>
-        <option value="">Manufacturing</option>
-        <option value="">Mining</option>
-        <option value="">Real Estate</option>
-        <option value="">Science and Technology</option>
-        <option value="">Service Industries</option>
-        <option value="">Transport and Distribution</option>
-        <option value="">Travel and Leisure</option>
-        <option value="">Utilities</option>
-        <option value="">Wholesale and Retail</option>
-        </select>
-        </div>
-        </div>
-
-
-
-        <!-- Business stage -->
-        <div class="filter" id="business-stage-filter">
-        <div class="filter-inner">
-        <label for="business-stage-option">Business stage</label>
-        <select class="single-row-select" id="business-stage-option" name="business-stage-option"><option value="all" selected="">All business stages</option>
-        <option value="">Pre-start</option>
-        <option value="">Start-up</option>
-        <option value="">Grow and sustain</option>
-        <option value="">Exiting a business</option>
-        </select>
-        </div>
-        </div>
-
-
-
-
-        <div class="filter" id="filter-submit">
-        <div class="filter-inner">
-        <div class="submit js-hidden">
-        <!-- <input class="button" name="commit" type="submit" value="Refresh results"> -->
-        </div>
-        </div>
-        </div>
-
-
-        </fieldset>
+          </fieldset>
         </form>
       </div>
     </div>
   </div>
 
-
-
   <div class="block-4 filtered-results">
     <div class="inner-block">
-
       
       <!-- Summary -->
       <div class="filter-results-summary">
@@ -147,148 +130,142 @@
         </div>
       </div>
 
-
       <!-- Results -->
       <ul class="results-list">
         
         <li class="scheme">
-        <h3><a href="#">Helping Your Business Grow Internationally</a></h3>
-        <p class="attributes">Expertise and advice</p>
-        <p>Get expert trade advice and practical support to grow your business overseas..</p>
+          <h3><a href="#">Helping Your Business Grow Internationally</a></h3>
+          <p class="attributes">Expertise and advice</p>
+          <p>Get expert trade advice and practical support to grow your business overseas..</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">Knowledge Transfer Networks</a></h3>
-        <p class="attributes">Expertise and advice</p>
-        <p>National network set up to support innovation.</p>
+          <h3><a href="#">Knowledge Transfer Networks</a></h3>
+          <p class="attributes">Expertise and advice</p>
+          <p>National network set up to support innovation.</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">Start-Up Loans</a></h3>
-        <p class="attributes">Loan, &pound;4,500 on average</p>
-        <p>Loans and mentoring for 18 to 30 year olds who are looking to start a business.</p>
+          <h3><a href="#">Start-Up Loans</a></h3>
+          <p class="attributes">Loan, &pound;4,500 on average</p>
+          <p>Loans and mentoring for 18 to 30 year olds who are looking to start a business.</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">Annual Accounting Scheme</a></h3>
-        <p class="attributes">Expertise and advice, Finance, £1 - £3,000</p>
-        <p>Allows businesses below £1.35m turnover to make a single annual VAT return with instalment payments throughout the year and a final balancing payment.</p>
+          <h3><a href="#">Annual Accounting Scheme</a></h3>
+          <p class="attributes">Expertise and advice, Finance, £1 - £3,000</p>
+          <p>Allows businesses below £1.35m turnover to make a single annual VAT return with instalment payments throughout the year and a final balancing payment.</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">English Woodland Grant Scheme</a></h3>
-        <p class="attributes">Grant</p>
-        <p>Grants to improve woodlands.</p>
+          <h3><a href="#">English Woodland Grant Scheme</a></h3>
+          <p class="attributes">Grant</p>
+          <p>Grants to improve woodlands.</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">Enhanced Capital Allowances (energy and water)</a></h3>
-        <p class="attributes">Finance, £1,000 - £3,000</p>
-        <p>Tax deduction for the full cost of purchasing certain energy-saving and water-efficient equipment.</p>
+          <h3><a href="#">Enhanced Capital Allowances (energy and water)</a></h3>
+          <p class="attributes">Finance, £1,000 - £3,000</p>
+          <p>Tax deduction for the full cost of purchasing certain energy-saving and water-efficient equipment.</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">Heritage Enterprise (HE)</a></h3>
-        <p class="attributes">Finance, £100,000 - £5,000,000</p>
-        <p>Heritage Enterprise supports enterprising community organisations across UK to rescue neglected historic buildings and sites and unlock their economic potential..</p>
+          <h3><a href="#">Heritage Enterprise (HE)</a></h3>
+          <p class="attributes">Finance, £100,000 - £5,000,000</p>
+          <p>Heritage Enterprise supports enterprising community organisations across UK to rescue neglected historic buildings and sites and unlock their economic potential..</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">Helping Your Business Grow Internationally</a></h3>
-        <p class="attributes">Expertise and advice</p>
-        <p>Get expert trade advice and practical support to grow your business overseas..</p>
+          <h3><a href="#">Helping Your Business Grow Internationally</a></h3>
+          <p class="attributes">Expertise and advice</p>
+          <p>Get expert trade advice and practical support to grow your business overseas..</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">Knowledge Transfer Networks</a></h3>
-        <p class="attributes">Expertise and advice</p>
-        <p>National network set up to support innovation.</p>
+          <h3><a href="#">Knowledge Transfer Networks</a></h3>
+          <p class="attributes">Expertise and advice</p>
+          <p>National network set up to support innovation.</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">Start-Up Loans</a></h3>
-        <p class="attributes">Loan, &pound;4,500 on average</p>
-        <p>Loans and mentoring for 18 to 30 year olds who are looking to start a business.</p>
+          <h3><a href="#">Start-Up Loans</a></h3>
+          <p class="attributes">Loan, &pound;4,500 on average</p>
+          <p>Loans and mentoring for 18 to 30 year olds who are looking to start a business.</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">Annual Accounting Scheme</a></h3>
-        <p class="attributes">Expertise and advice, Finance, £1 - £3,000</p>
-        <p>Allows businesses below £1.35m turnover to make a single annual VAT return with instalment payments throughout the year and a final balancing payment.</p>
+          <h3><a href="#">Annual Accounting Scheme</a></h3>
+          <p class="attributes">Expertise and advice, Finance, £1 - £3,000</p>
+          <p>Allows businesses below £1.35m turnover to make a single annual VAT return with instalment payments throughout the year and a final balancing payment.</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">English Woodland Grant Scheme</a></h3>
-        <p class="attributes">Grant</p>
-        <p>Grants to improve woodlands.</p>
+          <h3><a href="#">English Woodland Grant Scheme</a></h3>
+          <p class="attributes">Grant</p>
+          <p>Grants to improve woodlands.</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">Enhanced Capital Allowances (energy and water)</a></h3>
-        <p class="attributes">Finance, £1,000 - £3,000</p>
-        <p>Tax deduction for the full cost of purchasing certain energy-saving and water-efficient equipment.</p>
+          <h3><a href="#">Enhanced Capital Allowances (energy and water)</a></h3>
+          <p class="attributes">Finance, £1,000 - £3,000</p>
+          <p>Tax deduction for the full cost of purchasing certain energy-saving and water-efficient equipment.</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">Heritage Enterprise (HE)</a></h3>
-        <p class="attributes">Finance, £100,000 - £5,000,000</p>
-        <p>Heritage Enterprise supports enterprising community organisations across UK to rescue neglected historic buildings and sites and unlock their economic potential..</p>
+          <h3><a href="#">Heritage Enterprise (HE)</a></h3>
+          <p class="attributes">Finance, £100,000 - £5,000,000</p>
+          <p>Heritage Enterprise supports enterprising community organisations across UK to rescue neglected historic buildings and sites and unlock their economic potential..</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">Helping Your Business Grow Internationally</a></h3>
-        <p class="attributes">Expertise and advice</p>
-        <p>Get expert trade advice and practical support to grow your business overseas..</p>
+          <h3><a href="#">Helping Your Business Grow Internationally</a></h3>
+          <p class="attributes">Expertise and advice</p>
+          <p>Get expert trade advice and practical support to grow your business overseas..</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">Knowledge Transfer Networks</a></h3>
-        <p class="attributes">Expertise and advice</p>
-        <p>National network set up to support innovation.</p>
+          <h3><a href="#">Knowledge Transfer Networks</a></h3>
+          <p class="attributes">Expertise and advice</p>
+          <p>National network set up to support innovation.</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">Start-Up Loans</a></h3>
-        <p class="attributes">Loan, &pound;4,500 on average</p>
-        <p>Loans and mentoring for 18 to 30 year olds who are looking to start a business.</p>
+          <h3><a href="#">Start-Up Loans</a></h3>
+          <p class="attributes">Loan, &pound;4,500 on average</p>
+          <p>Loans and mentoring for 18 to 30 year olds who are looking to start a business.</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">Annual Accounting Scheme</a></h3>
-        <p class="attributes">Expertise and advice, Finance, £1 - £3,000</p>
-        <p>Allows businesses below £1.35m turnover to make a single annual VAT return with instalment payments throughout the year and a final balancing payment.</p>
+          <h3><a href="#">Annual Accounting Scheme</a></h3>
+          <p class="attributes">Expertise and advice, Finance, £1 - £3,000</p>
+          <p>Allows businesses below £1.35m turnover to make a single annual VAT return with instalment payments throughout the year and a final balancing payment.</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">English Woodland Grant Scheme</a></h3>
-        <p class="attributes">Grant</p>
-        <p>Grants to improve woodlands.</p>
+          <h3><a href="#">English Woodland Grant Scheme</a></h3>
+          <p class="attributes">Grant</p>
+          <p>Grants to improve woodlands.</p>
         </li>
 
         <li class="scheme">
-        <h3><a href="#">Enhanced Capital Allowances (energy and water)</a></h3>
-        <p class="attributes">Finance, £1,000 - £3,000</p>
-        <p>Tax deduction for the full cost of purchasing certain energy-saving and water-efficient equipment.</p>
+          <h3><a href="#">Enhanced Capital Allowances (energy and water)</a></h3>
+          <p class="attributes">Finance, £1,000 - £3,000</p>
+          <p>Tax deduction for the full cost of purchasing certain energy-saving and water-efficient equipment.</p>
         </li>
 
       </ul>
 
-      <nav id="show-more-documents" role="navigation"><ul class="previous-next-navigation">
-        <li class="previous">
-        <a href="#">Previous page <span>1 of 40</span></a>
-        </li>
-        <li class="next">
-        <a href="#">Next page <span>3 of 40</span></a>
-        </li>
-      </ul></nav>
+      <nav id="show-more-documents" role="navigation">
+        <ul class="previous-next-navigation">
+          <li class="previous">
+            <a href="#">Previous page <span>1 of 40</span></a>
+          </li>
+          <li class="next">
+            <a href="#">Next page <span>3 of 40</span></a>
+          </li>
+        </ul>
+      </nav>
 
     </div>
   </div>
-
-  
-
-
-
-
-
 </div>
