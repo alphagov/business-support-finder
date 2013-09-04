@@ -1,0 +1,1 @@
+$(".js-document-filter").enableDocumentFilter();
