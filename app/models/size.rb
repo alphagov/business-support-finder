@@ -1,13 +1,12 @@
 require 'ostruct'
 
-class Structure < OpenStruct
+class Size < OpenStruct
   HARDCODED_DATA = {
-    "private-company" => "Private company",
-    "partnership" => "Partnership",
-    "public-limited-company" => "Public limited company",
-    "sole-trader" => "Sole trader",
-    "social-enterprise" => "Social enterprise",
-    "charity" => "Charity",
+    "under-10" => "Under 10",
+    "up-to-249" => "Up to 249",
+    "between-250-and-500" => "Between 250 and 500",
+    "between-501-and-1000" => "Between 501 and 1000",
+    "over-1000" => "Over 1000"
   }.map do |slug, name|
     new(:slug => slug, :name => name)
   end

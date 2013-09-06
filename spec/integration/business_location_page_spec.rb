@@ -3,12 +3,12 @@ require 'spec_helper'
 describe "Business location page" do
 
   specify "inspecting the page" do
-    visit "/#{APP_SLUG}/location?sectors=health_manufacturing&stage=start-up&structure=partnership&types=finance_grant_loan"
+    visit "/#{APP_SLUG}/location?sectors=health_manufacturing&stage=start-up&size=under-10&types=finance_grant_loan"
 
     assert_completed_questions(
       1 => ["What is your activity or business?", ["Health", "Manufacturing"]],
       2 => ["What stage is your business at?", ["Start-up"]],
-      3 => ["How is your business structured?", ["Partnership"]],
+      3 => ["How many employees do you have?", ["Under 10"]],
       4 => ["What type of support are you interested in?", ["Finance (any)", "Grant", "Loan (including guarantees)"]]
     )
 
@@ -45,7 +45,7 @@ describe "Business location page" do
   end
 
   specify "with a location already selected" do
-    visit "/#{APP_SLUG}/location?sectors=health_manufacturing&stage=start-up&structure=partnership&types=finance&location=wales"
+    visit "/#{APP_SLUG}/location?sectors=health_manufacturing&stage=start-up&size=under-10&types=finance&location=wales"
 
     within '.current-question' do
       page.should have_select("Select a location", :options => [

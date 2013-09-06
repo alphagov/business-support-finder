@@ -7,7 +7,7 @@ describe "Finding support options" do
       {
         "sectors" => "education,hospitality-and-catering",
         "stages" => "start-up",
-        "business_types" => "public-limited-company",
+        "business_sizes" => "under-10",
         "locations" => "wales",
         "support_types" => "finance,grant,loan"
       },
@@ -65,7 +65,7 @@ describe "Finding support options" do
       click_on 'Next step'
     end
 
-    i_should_be_on "/#{APP_SLUG}/structure", :ignore_query => true
+    i_should_be_on "/#{APP_SLUG}/size", :ignore_query => true
 
     within_section 'completed question 1' do
       page.should have_content("Education")
@@ -76,9 +76,9 @@ describe "Finding support options" do
     end
 
     within '.current-question' do
-      page.should have_content("How is your business structured?")
+      page.should have_content("How many employees do you have?")
 
-      select 'Public limited company', :from => "Select a structure"
+      select 'Under 10', :from => "Select a size"
       click_on 'Next step'
     end
 
@@ -92,7 +92,7 @@ describe "Finding support options" do
       page.should have_content("Start-up")
     end
     within_section 'completed question 3' do
-      page.should have_content("Public limited company")
+      page.should have_content("Under 10")
     end
 
     within '.current-question' do
@@ -115,7 +115,7 @@ describe "Finding support options" do
       page.should have_content("Start-up")
     end
     within_section 'completed question 3' do
-      page.should have_content("Public limited company")
+      page.should have_content("Under 10")
     end
     within_section 'completed question 4' do
       page.should have_content("Finance (any)")
