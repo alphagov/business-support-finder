@@ -3,12 +3,12 @@ require 'spec_helper'
 describe "Types page" do
 
   specify "inspecting the page" do
-    visit "/#{APP_SLUG}/types?sectors=health_manufacturing&stage=start-up&structure=partnership"
+    visit "/#{APP_SLUG}/types?sectors=health_manufacturing&stage=start-up&size=under-10"
 
     assert_completed_questions(
       1 => ["What is your activity or business?", ["Health", "Manufacturing"]],
       2 => ["What stage is your business at?", ["Start-up"]],
-      3 => ["How is your business structured?", ["Partnership"]]
+      3 => ["How many employees do you have?", ["Under 10"]]
     )
 
     assert_current_question(4, "What type of support are you interested in?")
@@ -37,7 +37,7 @@ describe "Types page" do
   end
 
   specify "with types already selected" do
-    visit "/#{APP_SLUG}/types?sectors=health_manufacturing&stage=start-up&structure=sole-trader&types=loan_expertise-and-advice"
+    visit "/#{APP_SLUG}/types?sectors=health_manufacturing&stage=start-up&size=up-to-249&types=loan_expertise-and-advice"
 
     within '.current-question' do
       page.should have_field("Finance (any)", :type => :checkbox, :checked => false)

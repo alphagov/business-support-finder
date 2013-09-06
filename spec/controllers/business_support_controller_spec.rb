@@ -4,7 +4,7 @@ describe BusinessSupportController do
   before :each do
     @question1 = "What is your activity or business?"
     @question2 = "What stage is your business at?"
-    @question3 = "How is your business structured?"
+    @question3 = "How many employees do you have?"
     @question4 = "What type of support are you interested in?"
     @question5 = "Where is your business located?"
   end
@@ -119,9 +119,9 @@ describe BusinessSupportController do
   describe "POST 'stage_submit'" do
     context "with valid sectors" do
       context "with a valid stage" do
-        it "should redirect to the structure page, passing through necessary params" do
+        it "should redirect to the size page, passing through necessary params" do
           post :stage_submit, :sectors => "health_manufacturing", :stage => "pre-start"
-          response.should redirect_to(structure_path(:sectors => "health_manufacturing", :stage => "pre-start"))
+          response.should redirect_to(size_path(:sectors => "health_manufacturing", :stage => "pre-start"))
         end
       end
 
@@ -151,10 +151,10 @@ describe BusinessSupportController do
     end
   end
 
-  describe "GET 'structure'" do
+  describe "GET 'size'" do
     context "with some sectors specified and a stage" do
       def do_get
-        get :structure, :sectors => "health_manufacturing", :stage => "start-up"
+        get :size, :sectors => "health_manufacturing", :stage => "start-up"
       end
 
       it "returns http success" do
@@ -168,10 +168,10 @@ describe BusinessSupportController do
         response.headers["Cache-Control"].should == "max-age=1800, public"
       end
 
-      it "assigns all the business structures" do
-        Structure.should_receive(:all).and_return(:some_structures)
+      it "assigns all the business sizes" do
+        Size.should_receive(:all).and_return(:some_sizes)
         do_get
-        assigns[:structures].should == :some_structures
+        assigns[:sizes].should == :some_sizes
       end
 
       it "loads the given sectors and assigns them to @sectors" do
@@ -201,75 +201,75 @@ describe BusinessSupportController do
     end
 
     it "should 404 with no sectors specified" do
-      get :structure, :stage => "start-up"
+      get :size, :stage => "start-up"
       response.should be_not_found
     end
 
     it "should 404 with no valid sectors specified" do
-      get :structure, :sectors => "non-existent", :stage => "start-up"
+      get :size, :sectors => "non-existent", :stage => "start-up"
       response.should be_not_found
     end
 
     it "should 404 with an invalid stage" do
-      get :structure, :sectors => "health_manufacturing", :stage => "non-existent"
+      get :size, :sectors => "health_manufacturing", :stage => "non-existent"
       response.should be_not_found
     end
 
     it "should 404 with no stage specified" do
-      get :structure, :sectors => "health_manufacturing"
+      get :size, :sectors => "health_manufacturing"
       response.should be_not_found
     end
   end
 
-  describe "POST 'structure_submit'" do
+  describe "POST 'size_submit'" do
     context "with valid sectors, and stage" do
-      context "with a valid structure" do
+      context "with a valid size" do
         it "should redirect to the types page, passing through necessary params" do
-          post :structure_submit, :sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader"
-          response.should redirect_to(types_path(:sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader"))
+          post :size_submit, :sectors => "health_manufacturing", :stage => "pre-start", :size => "under-10"
+          response.should redirect_to(types_path(:sectors => "health_manufacturing", :stage => "pre-start", :size => "under-10"))
         end
       end
 
-      context "with an invalid structure" do
+      context "with an invalid size" do
         it "should redirect back to the form preserving the sectors and stage" do
-          post :structure_submit, :sectors => "health_manufacturing", :stage => "pre-start", :structure => "non-existent"
-          response.should redirect_to(structure_path(:sectors => "health_manufacturing", :stage => "pre-start"))
+          post :size_submit, :sectors => "health_manufacturing", :stage => "pre-start", :size => "non-existent"
+          response.should redirect_to(size_path(:sectors => "health_manufacturing", :stage => "pre-start"))
         end
       end
 
-      context "with no structure" do
+      context "with no size" do
         it "should redirect back to the form preserving the sectors and stage" do
-          post :structure_submit, :sectors => "health_manufacturing", :stage => "pre-start"
-          response.should redirect_to(structure_path(:sectors => "health_manufacturing", :stage => "pre-start"))
+          post :size_submit, :sectors => "health_manufacturing", :stage => "pre-start"
+          response.should redirect_to(size_path(:sectors => "health_manufacturing", :stage => "pre-start"))
         end
       end
     end
 
     it "should 404 with no sectors specified" do
-      post :structure_submit, :stage => "start-up", :structure => 'partnership'
+      post :size_submit, :stage => "start-up", :size => 'under-10'
       response.should be_not_found
     end
 
     it "should 404 with no valid sectors specified" do
-      post :structure_submit, :sectors => "non-existent", :stage => "start-up", :structure => 'partnership'
+      post :size_submit, :sectors => "non-existent", :stage => "start-up", :size => 'under-10'
       response.should be_not_found
     end
 
     it "should 404 with an invalid stage" do
-      post :structure_submit, :sectors => "health_manufacturing", :stage => "non-existent", :structure => 'partnership'
+      post :size_submit, :sectors => "health_manufacturing", :stage => "non-existent", :size => 'under-10'
       response.should be_not_found
     end
 
     it "should 404 with no stage specified" do
-      post :structure_submit, :sectors => "health_manufacturing", :structure => 'partnership'
+      post :size_submit, :sectors => "health_manufacturing", :size => 'under-10'
       response.should be_not_found
     end
   end
 
   describe "GET 'types'" do
-    context "with some sectors, a stage and a structure specified" do
+    context "with some sectors, a stage and a size specified" do
       def do_get(attrs = {})
-        get :types, {:sectors => "health_manufacturing", :stage => "start-up", :structure => "partnership"}.merge(attrs)
+        get :types, {:sectors => "health_manufacturing", :stage => "start-up", :size => "under-10"}.merge(attrs)
       end
 
       it "returns http success" do
@@ -301,22 +301,22 @@ describe BusinessSupportController do
         assigns[:stage].should == :a_stage
       end
 
-      it "loads the given structure and assigns it to @structure" do
-        Structure.should_receive(:find_by_slug).with('partnership').and_return(:a_structure)
+      it "loads the given size and assigns it to @size" do
+        Size.should_receive(:find_by_slug).with('under-10').and_return(:a_size)
         do_get
-        assigns[:structure].should == :a_structure
+        assigns[:size].should == :a_size
       end
 
       it "sets up the questions correctly" do
         Sector.stub(:find_by_slugs).and_return(:some_sectors)
         Stage.stub(:find_by_slug).and_return(:a_stage)
-        Structure.stub(:find_by_slug).and_return(:a_structure)
+        Size.stub(:find_by_slug).and_return(:a_size)
         do_get
         assigns[:current_question_number].should == 4
         assigns[:completed_questions].should == [
           [@question1, :some_sectors, 'sectors'],
           [@question2, [:a_stage], 'stage'],
-          [@question3, [:a_structure], 'structure'],
+          [@question3, [:a_size], 'size'],
         ]
         assigns[:current_question].should == @question4
         assigns[:upcoming_questions].should == [@question5]
@@ -332,95 +332,95 @@ describe BusinessSupportController do
     end
 
     it "should 404 with no sectors specified" do
-      get :location, :stage => "start-up", :structure => 'partnership'
+      get :location, :stage => "start-up", :size => 'under-10'
       response.should be_not_found
     end
 
     it "should 404 with no valid sectors specified" do
-      get :location, :sectors => "non-existent", :stage => "start-up", :structure => 'partnership'
+      get :location, :sectors => "non-existent", :stage => "start-up", :size => 'under-10'
       response.should be_not_found
     end
 
     it "should 404 with an invalid stage" do
-      get :location, :sectors => "health_manufacturing", :stage => "non-existent", :structure => 'partnership'
+      get :location, :sectors => "health_manufacturing", :stage => "non-existent", :size => 'under-10'
       response.should be_not_found
     end
 
     it "should 404 with no stage specified" do
-      get :location, :sectors => "health_manufacturing", :structure => 'partnership'
+      get :location, :sectors => "health_manufacturing", :size => 'under-10'
       response.should be_not_found
     end
 
-    it "should 404 with an invalid structure" do
-      get :location, :sectors => "health_manufacturing", :stage => "start-up", :structure => 'non-existent'
+    it "should 404 with an invalid size" do
+      get :location, :sectors => "health_manufacturing", :stage => "start-up", :size => 'non-existent'
       response.should be_not_found
     end
 
-    it "should 404 with no structure specified" do
+    it "should 404 with no size specified" do
       get :location, :sectors => "health_manufacturing", :stage => 'start-up'
       response.should be_not_found
     end
   end
 
   describe "POST 'types_submit'" do
-    context "with valid structure, sectors, and stage" do
+    context "with valid size, sectors, and stage" do
       context "with valid types" do
         it "should redirect to the location page, passing through necessary params" do
-          post :types_submit, :sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader", :types => ["finance", "grant"]
-          response.should redirect_to(location_path(:sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader", :types => "finance_grant"))
+          post :types_submit, :sectors => "health_manufacturing", :stage => "pre-start", :size => "under-10", :types => ["finance", "grant"]
+          response.should redirect_to(location_path(:sectors => "health_manufacturing", :stage => "pre-start", :size => "under-10", :types => "finance_grant"))
         end
       end
 
       context "with no valid types" do
-        it "should redirect back to the form preserving the structure, sectors and stage" do
-          post :types_submit, :sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader", :types => ["non-existent"]
-          response.should redirect_to(types_path(:sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader"))
+        it "should redirect back to the form preserving the size, sectors and stage" do
+          post :types_submit, :sectors => "health_manufacturing", :stage => "pre-start", :size => "under-10", :types => ["non-existent"]
+          response.should redirect_to(types_path(:sectors => "health_manufacturing", :stage => "pre-start", :size => "under-10"))
         end
       end
 
       context "with no types" do
-        it "should redirect back to the form preserving the structure, sectors and stage" do
-          post :types_submit, :sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader"
-          response.should redirect_to(types_path(:sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader"))
+        it "should redirect back to the form preserving the size, sectors and stage" do
+          post :types_submit, :sectors => "health_manufacturing", :stage => "pre-start", :size => "under-10"
+          response.should redirect_to(types_path(:sectors => "health_manufacturing", :stage => "pre-start", :size => "under-10"))
         end
       end
     end
 
     it "should 404 with no sectors specified" do
-      post :types_submit, :stage => "start-up", :structure => 'partnership', :types => 'finance'
+      post :types_submit, :stage => "start-up", :size => 'under-10', :types => 'finance'
       response.should be_not_found
     end
 
     it "should 404 with no valid sectors specified" do
-      post :types_submit, :sectors => "non-existent", :stage => "start-up", :structure => 'partnership', :types => 'finance'
+      post :types_submit, :sectors => "non-existent", :stage => "start-up", :size => 'under-10', :types => 'finance'
       response.should be_not_found
     end
 
     it "should 404 with an invalid stage" do
-      post :types_submit, :sectors => "health_manufacturing", :stage => "non-existent", :structure => 'partnership', :types => 'finance'
+      post :types_submit, :sectors => "health_manufacturing", :stage => "non-existent", :size => 'under-10', :types => 'finance'
       response.should be_not_found
     end
 
     it "should 404 with no stage specified" do
-      post :types_submit, :sectors => "health_manufacturing", :structure => 'partnership', :types => 'finance'
+      post :types_submit, :sectors => "health_manufacturing", :size => 'under-10', :types => 'finance'
       response.should be_not_found
     end
 
-    it "should 404 with an invalid structure" do
-      post :types_submit, :sectors => "health_manufacturing", :stage => "start-up", :structure => 'non-existent', :types => 'finance'
+    it "should 404 with an invalid size" do
+      post :types_submit, :sectors => "health_manufacturing", :stage => "start-up", :size => 'non-existent', :types => 'finance'
       response.should be_not_found
     end
 
-    it "should 404 with no structure specified" do
+    it "should 404 with no size specified" do
       post :types_submit, :sectors => "health_manufacturing", :stage => 'start-up', :types => 'finance'
       response.should be_not_found
     end
   end
 
   describe "GET 'location'" do
-    context "with some sectors, a stage, a structure and a type specified" do
+    context "with some sectors, a stage, a size and a type specified" do
       def do_get
-        get :location, :sectors => "health_manufacturing", :stage => "start-up", :structure => "partnership", :types => "finance_grant"
+        get :location, :sectors => "health_manufacturing", :stage => "start-up", :size => "under-10", :types => "finance_grant"
       end
 
       it "returns http success" do
@@ -452,10 +452,10 @@ describe BusinessSupportController do
         assigns[:stage].should == :a_stage
       end
 
-      it "loads the given structure and assigns it to @structure" do
-        Structure.should_receive(:find_by_slug).with('partnership').and_return(:a_structure)
+      it "loads the given size and assigns it to @size" do
+        Size.should_receive(:find_by_slug).with('under-10').and_return(:a_size)
         do_get
-        assigns[:structure].should == :a_structure
+        assigns[:size].should == :a_size
       end
 
       it "loads the given types and assigns them to @types" do
@@ -467,14 +467,14 @@ describe BusinessSupportController do
       it "sets up the questions correctly" do
         Sector.stub(:find_by_slugs).and_return(:some_sectors)
         Stage.stub(:find_by_slug).and_return(:a_stage)
-        Structure.stub(:find_by_slug).and_return(:a_structure)
+        Size.stub(:find_by_slug).and_return(:a_size)
         Type.stub(:find_by_slugs).and_return(:some_types)
         do_get
         assigns[:current_question_number].should == 5
         assigns[:completed_questions].should == [
           [@question1, :some_sectors, 'sectors'],
           [@question2, [:a_stage], 'stage'],
-          [@question3, [:a_structure], 'structure'],
+          [@question3, [:a_size], 'size'],
           [@question4, :some_types, 'types'],
         ]
         assigns[:current_question].should == @question5
@@ -483,119 +483,119 @@ describe BusinessSupportController do
     end
 
     it "should 404 with no sectors specified" do
-      get :location, :stage => "start-up", :structure => 'partnership', :types => 'finance'
+      get :location, :stage => "start-up", :size => 'under-10', :types => 'finance'
       response.should be_not_found
     end
 
     it "should 404 with no valid sectors specified" do
-      get :location, :sectors => "non-existent", :stage => "start-up", :structure => 'partnership', :types => 'finance'
+      get :location, :sectors => "non-existent", :stage => "start-up", :size => 'under-10', :types => 'finance'
       response.should be_not_found
     end
 
     it "should 404 with an invalid stage" do
-      get :location, :sectors => "health_manufacturing", :stage => "non-existent", :structure => 'partnership', :types => 'finance'
+      get :location, :sectors => "health_manufacturing", :stage => "non-existent", :size => 'under-10', :types => 'finance'
       response.should be_not_found
     end
 
     it "should 404 with no stage specified" do
-      get :location, :sectors => "health_manufacturing", :structure => 'partnership', :types => 'finance'
+      get :location, :sectors => "health_manufacturing", :size => 'under-10', :types => 'finance'
       response.should be_not_found
     end
 
-    it "should 404 with an invalid structure" do
-      get :location, :sectors => "health_manufacturing", :stage => "start-up", :structure => 'non-existent', :types => 'finance'
+    it "should 404 with an invalid size" do
+      get :location, :sectors => "health_manufacturing", :stage => "start-up", :size => 'non-existent', :types => 'finance'
       response.should be_not_found
     end
 
-    it "should 404 with no structure specified" do
+    it "should 404 with no size specified" do
       get :location, :sectors => "health_manufacturing", :stage => 'start-up', :types => 'finance'
       response.should be_not_found
     end
 
     it "should 404 with no valid types" do
-      get :location, :sectors => "health_manufacturing", :stage => "start-up", :structure => 'partnership', :types => 'non-existent'
+      get :location, :sectors => "health_manufacturing", :stage => "start-up", :size => 'under-10', :types => 'non-existent'
       response.should be_not_found
     end
 
     it "should 404 with no types specified" do
-      get :location, :sectors => "health_manufacturing", :stage => 'start-up', :structure => 'partnership'
+      get :location, :sectors => "health_manufacturing", :stage => 'start-up', :size => 'under-10'
       response.should be_not_found
     end
   end
 
   describe "POST 'location_submit'" do
-    context "with valid sectors, stage, structure and types" do
+    context "with valid sectors, stage, size and types" do
       context "with a valid location" do
         it "should redirect to the support options page, passing through necessary params" do
-          post :location_submit, :sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader", :types => 'finance', :location => 'england'
-          response.should redirect_to(support_options_path(:sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader", :types => 'finance', :location => 'england'))
+          post :location_submit, :sectors => "health_manufacturing", :stage => "pre-start", :size => "under-10", :types => 'finance', :location => 'england'
+          response.should redirect_to(support_options_path(:sectors => "health_manufacturing", :stage => "pre-start", :size => "under-10", :types => 'finance', :location => 'england'))
         end
       end
 
       context "with an invalid location" do
         it "should redirect back to the form preserving the sectors and stage" do
-          post :location_submit, :sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader", :types => 'finance', :location => "non-existent"
-          response.should redirect_to(location_path(:sectors => "health_manufacturing", :stage => "pre-start", :types => 'finance', :structure => "sole-trader"))
+          post :location_submit, :sectors => "health_manufacturing", :stage => "pre-start", :size => "under-10", :types => 'finance', :location => "non-existent"
+          response.should redirect_to(location_path(:sectors => "health_manufacturing", :stage => "pre-start", :types => 'finance', :size => "under-10"))
         end
       end
 
       context "with no location" do
         it "should redirect back to the form preserving the sectors and stage" do
-          post :location_submit, :sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader", :types => 'finance'
-          response.should redirect_to(location_path(:sectors => "health_manufacturing", :stage => "pre-start", :structure => "sole-trader", :types => 'finance'))
+          post :location_submit, :sectors => "health_manufacturing", :stage => "pre-start", :size => "under-10", :types => 'finance'
+          response.should redirect_to(location_path(:sectors => "health_manufacturing", :stage => "pre-start", :size => "under-10", :types => 'finance'))
         end
       end
     end
 
     it "should 404 with no sectors specified" do
-      post :location_submit, :stage => "start-up", :structure => 'partnership', :types => 'finance', :location => 'england'
+      post :location_submit, :stage => "start-up", :size => 'under-10', :types => 'finance', :location => 'england'
       response.should be_not_found
     end
 
     it "should 404 with no valid sectors specified" do
-      post :location_submit, :sectors => "non-existent", :stage => "start-up", :structure => 'partnership', :types => 'finance', :location => 'england'
+      post :location_submit, :sectors => "non-existent", :stage => "start-up", :size => 'under-10', :types => 'finance', :location => 'england'
       response.should be_not_found
     end
 
     it "should 404 with an invalid stage" do
-      post :location_submit, :sectors => "health_manufacturing", :stage => "non-existent", :structure => 'partnership', :types => 'finance', :location => 'england'
+      post :location_submit, :sectors => "health_manufacturing", :stage => "non-existent", :size => 'under-10', :types => 'finance', :location => 'england'
       response.should be_not_found
     end
 
     it "should 404 with no stage specified" do
-      post :location_submit, :sectors => "health_manufacturing", :structure => 'partnership', :types => 'finance', :location => 'england'
+      post :location_submit, :sectors => "health_manufacturing", :size => 'under-10', :types => 'finance', :location => 'england'
       response.should be_not_found
     end
 
-    it "should 404 with an invalid structure" do
-      post :location_submit, :sectors => "health_manufacturing", :stage => "start-up", :structure => 'non-existent', :types => 'finance', :location => 'england'
+    it "should 404 with an invalid size" do
+      post :location_submit, :sectors => "health_manufacturing", :stage => "start-up", :size => 'non-existent', :types => 'finance', :location => 'england'
       response.should be_not_found
     end
 
-    it "should 404 with no structure specified" do
+    it "should 404 with no size specified" do
       post :location_submit, :sectors => "health_manufacturing", :stage => 'start-up', :types => 'finance', :location => 'england'
       response.should be_not_found
     end
 
     it "should 404 with no valid types" do
-      post :location_submit, :sectors => "health_manufacturing", :stage => "start-up", :structure => 'partnership', :types => 'non-existent', :location => 'england'
+      post :location_submit, :sectors => "health_manufacturing", :stage => "start-up", :size => 'under-10', :types => 'non-existent', :location => 'england'
       response.should be_not_found
     end
 
     it "should 404 with no types specified" do
-      post :location_submit, :sectors => "health_manufacturing", :stage => 'start-up', :structure => 'partnership', :location => 'england'
+      post :location_submit, :sectors => "health_manufacturing", :stage => 'start-up', :size => 'under-10', :location => 'england'
       response.should be_not_found
     end
   end
 
   describe "GET 'support_options'" do
-    context "with some sectors, a stage, a structure, types and location specified" do
+    context "with some sectors, a stage, a size, types and location specified" do
       before :each do
         Scheme.stub(:lookup).and_return([])
       end
 
       def do_get
-        get :support_options, :sectors => "health_manufacturing", :stage => "start-up", :structure => "partnership", :types => 'finance_equity', :location => 'wales'
+        get :support_options, :sectors => "health_manufacturing", :stage => "start-up", :size => "under-10", :types => 'finance_equity', :location => 'wales'
       end
 
       it "returns http success" do
@@ -621,10 +621,10 @@ describe BusinessSupportController do
         assigns[:stage].should == :a_stage
       end
 
-      it "loads the given structure and assigns it to @structure" do
-        Structure.should_receive(:find_by_slug).with('partnership').and_return(:a_structure)
+      it "loads the given size and assigns it to @size" do
+        Size.should_receive(:find_by_slug).with('under-10').and_return(:a_size)
         do_get
-        assigns[:structure].should == :a_structure
+        assigns[:size].should == :a_size
       end
 
       it "loads the given types and assigns them to @types" do
@@ -642,14 +642,14 @@ describe BusinessSupportController do
       it "sets up the questions correctly" do
         Sector.stub(:find_by_slugs).and_return(:some_sectors)
         Stage.stub(:find_by_slug).and_return(:a_stage)
-        Structure.stub(:find_by_slug).and_return(:a_structure)
+        Size.stub(:find_by_slug).and_return(:a_size)
         Type.stub(:find_by_slugs).and_return(:some_types)
         Location.stub(:find_by_slug).and_return(:a_location)
         do_get
         assigns[:completed_questions].should == [
           [@question1, :some_sectors, 'sectors'],
           [@question2, [:a_stage], 'stage'],
-          [@question3, [:a_structure], 'structure'],
+          [@question3, [:a_size], 'size'],
           [@question4, :some_types, 'types'],
           [@question5, [:a_location], 'location'],
         ]
@@ -658,12 +658,12 @@ describe BusinessSupportController do
       it "looks up the available support schemes, and assigns them to @support_options" do
         Sector.stub(:find_by_slugs).and_return(:some_sectors)
         Stage.stub(:find_by_slug).and_return(:a_stage)
-        Structure.stub(:find_by_slug).and_return(:a_structure)
+        Size.stub(:find_by_slug).and_return(:a_size)
         Type.stub(:find_by_slugs).and_return(:some_types)
         Location.stub(:find_by_slug).and_return(:a_location)
 
         Scheme.should_receive(:lookup).
-          with(:sectors => :some_sectors, :stage => :a_stage, :structure => :a_structure, :types => :some_types, :location => :a_location).
+          with(:sectors => :some_sectors, :stage => :a_stage, :size => :a_size, :types => :some_types, :location => :a_location).
           and_return(:some_schemes)
 
         do_get
@@ -679,52 +679,52 @@ describe BusinessSupportController do
     end
 
     it "should 404 with no sectors specified" do
-      get :support_options, :stage => "start-up", :structure => 'partnership', :types => 'finance', :location => 'wales'
+      get :support_options, :stage => "start-up", :size => 'under-10', :types => 'finance', :location => 'wales'
       response.should be_not_found
     end
 
     it "should 404 with no valid sectors specified" do
-      get :support_options, :sectors => "non-existent", :stage => "start-up", :structure => 'partnership', :types => 'finance', :location => 'wales'
+      get :support_options, :sectors => "non-existent", :stage => "start-up", :size => 'under-10', :types => 'finance', :location => 'wales'
       response.should be_not_found
     end
 
     it "should 404 with an invalid stage" do
-      get :support_options, :sectors => "health_manufacturing", :stage => "non-existent", :structure => 'partnership', :types => 'finance', :location => 'wales'
+      get :support_options, :sectors => "health_manufacturing", :stage => "non-existent", :size => 'under-10', :types => 'finance', :location => 'wales'
       response.should be_not_found
     end
 
     it "should 404 with no stage specified" do
-      get :support_options, :sectors => "health_manufacturing", :structure => 'partnership', :types => 'finance', :location => 'wales'
+      get :support_options, :sectors => "health_manufacturing", :size=> 'under-10', :types => 'finance', :location => 'wales'
       response.should be_not_found
     end
 
-    it "should 404 with an invalid structure" do
-      get :support_options, :sectors => "health_manufacturing", :stage => "start-up", :structure => 'non-existent', :types => 'finance', :location => 'wales'
+    it "should 404 with an invalid size" do
+      get :support_options, :sectors => "health_manufacturing", :stage => "start-up", :size => 'non-existent', :types => 'finance', :location => 'wales'
       response.should be_not_found
     end
 
-    it "should 404 with no structure specified" do
+    it "should 404 with no size specified" do
       get :support_options, :sectors => "health_manufacturing", :stage => 'start-up', :types => 'finance', :location => 'wales'
       response.should be_not_found
     end
 
     it "should 404 with no valid types" do
-      get :support_options, :sectors => "health_manufacturing", :stage => "start-up", :structure => 'partnership', :types => 'non-existent', :location => 'wales'
+      get :support_options, :sectors => "health_manufacturing", :stage => "start-up", :size => 'under-10', :types => 'non-existent', :location => 'wales'
       response.should be_not_found
     end
 
     it "should 404 with no type specified" do
-      get :support_options, :sectors => "health_manufacturing", :stage => 'start-up', :structure => 'partnership', :location => 'wales'
+      get :support_options, :sectors => "health_manufacturing", :stage => 'start-up', :size => 'under-10', :location => 'wales'
       response.should be_not_found
     end
 
     it "should 404 with an invalid location" do
-      get :support_options, :sectors => "health_manufacturing", :stage => "start-up", :structure => 'partnership', :types => 'finance', :location => 'non-existent'
+      get :support_options, :sectors => "health_manufacturing", :stage => "start-up", :size => 'under-10', :types => 'finance', :location => 'non-existent'
       response.should be_not_found
     end
 
     it "should 404 with no location specified" do
-      get :support_options, :sectors => "health_manufacturing", :stage => 'start-up', :structure => 'partnership', :types => 'finance'
+      get :support_options, :sectors => "health_manufacturing", :stage => 'start-up', :size => 'under-10', :types => 'finance'
       response.should be_not_found
     end
   end
@@ -759,7 +759,7 @@ describe BusinessSupportController do
     end
 
     it "should return 404 for invalid UTF-8 in params" do
-      get :index, "sectors"=>"travel-and-leisure", "stage"=>"pre-start", "structure"=>"sole-trader", "types"=>"acux10764\xC0\xBEz1\xC0\xBCz2a\x90bcxuca10764"
+      get :index, "sectors"=>"travel-and-leisure", "stage"=>"pre-start", "size"=>"under-10", "types"=>"acux10764\xC0\xBEz1\xC0\xBCz2a\x90bcxuca10764"
 
       response.status.should == 404
     end
