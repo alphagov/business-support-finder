@@ -5,7 +5,7 @@
       <div class="filter-block">
         <h2>You can use the filters to only show schemes that you are eligible for</h2>
           
-        <form method="get" action="/government/announcements" id="document-filter" class="js-document-filter">
+        <form method="get" action="schemes.json" id="document-filter" class="js-document-filter">
           <fieldset>
             <legend class="visuallyhidden">Filter available support</legend>
 
@@ -15,32 +15,32 @@
 
               <div class="filter-inner checkbox">
                 <label for="finance">Finance</label>
-                <input name="finance" id="finance" type="checkbox" value="0" checked="checked">
+                <input name="types[]" id="finance" type="checkbox" value="finance" >
               </div>
 
               <div class="filter-inner checkbox">
                 <label for="equity">Equity</label>
-                <input name="equity" id="equity" type="checkbox" value="0" checked="checked">
+                <input name="types[]" id="equity" type="checkbox" value="equity" >
               </div>
 
               <div class="filter-inner checkbox">
                 <label for="grant">Grant</label>
-                <input name="grant" id="grant" type="checkbox" value="0" checked="checked">
+                <input name="types[]" id="grant" type="checkbox" value="grant" checked="checked">
               </div>
 
               <div class="filter-inner checkbox">
                 <label for="loan">Loan</label>
-                <input name="loan" id="loan" type="checkbox" value="0" checked="checked">
+                <input name="types[]" id="loan" type="checkbox" value="loan" checked="checked">
               </div>
 
               <div class="filter-inner checkbox">
                 <label for="expertise-and-advice">Expertise and advice</label>
-                <input name="expertise-and-advice" id="expertise-and-advice" type="checkbox" value="0" checked="checked">
+                <input name="types[]" id="expertise-and-advice" type="checkbox" value="expertise-and-advice" checked="checked">
               </div>
 
               <div class="filter-inner checkbox">
                 <label for="recognition-award">Recognition award</label>
-                <input name="recognition-award" id="recognition-award" type="checkbox" value="0" checked="checked">
+                <input name="types[]" id="recognition-award" type="checkbox" value="recognition-award" checked="checked">
               </div>
             </div>
 
