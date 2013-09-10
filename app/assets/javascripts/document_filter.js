@@ -18,7 +18,10 @@ window.GOVUK.support.history = function() {
     loading: false,
     $form: null,
     formType: '',
+    groupNumber: 20,
     staticData: null,
+    groups: [],
+    currentGroupIdx: 0,
 
     getData: function(params) {
       var $form = this.$form,
@@ -81,35 +84,35 @@ window.GOVUK.support.history = function() {
           },
           
           isValidItem = function(item) {
-            var paramNum = params.length,
+            var idx = params.length,
                 paramName,
                 paramValues,
                 param,
-                valueMatches,
-                paramMatches = 0;
+                matchedValues,
+                matchedParams = 0;
 
-            while (paramNum--) {
-              if ($.isArray(params[paramNum].value)) {
-                valueMatches = 0;
-                paramName = params[paramNum].name;
-                paramValues = params[paramNum].value;
-                $.map(params[paramNum].value, function (paramValue) {
-                  if (paramInItem(item, { 'name': paramName, 'value': paramValue})) { valueMatches++; }
+            while (idx--) {
+              if ($.isArray(params[idx].value)) {
+                matchedValues = 0;
+                paramName = params[idx].name;
+                paramValues = params[idx].value;
+                $.map(params[idx].value, function (paramValue) {
+                  if (paramInItem(item, { 'name': paramName, 'value': paramValue })) { matchedValues++; }
                 });
-                if (valueMatches === paramValues.length) { paramMatches++ }
+                if (matchedValues === paramValues.length) { matchedParams++ }
               }
               else {
-                param = params[paramNum];
+                param = params[idx];
                 if (param.value === 'all') {
-                  paramMatches++;
+                  matchedParams++;
                 }
                 else {
-                  if (paramInItem(item, param)) { paramMatches++ }
+                  if (paramInItem(item, param)) { matchedParams++ }
                 }
               }
             }
 
-            return (paramMatches === params.length);
+            return (matchedParams === params.length);
           };
 
       while (itemNum--) {
@@ -120,7 +123,48 @@ window.GOVUK.support.history = function() {
       return results;
     },
     renderTable: function(data) {
-      $('.js-filter-results').mustache('documents-_filter_table', data);
+      var items = data.length,
+          currentGroup,
+          idx,
+          scheme,
+          schemesString = "",
+
+      formatAmount = function(amount) {
+        return (amount + "").replace(/[0]{3}/g, ',000');
+      },
+
+      capitaliseFirstLetter = function(string) {
+          return string.charAt(0).toUpperCase() + string.slice(1);
+      };
+
+      this.numberOfGroups = Math.ceil(items / this.groupNumber);
+
+      if (this.currentGroupIdx === 0) {
+        for (idx = 0; idx < items; idx += this.groupNumber) {
+          this.groups.push(data.slice(idx, (idx + this.groupNumber)));
+        }
+      }
+
+      currentGroup = this.groups[this.currentGroupIdx] 
+      for (idx = 0; idx < this.groupNumber; idx++) {
+        scheme = currentGroup[idx];
+        schemesString += "<li class='scheme'><h3><a href='" +
+                          scheme.slug +
+                          "'>" +
+                          scheme.title +
+                          "</a></h3><p class='attributes'>" +
+                          scheme.support_types.join(',') + ",";
+
+        if (scheme.min_value !== null) {
+          schemesString += "£" + formatAmount(scheme.min_value) + " - £" + formatAmount(scheme.max_value);
+        }
+         
+        schemesString += "</p><p>" + 
+                          scheme.short_description +
+                          "</p></li>";
+      }
+      $('.results-list').html(schemesString);
+      //$('.js-filter-results').mustache('documents-_filter_table', data);
     },
     updateAtomFeed: function(data) {
       if (data.atom_feed_url) {
@@ -149,32 +193,6 @@ window.GOVUK.support.history = function() {
       $('.submit .button').addClass('disabled');
       $(".filter-results-summary").find('.selections').text("Loading results…");
       $(".feeds").addClass('js-hidden');
-      //documentFilter.loading = true;
-      // TODO: make a spinny updating thing
-      /*
-      $.ajax(jsonUrl, {
-        cache: false,
-        dataType:'json',
-        data: params,
-        complete: function(){
-          documentFilter.loading = false;
-        },
-        success: function(data) {
-          documentFilter.updateFeeds(data);
-          if (data.results) {
-            documentFilter.renderTable(data);
-            documentFilter.liveResultCounter(data);
-          }
-
-          var newUrl = url + "?" + $form.serialize();
-          history.pushState(documentFilter.currentPageState(), null, newUrl);
-          //window._gaq && _gaq.push(['_trackPageview', newUrl]);
-        },
-        error: function() {
-          $submitButton.removeAttr('disabled');
-        }
-      });
-      */
       params = documentFilter.filterParams(params);
       data = documentFilter.sortData(params);
       documentFilter.renderTable(data);
