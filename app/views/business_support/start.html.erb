@@ -47,9 +47,31 @@
             <!-- Business location -->
             <div class="filter business-location" id="location-filter">
               <div class="filter-inner">
-                <label class="title" for="location">Business location</label>
-                <p class="hint">Enter a postcode, city or county</p>
-                <input id="location" name="location" placeholder="Location" type="text" value="">
+                <label for="location">Business location</label>
+                <select id="select-location" name="location" class="single-row-select">
+                <option value="all" selected="selected">Any location</option>
+                <optgroup label="England">
+                  <option value="england">All of England</option>
+                  <option value="london">London</option>
+                  <option value="north-east">North East</option>
+                  <option value="north-west">North West</option>
+                  <option value="east-midlands">East Midlands</option>
+                  <option value="west-midlands">West Midlands</option>
+                  <option value="yorkshire-and-the-humber">Yorkshire and the Humber</option>
+                  <option value="south-west">South West</option>
+                  <option value="east-of-england">East of England</option>
+                  <option value="south-east">South East</option>
+                </optgroup>
+                <optgroup label="Scotland">
+                  <option value="scotland">All of Scotland</option>
+                </optgroup>
+                <optgroup label="Wales">
+                  <option value="wales">All of Wales</option>
+                </optgroup>
+                <optgroup label="Northern Ireland">
+                  <option value="northern-ireland">All of Northern Ireland</option>
+                </optgroup>
+                </select>
               </div>
             </div>
 
@@ -72,22 +94,22 @@
               <div class="filter-inner">
                 <label for="business-type-option">Activity or business type</label>
                 <select class="single-row-select" id="business-type-option" name="business-type-option"><option value="all" selected="">All activities and business types</option>
-                  <option value="">Agriculture</option>
-                  <option value="">Business and Finance</option>
-                  <option value="">Construction</option>
-                  <option value="">Education</option>
-                  <option value="">Health</option>
-                  <option value="">Hospitality and Catering</option>
-                  <option value="">Information, Communication and Media</option>
-                  <option value="">Manufacturing</option>
-                  <option value="">Mining</option>
-                  <option value="">Real Estate</option>
-                  <option value="">Science and Technology</option>
-                  <option value="">Service Industries</option>
-                  <option value="">Transport and Distribution</option>
-                  <option value="">Travel and Leisure</option>
-                  <option value="">Utilities</option>
-                  <option value="">Wholesale and Retail</option>
+                  <option value="agriculture">Agriculture</option>
+                  <option value="business-and-finance">Business and Finance</option>
+                  <option value="construction">Construction</option>
+                  <option value="education">Education</option>
+                  <option value="health">Health</option>
+                  <option value="hospitality-and-catering">Hospitality and Catering</option>
+                  <option value="information-communication-and-media">Information, Communication and Media</option>
+                  <option value="manufacturing">Manufacturing</option>
+                  <option value="mining">Mining</option>
+                  <option value="real-estate">Real Estate</option>
+                  <option value="science-and-technology">Science and Technology</option>
+                  <option value="servicer- industries">Service Industries</option>
+                  <option value="transport-and- distribution">Transport and Distribution</option>
+                  <option value="travel-and-leisure">Travel and Leisure</option>
+                  <option value="utilities">Utilities</option>
+                  <option value="wholesale-and-retail">Wholesale and Retail</option>
                 </select>
               </div>
             </div>
@@ -97,10 +119,10 @@
               <div class="filter-inner">
                 <label for="business-stage-option">Business stage</label>
                 <select class="single-row-select" id="business-stage-option" name="business-stage-option"><option value="all" selected="">All business stages</option>
-                  <option value="">Pre-start</option>
-                  <option value="">Start-up</option>
-                  <option value="">Grow and sustain</option>
-                  <option value="">Exiting a business</option>
+                  <option value="pre-start">Pre-start</option>
+                  <option value="start-up">Start-up</option>
+                  <option value="grow-and-sustain">Grow and sustain</option>
+                  <option value="exiting-a-business">Exiting a business</option>
                 </select>
               </div>
             </div>
