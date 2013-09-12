@@ -53,6 +53,7 @@ window.GOVUK.support.history = function() {
       var $form = this.$form,
           $submitButton = $form.find('input[type=submit]');
 
+/*
       $.ajax($form.attr('action'), {
         cache: false,
         dataType:'json',
@@ -61,13 +62,16 @@ window.GOVUK.support.history = function() {
           //documentFilter.loading = false;
         },
         success: function(data) {
-          documentFilter.staticData = data;
+*/
+          documentFilter.staticData = schemeData;/* data */
           documentFilter.submitFilters({ preventDefault: function() {} });
+/*
         },
         error: function() {
           $submitButton.removeAttr('disabled');
         }
       });
+*/
     },
     filterParams: function(params) {
       var collections = {},
