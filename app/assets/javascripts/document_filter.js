@@ -23,6 +23,32 @@ window.GOVUK.support.history = function() {
     groups: [],
     currentGroupIdx: 0,
 
+    comparisonTests: {
+      'default': function(param, item) {
+        var valueInItem = function(item, param) {
+          if (typeof item[param.name] !== 'undefined' && ($.inArray(param.value, item[param.name]) !== -1)) {
+            return true;
+          }
+          return false;
+        };
+
+        return valueInItem(item, param);
+      },
+      'max_is_less_than': function(param, item) {
+        return parseInt(param.value.max, 10) < item[param.name];
+      }
+    },
+    paramTests: {},
+    testParam: function(param, item) {
+      var test = (typeof this.paramTests[param.name] !== 'undefined') ? this.paramTests[param.name] : 'default';
+
+      if (param.value === 'all') {
+        return true;
+      }
+      else {
+        return this.comparisonTests[test](param, item);
+      }
+    },
     getData: function(params) {
       var $form = this.$form,
           $submitButton = $form.find('input[type=submit]');
@@ -44,7 +70,8 @@ window.GOVUK.support.history = function() {
       });
     },
     filterParams: function(params) {
-      var supportFilters = [],
+      var collections = {},
+          collection,
           tempParams = [],
           mappings = {
             "business-type-option": "sectors",
@@ -52,25 +79,36 @@ window.GOVUK.support.history = function() {
             "employee-count-option": "max_employees",
             "types[]": "support_types",
             "location": "locations"
-          };
+          },
+          range;
+
       $.map(params, function (param) {
-        if (param.name === 'types[]') {
-          supportFilters.push(param.value);
+        if (param.name.match(/\[\]$/)) {
+          if (typeof collections[param.name] !== 'undefined') {
+            collections[param.name].push(param.value);
+          }
+          else {
+            collections[param.name] = [param.value];
+          }
         }
         else if (param.name === 'employee-count-option' && param.value !== 'all') {
+          range = param.value.match(/(\d+)-(\d+)$/);
+          range = { 'min': range[1], 'max': range[2] };
           tempParams.push({
             'name': param.name,
-            'value': param.value.match(/(\d+)$/)[0]
+            'value': range
           });
         }
         else { tempParams.push(param); }
       });
 
-      if (supportFilters.length) { 
-        params = tempParams;
-        params.push({ 'name': 'types[]', 'value': supportFilters }); 
-        tempParams = [];
+      params = tempParams;
+      if (!$.isEmptyObject(collections)) { 
+        for (collection in collections) { 
+          params.push({ 'name': collection, 'value': collections[collection] }); 
+        };
       }
+      tempParams = [];
 
       $.map(params, function (param) {
         param.name = mappings[param.name];
@@ -82,14 +120,8 @@ window.GOVUK.support.history = function() {
     sortData: function(params) {
       var items = this.staticData,
           itemNum = items.length,
+          filter = this,
           results = [],
-
-          paramInItem = function(item, param) {
-            if (typeof item[param.name] !== 'undefined' && ($.inArray(param.value, item[param.name]) !== -1)) {
-              return true;
-            }
-            return false;
-          },
           
           isValidItem = function(item) {
             var idx = params.length,
@@ -105,7 +137,7 @@ window.GOVUK.support.history = function() {
                 paramName = params[idx].name;
                 paramValues = params[idx].value;
                 $.each(paramValues, function (idx, paramValue) {
-                  if (paramInItem(item, { 'name': paramName, 'value': paramValue })) {
+                  if (filter.testParam({ 'name': paramName, 'value': paramValue }, item)) {
                      matchedParams++;
                      return false;
                    }
@@ -113,14 +145,8 @@ window.GOVUK.support.history = function() {
               }
               else {
                 param = params[idx];
-                if (param.value === 'all') {
+                if (filter.testParam(param, item)) {
                   matchedParams++;
-                }
-                else if (param.name === 'max_employees' && parseInt(param.value, 10) < item.max_employees) {
-                  matchedParams++;
-                }
-                else {
-                  if (paramInItem(item, param)) { matchedParams++ }
                 }
               }
             }
@@ -188,8 +214,8 @@ window.GOVUK.support.history = function() {
             if ((scheme.min_value !== null && scheme.min_value > 0)  || (scheme.max_value !== null && scheme.max_value > 0)) {
               schemesString += formatAmount(scheme.min_value) + " - " + formatAmount(scheme.max_value);
             }
+
             schemesString = schemesString.replace(/,\s$/, '');
-             
             schemesString += "</p><p>" + 
                               scheme.short_description +
                               "</p>";
@@ -197,7 +223,6 @@ window.GOVUK.support.history = function() {
             schemesString += "<p class='visuallyhidden'>stages: " + scheme.stages.join(", ") + "</p>";
             schemesString += "<p class='visuallyhidden'>sectors: " + scheme.sectors.join(", ") + "</p>";
             schemesString += "<p class='visuallyhidden'>max employees: " + scheme.max_employees + "</p>";
-
             schemesString += "</li>";
           };
 
@@ -308,10 +333,11 @@ window.GOVUK.support.history = function() {
   };
   window.GOVUK.documentFilter = documentFilter;
 
-  var enableDocumentFilter = function() {
+  var enableDocumentFilter = function(opts) {
     if (window.ieVersion && ieVersion === 6) {
       return this;
     }
+    documentFilter.paramTests = $.extend(documentFilter.paramTests, opts);
     this.each(function(){
       if (window.GOVUK.support.history()) {
         var $form = $(this),
