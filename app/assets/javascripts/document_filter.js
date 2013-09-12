@@ -177,7 +177,36 @@ window.GOVUK.support.history = function() {
 
       return true;
     },
-    renderTable: function(data) {
+    pagination : {
+      atStart: function() { return documentFilter.currentGroupIdx === 0; },
+      atEnd: function() { return documentFilter.currentGroupIdx === (documentFilter.numberOfGroups - 1) },
+      update: function() {
+        var $links = $('.previous-next-navigation li').removeClass('js-hidden'),
+            $previous = $links.filter('.previous'),
+            $next = $links.filter('.next');
+        
+        if (this.atStart()) {
+          $previous.addClass('js-hidden')
+        }
+        else if (this.atEnd()) {
+          $next.addClass('js-hidden');
+        }
+        $previous.find('span').text((documentFilter.currentGroupIdx) + " of " + documentFilter.numberOfGroups);
+        $next.find('span').text((documentFilter.currentGroupIdx + 2) + " of " + documentFilter.numberOfGroups);
+      }
+    },
+    moveGroup: function(direction) {
+      var pagination = this.pagination;
+      if (direction === 'previous' && !pagination.atStart()) {
+        this.currentGroupIdx--;
+      }
+      else if (direction === 'next' && !pagination.atEnd()) {
+        this.currentGroupIdx++;
+      }
+      pagination.update();
+      documentFilter.renderTable();
+    },
+    renderTable: function() {
       var currentGroup,
           currentGroupNumber,
           idx,
@@ -262,12 +291,13 @@ window.GOVUK.support.history = function() {
 
       $('.submit .button').addClass('disabled');
       $(".filter-results-summary").find('.selections').text("Loading results…");
-      $(".feeds").addClass('js-hidden');
+      //$(".feeds").addClass('js-hidden');
       params = documentFilter.filterParams(params);
       data = documentFilter.sortData(params);
       if (documentFilter.setGroups(data)) {
-        documentFilter.renderTable(data);
-        documentFilter.liveResultCounter(data);
+        documentFilter.renderTable();
+        documentFilter.pagination.update();
+        documentFilter.liveResultCounter(data.length);
       }
     },
     urlWithout: function(object, value){
@@ -289,8 +319,8 @@ window.GOVUK.support.history = function() {
       }
       return url.replace(reg, 'keywords='+ newLocations.join('+'));
     },
-    liveResultCounter: function(data) {
-      $('.filter-results-summary span').text(data.length);
+    liveResultCounter: function(total) {
+      $('.filter-results-summary span').text(total);
     },
     currentPageState: function() {
       return {
@@ -355,6 +385,11 @@ window.GOVUK.support.history = function() {
         $form.submit(documentFilter.submitFilters);
         $form.find('select, input[name=location]:radio, input:checkbox').change(function(e){
           $form.submit();
+        });
+        $('.previous-next-navigation li a').on('click', function (e) {
+          var direction = ($(e.target).parent().hasClass('previous')) ? 'previous' : 'next';
+          documentFilter.moveGroup(direction);
+          return false;
         });
 
         var delay = (function(){
