@@ -39,6 +39,7 @@ window.GOVUK.support.history = function() {
       }
     },
     paramTests: {},
+    requiredParams: [],
     testParam: function(param, item) {
       var test = (typeof this.paramTests[param.name] !== 'undefined') ? this.paramTests[param.name] : 'default';
 
@@ -126,6 +127,7 @@ window.GOVUK.support.history = function() {
           itemNum = items.length,
           filter = this,
           results = [],
+          requiredPresent = 0,
           
           isValidItem = function(item) {
             var idx = params.length,
@@ -158,6 +160,16 @@ window.GOVUK.support.history = function() {
             return (matchedParams === params.length);
           };
 
+      $.each(documentFilter.requiredParams, function (idx, requiredParam) {
+        $.each(params, function (idx, param) {
+          if (param.name === requiredParam) {
+            requiredPresent++;
+            return false;
+          }
+        });
+      });
+      if (requiredPresent < documentFilter.requiredParams.length) { return []; }
+
       while (itemNum--) {
         if (isValidItem(items[itemNum])) {
           results.push(items[itemNum]);
@@ -169,21 +181,26 @@ window.GOVUK.support.history = function() {
       var items = data.length,
           idx;
 
-      if (items === 0) { return false; }
-
       this.currentGroupIdx = 0;
       this.groups = [];
-      this.numberOfGroups = Math.ceil(items / this.groupNumber);
+      this.numberOfGroups = (items > 0) ? Math.ceil(items / this.groupNumber) : 0;
+
+      if (items === 0) { return false; }
 
       for (idx = 0; idx < items; idx += this.groupNumber) {
         this.groups.push(data.slice(idx, (idx + this.groupNumber)));
       }
-
-      return true;
     },
     pagination : {
       atStart: function() { return documentFilter.currentGroupIdx === 0; },
-      atEnd: function() { return documentFilter.currentGroupIdx === (documentFilter.numberOfGroups - 1) },
+      atEnd: function() { 
+        if (documentFilter.numberOfGroups > 1) {
+           return documentFilter.currentGroupIdx === (documentFilter.numberOfGroups - 1);
+        }
+        else {
+          return true;
+        }
+      },
       update: function() {
         var $links = $('.previous-next-navigation li').removeClass('js-hidden'),
             $previous = $links.filter('.previous'),
@@ -192,7 +209,7 @@ window.GOVUK.support.history = function() {
         if (this.atStart()) {
           $previous.addClass('js-hidden')
         }
-        else if (this.atEnd()) {
+        if (this.atEnd()) {
           $next.addClass('js-hidden');
         }
         $previous.find('span').text((documentFilter.currentGroupIdx) + " of " + documentFilter.numberOfGroups);
@@ -237,7 +254,7 @@ window.GOVUK.support.history = function() {
           },
 
           renderScheme = function(scheme) {
-            schemesString += "<li class='scheme'><h3><a href='" +
+            schemesString += "<li class='scheme'><h3><a href='http://www.gov.uk/" +
                               scheme.slug +
                               "'>" +
                               scheme.title +
@@ -259,6 +276,11 @@ window.GOVUK.support.history = function() {
             schemesString += "</li>";
           };
 
+      if (this.numberOfGroups === 0) { 
+        $('.results-list').html('');
+        return false;
+      }
+
       currentGroup = this.groups[this.currentGroupIdx] 
       currentGroupNumber = currentGroup.length;
       for (idx = 0; idx < currentGroupNumber; idx++) {
@@ -268,6 +290,7 @@ window.GOVUK.support.history = function() {
       }
       $('.results-list').html(schemesString);
       //$('.js-filter-results').mustache('documents-_filter_table', data);
+      $(document).scrollTop(0);
     },
     updateAtomFeed: function(data) {
       if (data.atom_feed_url) {
@@ -298,11 +321,10 @@ window.GOVUK.support.history = function() {
       //$(".feeds").addClass('js-hidden');
       params = documentFilter.filterParams(params);
       data = documentFilter.sortData(params);
-      if (documentFilter.setGroups(data)) {
-        documentFilter.renderTable();
-        documentFilter.pagination.update();
-        documentFilter.liveResultCounter(data.length);
-      }
+      documentFilter.setGroups(data)
+      documentFilter.renderTable();
+      documentFilter.pagination.update();
+      documentFilter.liveResultCounter(data.length);
     },
     urlWithout: function(object, value){
       var url = window.location.search,
@@ -371,7 +393,14 @@ window.GOVUK.support.history = function() {
     if (window.ieVersion && ieVersion === 6) {
       return this;
     }
-    documentFilter.paramTests = $.extend(documentFilter.paramTests, opts);
+    if (arguments.length > 0) {
+      if (typeof opts.paramTests !== 'undefined') {
+        documentFilter.paramTests = $.extend(documentFilter.paramTests, opts.paramTests);
+      }
+      if (typeof opts.requiredParams !== 'undefined') {
+        documentFilter.requiredParams = $.merge(documentFilter.requiredParams, opts.requiredParams)
+      }
+    }
     this.each(function(){
       if (window.GOVUK.support.history()) {
         var $form = $(this),
