@@ -8,7 +8,7 @@ class Scheme < OpenStruct
     possible_schemes = imminence_api.business_support_schemes(
       :sectors => facets[:sectors].map(&:slug).join(','),
       :stages => facets[:stage].slug,
-      :business_types => facets[:structure].slug,
+      :business_sizes => facets[:size].slug,
       :locations => facets[:location].slug,
       :support_types => facets[:types].map(&:slug).join(',')
     )

@@ -24,7 +24,7 @@ describe "Business stage page" do
     end
 
     assert_upcoming_questions(
-      3 => "How is your business structured?",
+      3 => "How many employees do you have?",
       4 => "What type of support are you interested in?",
       5 => "Where is your business located?"
     )
@@ -33,7 +33,7 @@ describe "Business stage page" do
 
     click_on "Next step"
 
-    i_should_be_on "/#{APP_SLUG}/structure", :ignore_query => true
+    i_should_be_on "/#{APP_SLUG}/size", :ignore_query => true
   end
 
   specify "with a stage already selected" do

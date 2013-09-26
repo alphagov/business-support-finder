@@ -8,19 +8,19 @@ class BusinessSupportController < ApplicationController
   QUESTIONS = [
     "What is your activity or business?",
     "What stage is your business at?",
-    "How is your business structured?",
+    "How many employees do you have?",
     "What type of support are you interested in?",
     "Where is your business located?",
   ]
-  ACTIONS = %w(sectors stage structure types location)
+  ACTIONS = %w(sectors stage size types location)
 
   before_filter :load_artefact
-  before_filter :load_and_validate_sectors, :only => [:stage, :stage_submit, :structure, :structure_submit, :types, :types_submit, :location, :location_submit, :support_options]
-  before_filter :load_and_validate_stage, :only => [:structure, :structure_submit, :types, :types_submit, :location, :location_submit, :support_options]
-  before_filter :load_and_validate_structure, :only => [:types, :types_submit, :location, :location_submit, :support_options]
+  before_filter :load_and_validate_sectors, :only => [:stage, :stage_submit, :size, :size_submit, :types, :types_submit, :location, :location_submit, :support_options]
+  before_filter :load_and_validate_stage, :only => [:size, :size_submit, :types, :types_submit, :location, :location_submit, :support_options]
+  before_filter :load_and_validate_size, :only => [:types, :types_submit, :location, :location_submit, :support_options]
   before_filter :load_and_validate_types, :only => [:location, :location_submit, :support_options]
   before_filter :load_and_validate_location, :only => [:support_options]
-  before_filter :set_expiry, :only => [:start, :sectors, :stage, :structure, :types, :location, :support_options]
+  before_filter :set_expiry, :only => [:start, :sectors, :stage, :size, :types, :location, :support_options]
   after_filter :send_slimmer_headers
 
   def start
@@ -39,29 +39,29 @@ class BusinessSupportController < ApplicationController
 
   def stage_submit
     if Stage.find_by_slug(params[:stage])
-      redirect_to next_params.merge(:action => 'structure', :stage => params[:stage])
+      redirect_to next_params.merge(:action => 'size', :stage => params[:stage])
     else
       redirect_to next_params.merge(:action => 'stage')
     end
   end
 
-  def structure
-    @structures = Structure.all
+  def size
+    @sizes = Size.all
     setup_questions [@sectors, [@stage]]
   end
 
-  def structure_submit
-    if Structure.find_by_slug(params[:structure])
-      redirect_to next_params.merge(:action => 'types', :structure => params[:structure])
+  def size_submit
+    if Size.find_by_slug(params[:size])
+      redirect_to next_params.merge(:action => 'types', :size => params[:size])
     else
-      redirect_to next_params.merge(:action => 'structure')
+      redirect_to next_params.merge(:action => 'size')
     end
   end
 
   def types
     @types = Type.all
     @picked_types = Type.find_by_slugs(params[:types].to_s.split('_'))
-    setup_questions [@sectors, [@stage], [@structure]]
+    setup_questions [@sectors, [@stage], [@size]]
   end
 
   def types_submit
@@ -75,7 +75,7 @@ class BusinessSupportController < ApplicationController
 
   def location
     @locations = Location.all
-    setup_questions [@sectors, [@stage], [@structure], @types]
+    setup_questions [@sectors, [@stage], [@size], @types]
   end
 
   def location_submit
@@ -90,11 +90,11 @@ class BusinessSupportController < ApplicationController
     @support_options = Scheme.lookup(
       :sectors => @sectors,
       :stage => @stage,
-      :structure => @structure,
+      :size => @size,
       :types => @types,
       :location => @location
     )
-    setup_questions [@sectors, [@stage], [@structure], @types, [@location]]
+    setup_questions [@sectors, [@stage], [@size], @types, [@location]]
   end
 
   private
@@ -110,7 +110,7 @@ class BusinessSupportController < ApplicationController
     p = {}
     p[:sectors] = @sectors.map(&:slug).join('_') if @sectors
     p[:stage] = @stage.slug if @stage
-    p[:structure] = @structure.slug if @structure
+    p[:size] = @size.slug if @size
     p[:types] = @types.map(&:slug).join('_') if @types
     p
   end
@@ -129,9 +129,9 @@ class BusinessSupportController < ApplicationController
     error_404 unless @stage
   end
 
-  def load_and_validate_structure
-    @structure = Structure.find_by_slug(params[:structure])
-    error_404 unless @structure
+  def load_and_validate_size
+    @size= Size.find_by_slug(params[:size])
+    error_404 unless @size
   end
 
   def load_and_validate_types
