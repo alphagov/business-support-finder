@@ -39,8 +39,9 @@ describe "Finding support options" do
   end
 
   it "should show all available schemes by default" do
-    # shows count
-    # shows right results
+    page.should have_selector('.filter-results-summary h3 span', text: '2')
+    page.should have_content 'Graduate start-up'
+    page.should have_content 'Manufacturing Services - Wales'
   end
 
   it "should allow filtering"
