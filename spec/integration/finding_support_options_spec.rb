@@ -38,9 +38,10 @@ describe "Finding support options" do
     visit "/#{APP_SLUG}/search"
   end
 
-  it "should show all available schemes by default"
+  it "should show all available schemes by default" do
     # shows count
     # shows right results
+  end
 
   it "should allow filtering"
 end
