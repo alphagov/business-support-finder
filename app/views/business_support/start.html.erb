@@ -1,0 +1,34 @@
+<% content_for :page_class do %>start-page<% end %>
+
+<div class="article-container group">
+  <article role="article" class="group">
+    <div class="inner">
+
+      <section class="intro">
+        <div class="get-started-intro">
+          <p>Find business finance, support, grants and loans, including:</p>
+
+          <ul>
+            <li>government grants</li>
+            <li>publicly-backed finance and loans</li>
+            <li>business support eg mentoring, consultancy</li>
+            <li>funding for small and medium-sized businesses and start-ups</li>
+          </ul>
+
+          <p>Customise your search by location, size and kind of business.</p>
+        </div>
+
+        <p id="get-started" class="get-started">
+        <%= link_to sectors_path, :class => "big button" do %>
+          Get started <span class="indicator"></span>
+        <% end %>
+        </p>
+      </section>
+    </div>
+  </article>
+  <div id="report-a-problem"></div>
+</div>
+
+<% content_for :after_content do %>
+  <div id="related-items"></div>
+<% end %>
