@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "Finding support options" do
 
   specify "Happy path through the app" do
+  pending
     imminence_has_business_support_schemes(
       {
         "sectors" => "education,hospitality-and-catering",
