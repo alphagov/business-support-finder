@@ -6,17 +6,17 @@ class Scheme < OpenStruct
 
   def self.lookup(facets)
     possible_schemes = imminence_api.business_support_schemes(
-      :sectors => facets[:sectors].map(&:slug).join(','),
-      :stages => facets[:stage].slug,
-      :business_sizes => facets[:size].slug,
-      :locations => facets[:location].slug,
-      :support_types => facets[:types].map(&:slug).join(',')
+      :stages => facets[:stage],
+      :business_sizes => facets[:size],
+      :locations => facets[:location],
+      :sectors => facets[:sectors].join(','),
+      :support_types => facets[:types].join(',')
     )
     return [] if possible_schemes["results"].empty?
 
     identifiers = possible_schemes["results"].map {|s| s["business_support_identifier"] }
     schemes = content_api.business_support_schemes(identifiers)
-    
+
     schemes["results"].sort_by { |s| identifiers.index(s["identifier"]) }.map do |s|
       self.new(s)
     end

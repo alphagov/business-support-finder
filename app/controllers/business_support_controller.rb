@@ -27,6 +27,13 @@ class BusinessSupportController < ApplicationController
   end
 
   def search
+    @schemes = Scheme.lookup(
+      :stage => '',
+      :size => '',
+      :location => '',
+      :types => [],
+      :sectors => []
+    )
   end
 
   def sectors
