@@ -4,13 +4,7 @@ describe "Finding support options" do
 
   before do
     imminence_has_business_support_schemes(
-      {
-        "sectors" => "education,hospitality-and-catering",
-        "stages" => "start-up",
-        "business_sizes" => "under-10",
-        "locations" => "wales",
-        "support_types" => "finance,grant,loan"
-      },
+      nil,
       [
         {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
         {"title" => "Manufacturing Services - Wales", "business_support_identifier" => "manufacturing-services-wales"},
