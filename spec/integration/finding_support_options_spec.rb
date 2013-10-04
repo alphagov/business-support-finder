@@ -34,8 +34,8 @@ describe "Finding support options" do
 
   it "should show all available schemes by default" do
     page.should have_selector('.filter-results-summary h3 span', text: '2')
-    page.should have_content 'Graduate start-up'
-    page.should have_content 'Manufacturing Services - Wales'
+    page.should have_content 'Graduate start-up scheme'
+    page.should have_content 'Manufacturing Services scheme - Wales'
   end
 
   it "should allow filtering"
