@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Finding support options" do
 
   before do
-    imminence_has_business_support_schemes(
+    stub_imminence_business_support_schemes_for_filter(
       nil,
       [
         {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
