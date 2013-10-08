@@ -10,6 +10,18 @@ describe "Finding support options" do
         {"title" => "Manufacturing Services - Wales", "business_support_identifier" => "manufacturing-services-wales"},
       ]
     )
+    stub_imminence_business_support_schemes_for_filter(
+      {
+            "sectors" => "",
+            "stages" => "start-up",
+            "business_sizes" => "",
+            "locations" => "",
+            "support_types" => ""
+      },
+      [
+        {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
+      ]
+    )
     content_api_has_business_support_scheme(
       "title" => "Graduate start-up scheme",
       "web_url" => "https://www.gov.uk/graduate-start-up",
