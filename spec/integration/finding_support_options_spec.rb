@@ -33,16 +33,16 @@ describe "Finding support options" do
   end
 
   it "should show all available schemes by default" do
-    page.should have_selector('.filter-results-summary h3 span', text: '2')
     page.should have_content 'Graduate start-up scheme'
     page.should have_content 'Manufacturing Services scheme - Wales'
+    page.should have_selector('.filter-results-summary h3 span', text: '2') # result count
   end
 
   it "should allow filtering" do
     select "Start-up", :from => "Business stage"
     click_on "Refresh results"
-    page.should have_selector('.filter-results-summary h3 span', text: '1')
     page.should have_content 'Graduate start-up scheme'
     page.should_not have_content 'Manufacturing Services scheme - Wales'
+    page.should have_selector('.filter-results-summary h3 span', text: '1') # result count
   end
 end
