@@ -38,5 +38,11 @@ describe "Finding support options" do
     page.should have_content 'Manufacturing Services scheme - Wales'
   end
 
-  it "should allow filtering"
+  it "should allow filtering" do
+    select "Start-up", :from => "Business stage"
+    click_on "Refresh results"
+    page.should have_selector('.filter-results-summary h3 span', text: '1')
+    page.should have_content 'Graduate start-up scheme'
+    page.should_not have_content 'Manufacturing Services scheme - Wales'
+  end
 end
