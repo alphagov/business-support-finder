@@ -56,11 +56,15 @@ describe "Finding support options" do
   end
 
   it "should allow filtering" do
-    select "Start-up", :from => "Business stage"
+    uncheck("Loan")
+    uncheck("Recognition award")
+    select "London", :from => "location"
+    select "249", :from => "size"
+    select "Education", :from => "type"
+    select "Grow", :from => "stage"
     click_on "Refresh results"
     page.assert_selector('li.scheme', count: 1)
     page.should have_content 'Graduate start-up scheme'
-    page.should_not have_content 'An unfiltered scheme'
     page.should have_selector('.filter-results-summary h3 span', text: '1') # result count
   end
 end
