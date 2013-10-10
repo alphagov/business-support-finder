@@ -27,7 +27,9 @@ class BusinessSupportController < ApplicationController
   end
 
   def search
-    @schemes = Scheme.lookup
+    scheme_filter = {}
+    scheme_filter[:stage] = params[:stage] unless params[:stage] == "all"
+    @schemes = Scheme.lookup(scheme_filter)
   end
 
   def sectors
