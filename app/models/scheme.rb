@@ -11,7 +11,9 @@ class Scheme < OpenStruct
     facets_hash << {:locations => facets[:location]} if facets[:location]
     facets_hash << {:sectors => facets[:sectors].join(',')} if facets[:sectors]
     facets_hash << {:support_types => facets[:types].join(',')} if facets[:types]
+
     possible_schemes = imminence_api.business_support_schemes(facets_hash)
+
     return [] if possible_schemes["results"].empty?
 
     identifiers = possible_schemes["results"].map {|s| s["business_support_identifier"] }
