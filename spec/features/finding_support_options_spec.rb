@@ -8,7 +8,6 @@ describe "Finding support options" do
       [
         {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
         {"title" => "Manufacturing Services - Wales", "business_support_identifier" => "manufacturing-services-wales"},
-        {"title" => "An unfiltered scheme", "business_support_identifier" => "unfiltered-scheme"},
       ]
     )
     stub_imminence_business_support_schemes_for_filter(
@@ -48,8 +47,8 @@ describe "Finding support options" do
   it "should show all available schemes by default" do
     page.should have_content 'Graduate start-up scheme'
     page.should have_content 'Manufacturing Services scheme - Wales'
-    page.assert_selector('li.scheme', count: 3)
-    page.should have_selector('.filter-results-summary h3 span', text: '3') # result count
+    page.assert_selector('li.scheme', count: 2)
+    page.should have_selector('.filter-results-summary h3 span', text: '2') # result count
   end
 
   it "should allow filtering" do
