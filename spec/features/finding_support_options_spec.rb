@@ -12,7 +12,12 @@ describe "Finding support options" do
     )
     stub_imminence_business_support_schemes_for_filter(
       {
-            "stages" => "start-up",
+            "stages" => "grow-and-sustain",
+            "business_types" => "grow-and-sustain",
+            "business_sizes" => "11-249",
+            "sectors" => "education",
+            "locations" => "london",
+            "support_types" => "finance,grant,expertise-and-advice",
       },
       [
         {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
