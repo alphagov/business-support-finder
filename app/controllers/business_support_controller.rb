@@ -28,6 +28,11 @@ class BusinessSupportController < ApplicationController
 
   def search
     @locations = Location.all
+    @sectors = Sector.all
+    @stages = Stage.all
+    @sizes = Size.all
+    @types = Type.all
+
     scheme_filter = {}
 
     scheme_filter[:support_types] = params[:support_types]
