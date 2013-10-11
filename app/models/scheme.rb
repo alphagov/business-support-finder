@@ -10,7 +10,7 @@ class Scheme < OpenStruct
     facets_hash[:business_sizes] = facets[:size] if facets[:size]
     facets_hash[:locations] = facets[:location] if facets[:location]
     facets_hash[:sectors] = facets[:sector] if facets[:sector]
-    facets_hash[:support_types] = facets[:support_types].join(',') if facets[:support_type]
+    facets_hash[:support_types] = facets[:support_types].join(',') if facets[:support_types]
 
     possible_schemes = imminence_api.business_support_schemes(facets_hash)
 
