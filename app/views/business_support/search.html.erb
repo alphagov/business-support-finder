@@ -61,13 +61,12 @@
             <div class="filter" id="employee-count-filter">
               <div class="filter-inner">
                 <label for="employee-count-option">Number of employees</label>
-                <select class="single-row-select" id="employee-count-option" name="size"><option value="all" selected="">Any number of employees</option>
-                  <option value="0-10">0 – 9</option>
-                  <option value="11-249">10 – 249</option>
-                  <option value="250-499">250 – 499</option>
-                  <option value="500-999">500 – 999</option>
-                  <option value="over-1000">1000+</option>
-                </select>
+                <%= select_tag :size,
+                      options_from_collection_for_select(@sizes, :slug, :name, params[:size]),
+                      :prompt => 'Any number of employees',
+                      :id => "employee-count-option",
+                      :class => "single-row-select"
+                %>
               </div>
             </div>
 
@@ -75,24 +74,12 @@
             <div class="filter" id="business-type-filter">
               <div class="filter-inner">
                 <label for="business-type-option">Activity or business type</label>
-                <select class="single-row-select" id="business-type-option" name="sector"><option value="all" selected="">All activities and business types</option>
-                  <option value="agriculture">Agriculture</option>
-                  <option value="business-and-finance">Business and Finance</option>
-                  <option value="construction">Construction</option>
-                  <option value="education">Education</option>
-                  <option value="health">Health</option>
-                  <option value="hospitality-and-catering">Hospitality and Catering</option>
-                  <option value="information-communication-and-media">Information, Communication and Media</option>
-                  <option value="manufacturing">Manufacturing</option>
-                  <option value="mining">Mining</option>
-                  <option value="real-estate">Real Estate</option>
-                  <option value="science-and-technology">Science and Technology</option>
-                  <option value="service-industries">Service Industries</option>
-                  <option value="transport-and-distribution">Transport and Distribution</option>
-                  <option value="travel-and-leisure">Travel and Leisure</option>
-                  <option value="utilities">Utilities</option>
-                  <option value="wholesale-and-retail">Wholesale and Retail</option>
-                </select>
+                <%= select_tag :sector,
+                      options_from_collection_for_select(@sectors, :slug, :name, params[:sector]),
+                      :prompt => 'All activities and business types',
+                      :id => "employee-count-option",
+                      :class => "single-row-select"
+                %>
               </div>
             </div>
 
@@ -100,12 +87,12 @@
             <div class="filter" id="business-stage-filter">
               <div class="filter-inner">
                 <label for="business-stage-option">Business stage</label>
-                <select class="single-row-select" id="business-stage-option" name="stage"><option value="all" selected="">All business stages</option>
-                  <option value="pre-start">Pre-start</option>
-                  <option value="start-up">Start-up</option>
-                  <option value="grow-and-sustain">Grow and sustain</option>
-                  <option value="exiting-a-business">Exiting a business</option>
-                </select>
+                <%= select_tag :stage,
+                      options_from_collection_for_select(@stages, :slug, :name, params[:stage]),
+                      :prompt => 'All business stages',
+                      :id => "business-stage-option",
+                      :class => "single-row-select"
+                %>
               </div>
             </div>
 
