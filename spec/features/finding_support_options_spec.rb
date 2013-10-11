@@ -65,7 +65,7 @@ describe "Finding support options" do
     uncheck("recognition-award")
     select "London", :from => "location"
     select "249", :from => "size"
-    select "Education", :from => "type"
+    select "Education", :from => "sector"
     select "Grow", :from => "stage"
     click_on "Refresh results"
     page.assert_selector('li.scheme', count: 1)
