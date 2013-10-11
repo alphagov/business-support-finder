@@ -61,8 +61,8 @@ describe "Finding support options" do
   end
 
   it "should allow filtering" do
-    uncheck("Loan")
-    uncheck("Recognition award")
+    uncheck("loan")
+    uncheck("recognition-award")
     select "London", :from => "location"
     select "249", :from => "size"
     select "Education", :from => "type"
@@ -71,5 +71,17 @@ describe "Finding support options" do
     page.assert_selector('li.scheme', count: 1)
     page.should have_content 'Graduate start-up scheme'
     page.should have_selector('.filter-results-summary h3 span', text: '1') # result count
+  end
+
+  it "should show all if none checked" do
+    uncheck("recognition-award")
+    uncheck("finance")
+    uncheck("equity")
+    uncheck("loan")
+    uncheck("expertise-and-advice")
+    uncheck("grant")
+    click_on "Refresh results"
+    page.assert_selector('li.scheme', count: 2)
+    page.should have_selector('.filter-results-summary h3 span', text: '2') # result count
   end
 end
