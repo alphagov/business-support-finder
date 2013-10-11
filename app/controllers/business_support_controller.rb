@@ -29,12 +29,12 @@ class BusinessSupportController < ApplicationController
   def search
     scheme_filter = {}
 
-    scheme_filter[:types] = params[:types]
+    scheme_filter[:support_types] = params[:support_types]
 
     # "all" excluded as this means unfiltered
     scheme_filter[:location] = params[:location] unless params[:location] == "all"
     scheme_filter[:size] = params[:size] unless params[:size] == "all"
-    scheme_filter[:type] = params[:type] unless params[:type] == "all"
+    scheme_filter[:sector] = params[:sector] unless params[:sector] == "all"
     scheme_filter[:stage] = params[:stage] unless params[:stage] == "all"
 
     @schemes = Scheme.lookup(scheme_filter)
