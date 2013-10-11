@@ -27,6 +27,7 @@ class BusinessSupportController < ApplicationController
   end
 
   def search
+    @locations = Location.all
     scheme_filter = {}
 
     scheme_filter[:support_types] = params[:support_types]

@@ -48,30 +48,12 @@
             <div class="filter business-location" id="location-filter">
               <div class="filter-inner">
                 <label for="select-location">Business location</label>
-                <select id="select-location" name="location" class="single-row-select">
-                <option value="all" selected="selected">Any location</option>
-                <optgroup label="England">
-                  <option value="england">All of England</option>
-                  <option value="london">London</option>
-                  <option value="north-east">North East</option>
-                  <option value="north-west">North West</option>
-                  <option value="east-midlands">East Midlands</option>
-                  <option value="west-midlands">West Midlands</option>
-                  <option value="yorkshire-and-the-humber">Yorkshire and the Humber</option>
-                  <option value="south-west">South West</option>
-                  <option value="east-of-england">East of England</option>
-                  <option value="south-east">South East</option>
-                </optgroup>
-                <optgroup label="Scotland">
-                  <option value="scotland">All of Scotland</option>
-                </optgroup>
-                <optgroup label="Wales">
-                  <option value="wales">All of Wales</option>
-                </optgroup>
-                <optgroup label="Northern Ireland">
-                  <option value="northern-ireland">All of Northern Ireland</option>
-                </optgroup>
-                </select>
+                <%= select_tag :location,
+                      option_groups_from_collection_for_select(@locations, :regions, :name, :slug, :name, params[:location]),
+                      :prompt => 'Any location',
+                      :id => "select-location",
+                      :class => "single-row-select"
+                %>
               </div>
             </div>
 
