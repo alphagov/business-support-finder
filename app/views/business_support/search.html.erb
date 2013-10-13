@@ -12,36 +12,16 @@
             <!-- Available support -->
             <div class="filter" id="support-filter">
               <h3 class="title">Available support</h3>
-
-              <div class="filter-inner checkbox">
-                <label for="finance">Finance</label>
-                <input name="support_types[]" id="finance" type="checkbox" value="finance" checked="checked">
-              </div>
-
-              <div class="filter-inner checkbox">
-                <label for="equity">Equity</label>
-                <input name="support_types[]" id="equity" type="checkbox" value="equity" checked="checked">
-              </div>
-
-              <div class="filter-inner checkbox">
-                <label for="grant">Grant</label>
-                <input name="support_types[]" id="grant" type="checkbox" value="grant" checked="checked">
-              </div>
-
-              <div class="filter-inner checkbox">
-                <label for="loan">Loan</label>
-                <input name="support_types[]" id="loan" type="checkbox" value="loan" checked="checked">
-              </div>
-
-              <div class="filter-inner checkbox">
-                <label for="expertise-and-advice">Expertise and advice</label>
-                <input name="support_types[]" id="expertise-and-advice" type="checkbox" value="expertise-and-advice" checked="checked">
-              </div>
-
-              <div class="filter-inner checkbox">
-                <label for="recognition-award">Recognition award</label>
-                <input name="support_types[]" id="recognition-award" type="checkbox" value="recognition-award" checked="checked">
-              </div>
+              <% [ "finance", "equity", "grant", "loan", "expertise_and_advice", "recognition_award" ].each do |support_type| %>
+                <div class="filter-inner checkbox">
+                  <label for="<%= support_type.dasherize %>"><%= support_type.humanize %></label>
+                  <input name="support_types[]" id="<%= support_type.dasherize %>" type="checkbox"
+                          <% if !params["support_types"] || params["support_types"].include?(support_type.dasherize) %>
+                            checked="checked"
+                          <% end %>
+                          value="<%= support_type.dasherize %>">
+                </div>
+              <% end %>
             </div>
 
             <!-- Business location -->
