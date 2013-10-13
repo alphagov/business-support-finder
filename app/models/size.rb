@@ -2,10 +2,10 @@ require 'ostruct'
 
 class Size < OpenStruct
   HARDCODED_DATA = {
-    "0-10" => "0 - 9",
-    "11-249" => "10 - 249",
-    "250-499" => "250 - 499",
-    "500-999" => "500 - 999",
+    "under-10" => "0 - 9",
+    "up-to-249" => "10 - 249",
+    "between-250-and-500" => "250 - 500",
+    "between-501-and-1000" => "501 - 1000",
     "over-1000" => "1000+"
   }.map do |slug, name|
     new(:slug => slug, :name => name)
