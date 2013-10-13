@@ -92,7 +92,13 @@
 
   <div class="block-4 filtered-results">
     <div class="inner-block">
-
+    <% if @schemes.count == 0 %>
+      <!-- Summary -->
+      <div class="filter-results-summary" aria-live="polite" aria-atomic="true">
+        <h3>Available schemes</h3>
+        <p>No schemes available for this selection.</p>
+      </div>
+    <% else %>
       <!-- Summary -->
       <div class="filter-results-summary" aria-live="polite" aria-atomic="true">
         <h3>Available schemes<br /><span><%= @schemes.count %></span></h3>
@@ -107,6 +113,7 @@
         </li>
         <% end %>
       </ul>
+    <% end %>
 
     </div>
   </div>
