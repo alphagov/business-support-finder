@@ -102,6 +102,6 @@ describe "Finding support options" do
     select "Exiting", :from => "stage"
     click_on "Refresh results"
     page.assert_selector('li.scheme', count: 0)
-    page.should have_content('No schemes')
+    page.should have_content('no matching schemes')
   end
 end
