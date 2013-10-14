@@ -14,10 +14,10 @@ describe "Finding support options" do
       {
             "stages" => "grow-and-sustain",
             "business_types" => "grow-and-sustain",
-            "business_sizes" => "11-249",
+            "business_sizes" => "between-11-and-249",
             "sectors" => "education",
             "locations" => "london",
-            "support_types" => "finance,grant,expertise-and-advice",
+            "support_types" => "finance,equity,grant,loan,expertise-and-advice,recognition-award",
       },
       [
         {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
