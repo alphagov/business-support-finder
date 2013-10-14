@@ -16,7 +16,7 @@
                 <div class="filter-inner checkbox">
                   <label for="<%= support_type.dasherize %>"><%= support_type.humanize %></label>
                   <input name="support_types[]" id="<%= support_type.dasherize %>" type="checkbox"
-                          <% if !params["support_types"] || params["support_types"].include?(support_type.dasherize) %>
+                          <% if params["support_types"] && params["support_types"].include?(support_type.dasherize) %>
                             checked="checked"
                           <% end %>
                           value="<%= support_type.dasherize %>">
