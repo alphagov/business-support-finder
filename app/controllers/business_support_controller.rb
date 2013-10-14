@@ -37,7 +37,6 @@ class BusinessSupportController < ApplicationController
 
     scheme_filter[:support_types] = params[:support_types]
 
-    # "all" excluded as this means unfiltered
     scheme_filter[:location] = params[:location] unless params[:location] == ""
     scheme_filter[:size] = params[:size] unless params[:size] == ""
     scheme_filter[:sector] = params[:sector] unless params[:sector] == ""
