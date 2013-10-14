@@ -12,12 +12,20 @@ describe "Finding support options" do
     )
     stub_imminence_business_support_schemes_for_filter(
       {
+            "support_types" => "finance,equity,grant,loan,expertise-and-advice,recognition-award",
+      },
+      [
+        {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
+        {"title" => "Manufacturing Services - Wales", "business_support_identifier" => "manufacturing-services-wales"},
+      ]
+    )
+    stub_imminence_business_support_schemes_for_filter(
+      {
             "stages" => "grow-and-sustain",
-            "business_types" => "grow-and-sustain",
-            "business_sizes" => "between-11-and-249",
+            "business_sizes" => "up-to-249",
             "sectors" => "education",
             "locations" => "london",
-            "support_types" => "finance,equity,grant,loan,expertise-and-advice,recognition-award",
+            "support_types" => "finance,equity,grant,expertise-and-advice",
       },
       [
         {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
