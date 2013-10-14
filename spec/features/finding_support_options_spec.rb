@@ -92,4 +92,16 @@ describe "Finding support options" do
     page.assert_selector('li.scheme', count: 2)
     page.should have_selector('.filter-results-summary h3 span', text: '2') # result count
   end
+
+  it "should show message if no matching schemes" do
+    uncheck("recognition-award")
+    uncheck("finance")
+    uncheck("equity")
+    uncheck("loan")
+    uncheck("grant")
+    select "Exiting", :from => "stage"
+    click_on "Refresh results"
+    page.assert_selector('li.scheme', count: 0)
+    page.should have_content('No schemes')
+  end
 end
