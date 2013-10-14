@@ -3,14 +3,14 @@ require 'spec_helper'
 describe "Finding support options" do
 
   before do
-    stub_imminence_business_support_schemes_for_filter(
+    imminence_has_business_support_schemes(
       nil,
       [
         {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
         {"title" => "Manufacturing Services - Wales", "business_support_identifier" => "manufacturing-services-wales"},
       ]
     )
-    stub_imminence_business_support_schemes_for_filter(
+    imminence_has_business_support_schemes(
       {
             "support_types" => "finance,equity,grant,loan,expertise-and-advice,recognition-award",
       },
@@ -19,7 +19,7 @@ describe "Finding support options" do
         {"title" => "Manufacturing Services - Wales", "business_support_identifier" => "manufacturing-services-wales"},
       ]
     )
-    stub_imminence_business_support_schemes_for_filter(
+    imminence_has_business_support_schemes(
       {
             "stages" => "grow-and-sustain",
             "business_sizes" => "up-to-249",
