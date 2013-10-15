@@ -35,10 +35,11 @@ class BusinessSupportController < ApplicationController
 
     scheme_filter = {}
 
-    # If all the checkboxes are unchecked nothing is submitted
-    # Use support_types_sumitted hidden field to check that and filter
-    # everything out.
-    if !params[:support_types] && params[:support_types_submitted]
+    # By default get all the schemes for first time landing on page
+    if params.nil?
+      @schemes = Scheme.lookup(scheme_filter)
+    elsif !params[:support_types] && params[:support_types_submitted]
+      # User has unticked everything and we should show them nothing
       @schemes = []
     else
       scheme_filter[:support_types] = params[:support_types]
