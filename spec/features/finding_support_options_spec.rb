@@ -91,6 +91,7 @@ describe "Finding support options" do
     click_on "Refresh results"
     page.assert_selector('li.scheme', count: 0)
     page.should have_content('no matching schemes')
+    page.should have_selector('.filter-results-summary h3 span', text: '0') # result count
   end
 
   it "should show message if no matching schemes" do
@@ -103,5 +104,6 @@ describe "Finding support options" do
     click_on "Refresh results"
     page.assert_selector('li.scheme', count: 0)
     page.should have_content('no matching schemes')
+    page.should have_selector('.filter-results-summary h3 span', text: '0') # result count
   end
 end
