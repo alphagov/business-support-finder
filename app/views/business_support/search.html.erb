@@ -14,14 +14,19 @@
             <!-- Available support -->
             <div class="filter" id="support-filter">
               <h3 class="title">Available support</h3>
-              <% [ "finance", "equity", "grant", "loan", "expertise_and_advice", "recognition_award" ].each do |support_type| %>
+              <% { "finance" => "Finance",
+                   "equity" => "Equity",
+                   "grant" => "Grant",
+                   "loan" => "Loan and guarantees",
+                   "expertise-and-advice" => "Expertise and advice",
+                   "recognition-award" => "Recognition award" }.each do |support_type, display_name| %>
                 <div class="filter-inner checkbox">
-                  <label for="<%= support_type.dasherize %>"><%= support_type.humanize %></label>
-                  <input name="support_types[]" id="<%= support_type.dasherize %>" type="checkbox"
-                          <% if !params["support_types_submitted"] || params["support_types"] && params["support_types"].include?(support_type.dasherize) %>
+                  <label for="<%= support_type %>"><%= display_name %></label>
+                  <input name="support_types[]" id="<%= support_type %>" type="checkbox"
+                          <% if !params["support_types_submitted"] || params["support_types"] && params["support_types"].include?(support_type) %>
                             checked="checked"
                           <% end %>
-                          value="<%= support_type.dasherize %>">
+                          value="<%= support_type %>">
                 </div>
               <% end %>
               <input name="support_types_submitted" type="hidden" value="true">
