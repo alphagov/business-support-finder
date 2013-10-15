@@ -16,10 +16,10 @@
               <h3 class="title">Available support</h3>
               <% { "finance" => "Finance",
                    "equity" => "Equity",
-                   "grant" => "Grant",
-                   "loan" => "Loan and guarantees",
+                   "grant" => "Grants",
+                   "loan" => "Loans and guarantees",
                    "expertise-and-advice" => "Expertise and advice",
-                   "recognition-award" => "Recognition award" }.each do |support_type, display_name| %>
+                   "recognition-award" => "Recognition awards" }.each do |support_type, display_name| %>
                 <div class="filter-inner checkbox">
                   <label for="<%= support_type %>"><%= display_name %></label>
                   <input name="support_types[]" id="<%= support_type %>" type="checkbox"
