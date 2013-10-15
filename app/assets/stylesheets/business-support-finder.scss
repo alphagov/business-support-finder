@@ -5,6 +5,7 @@
 @import "_typography";
 @import "_colours";
 @import "_css3";
+@import "design-patterns/_buttons.scss";
 
 
 
@@ -58,6 +59,8 @@ $right-to-left: false !default;
 // ------
 
 .filter-block {
+
+  padding-bottom: 3em;
 
   .business-location {
     margin:0 0 30px 0;
@@ -377,6 +380,13 @@ ul.results-list {
   }
 }
 
+.button {
+  @include button;
+  @include bold-24;
+  padding: 0.45em 0 0.35em 0;
+  width: 100%;
+
+}
 
 .feed {
   display: inline-block;
