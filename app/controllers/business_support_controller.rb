@@ -39,17 +39,17 @@ class BusinessSupportController < ApplicationController
     # Use support_types_sumitted hidden field to check that and filter
     # everything out.
     if !params[:support_types] && params[:support_types_submitted]
-      scheme_filter[:support_types] = []
+      @schemes = []
     else
       scheme_filter[:support_types] = params[:support_types]
+
+      scheme_filter[:location] = params[:location] unless params[:location] == ""
+      scheme_filter[:size] = params[:size] unless params[:size] == ""
+      scheme_filter[:sector] = params[:sector] unless params[:sector] == ""
+      scheme_filter[:stage] = params[:stage] unless params[:stage] == ""
+
+      @schemes = Scheme.lookup(scheme_filter)
     end
-
-    scheme_filter[:location] = params[:location] unless params[:location] == ""
-    scheme_filter[:size] = params[:size] unless params[:size] == ""
-    scheme_filter[:sector] = params[:sector] unless params[:sector] == ""
-    scheme_filter[:stage] = params[:stage] unless params[:stage] == ""
-
-    @schemes = Scheme.lookup(scheme_filter)
   end
 
   def sectors
