@@ -264,6 +264,7 @@ $right-to-left: false !default;
     }
   }
 
+
   .feeds {
     margin:52px 0 0 0;
     float:right;
@@ -366,6 +367,12 @@ ul.results-list {
 
     @include media(tablet){
       padding: 0 $gutter-half;
+    }
+  }
+  .no-matching-schemes {
+    h2 {
+      @include core-27;
+      padding-top: 0.5em;
     }
   }
 }
@@ -508,7 +515,7 @@ ul.results-list {
 
 // CUSTOM STYLES AND OVERRIDES
 // WRITTEN FOR THIS PROTOTYPE
-main {
+.search-page main {
   header.page-header {
     div {
       margin:0;

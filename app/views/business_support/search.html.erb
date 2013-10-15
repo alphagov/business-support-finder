@@ -1,3 +1,5 @@
+<% content_for :page_class do %>search-page<% end %>
+
 <div class="article-container group business-support-index">
 
   <div class="block-2 filter-form">
@@ -105,8 +107,10 @@
       </div>
 
       <% if @schemes.count == 0 %>
-        <p>There are no matching schemes.</p>
+      <div class="no-matching-schemes">
+        <h2>There are no matching schemes.</h2>
         <p>Try making your search broader and try again.</p>
+      </div>  
       <% else %>
         <!-- Results -->
         <ul class="results-list">
