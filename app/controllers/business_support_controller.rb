@@ -38,7 +38,7 @@ class BusinessSupportController < ApplicationController
     # If all the checkboxes are unchecked nothing is submitted
     # Use support_types_sumitted hidden field to check that and filter
     # everything out.
-    if !params[:support_types] && params[:support_types_sumitted]
+    if !params[:support_types] && params[:support_types_submitted]
       scheme_filter[:support_types] = []
     else
       scheme_filter[:support_types] = params[:support_types]
