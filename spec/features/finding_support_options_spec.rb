@@ -60,7 +60,7 @@ describe "Finding support options" do
     page.should have_selector('.filter-results-summary h3 span', text: '2') # result count
   end
 
-  it "should show all available schemes if nothing selected" do
+  it "should show all available schemes if unchanged form submitted" do
     click_on "Refresh results"
     page.should have_content 'Graduate start-up scheme'
     page.should have_content 'Manufacturing Services scheme - Wales'
