@@ -143,135 +143,20 @@
 
   <div class="block-4 filtered-results">
     <div class="inner-block">
-      
+
       <!-- Summary -->
       <div class="filter-results-summary" aria-live="polite" aria-atomic="true">
-        <h3>Available schemes<br /><span>823</span></h3>
+        <h3>Available schemes<br /><span><%= @schemes.count %></span></h3>
       </div>
 
       <!-- Results -->
       <ul class="results-list">
-        
+        <% @schemes.each do |scheme| %>
         <li class="scheme">
-          <h3><a href="#">Helping Your Business Grow Internationally</a></h3>
-          <p class="attributes">Expertise and advice</p>
-          <p>Get expert trade advice and practical support to grow your business overseas..</p>
+          <h3><a href="<%= scheme.web_url %>"><%= scheme.title %></a></h3>
+          <p><%= scheme.short_description %></p>
         </li>
-
-        <li class="scheme">
-          <h3><a href="#">Knowledge Transfer Networks</a></h3>
-          <p class="attributes">Expertise and advice</p>
-          <p>National network set up to support innovation.</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">Start-Up Loans</a></h3>
-          <p class="attributes">Loan, &pound;4,500 on average</p>
-          <p>Loans and mentoring for 18 to 30 year olds who are looking to start a business.</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">Annual Accounting Scheme</a></h3>
-          <p class="attributes">Expertise and advice, Finance, £1 - £3,000</p>
-          <p>Allows businesses below £1.35m turnover to make a single annual VAT return with instalment payments throughout the year and a final balancing payment.</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">English Woodland Grant Scheme</a></h3>
-          <p class="attributes">Grant</p>
-          <p>Grants to improve woodlands.</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">Enhanced Capital Allowances (energy and water)</a></h3>
-          <p class="attributes">Finance, £1,000 - £3,000</p>
-          <p>Tax deduction for the full cost of purchasing certain energy-saving and water-efficient equipment.</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">Heritage Enterprise (HE)</a></h3>
-          <p class="attributes">Finance, £100,000 - £5,000,000</p>
-          <p>Heritage Enterprise supports enterprising community organisations across UK to rescue neglected historic buildings and sites and unlock their economic potential..</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">Helping Your Business Grow Internationally</a></h3>
-          <p class="attributes">Expertise and advice</p>
-          <p>Get expert trade advice and practical support to grow your business overseas..</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">Knowledge Transfer Networks</a></h3>
-          <p class="attributes">Expertise and advice</p>
-          <p>National network set up to support innovation.</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">Start-Up Loans</a></h3>
-          <p class="attributes">Loan, &pound;4,500 on average</p>
-          <p>Loans and mentoring for 18 to 30 year olds who are looking to start a business.</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">Annual Accounting Scheme</a></h3>
-          <p class="attributes">Expertise and advice, Finance, £1 - £3,000</p>
-          <p>Allows businesses below £1.35m turnover to make a single annual VAT return with instalment payments throughout the year and a final balancing payment.</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">English Woodland Grant Scheme</a></h3>
-          <p class="attributes">Grant</p>
-          <p>Grants to improve woodlands.</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">Enhanced Capital Allowances (energy and water)</a></h3>
-          <p class="attributes">Finance, £1,000 - £3,000</p>
-          <p>Tax deduction for the full cost of purchasing certain energy-saving and water-efficient equipment.</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">Heritage Enterprise (HE)</a></h3>
-          <p class="attributes">Finance, £100,000 - £5,000,000</p>
-          <p>Heritage Enterprise supports enterprising community organisations across UK to rescue neglected historic buildings and sites and unlock their economic potential..</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">Helping Your Business Grow Internationally</a></h3>
-          <p class="attributes">Expertise and advice</p>
-          <p>Get expert trade advice and practical support to grow your business overseas..</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">Knowledge Transfer Networks</a></h3>
-          <p class="attributes">Expertise and advice</p>
-          <p>National network set up to support innovation.</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">Start-Up Loans</a></h3>
-          <p class="attributes">Loan, &pound;4,500 on average</p>
-          <p>Loans and mentoring for 18 to 30 year olds who are looking to start a business.</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">Annual Accounting Scheme</a></h3>
-          <p class="attributes">Expertise and advice, Finance, £1 - £3,000</p>
-          <p>Allows businesses below £1.35m turnover to make a single annual VAT return with instalment payments throughout the year and a final balancing payment.</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">English Woodland Grant Scheme</a></h3>
-          <p class="attributes">Grant</p>
-          <p>Grants to improve woodlands.</p>
-        </li>
-
-        <li class="scheme">
-          <h3><a href="#">Enhanced Capital Allowances (energy and water)</a></h3>
-          <p class="attributes">Finance, £1,000 - £3,000</p>
-          <p>Tax deduction for the full cost of purchasing certain energy-saving and water-efficient equipment.</p>
-        </li>
-
+        <% end %>
       </ul>
 
     </div>

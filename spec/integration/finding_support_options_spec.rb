@@ -2,16 +2,9 @@ require 'spec_helper'
 
 describe "Finding support options" do
 
-  specify "Happy path through the app" do
-  pending
+  before do
     imminence_has_business_support_schemes(
-      {
-        "sectors" => "education,hospitality-and-catering",
-        "stages" => "start-up",
-        "business_sizes" => "under-10",
-        "locations" => "wales",
-        "support_types" => "finance,grant,loan"
-      },
+      nil,
       [
         {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
         {"title" => "Manufacturing Services - Wales", "business_support_identifier" => "manufacturing-services-wales"},
@@ -33,110 +26,15 @@ describe "Finding support options" do
         "short_description" => "Some blurb abour the welsh Manufacturing services scheme",
       }
     )
+  end
 
-    visit "/#{APP_SLUG}"
+  before do
+    visit "/#{APP_SLUG}/search"
+  end
 
-    page.should have_link("Get started")
-
-    click_on "Get started"
-
-    i_should_be_on "/#{APP_SLUG}/sectors"
-
-    within '.current-question' do
-      page.should have_content("What is your activity or business?")
-    end
-
-    click_add_link "Education"
-    click_add_link "Hospitality and Catering"
-
-    click_on "Next step"
-
-    i_should_be_on "/#{APP_SLUG}/stage", :ignore_query => true
-
-    within_section 'completed question 1' do
-      page.should have_content("Education")
-      page.should have_content("Hospitality and Catering")
-    end
-
-    within '.current-question' do
-      page.should have_content("What stage is your business at?")
-
-      select 'Start-up', :from => 'Select a stage'
-
-      click_on 'Next step'
-    end
-
-    i_should_be_on "/#{APP_SLUG}/size", :ignore_query => true
-
-    within_section 'completed question 1' do
-      page.should have_content("Education")
-      page.should have_content("Hospitality and Catering")
-    end
-    within_section 'completed question 2' do
-      page.should have_content("Start-up")
-    end
-
-    within '.current-question' do
-      page.should have_content("How many employees do you have?")
-
-      select 'Under 10', :from => "Select a size"
-      click_on 'Next step'
-    end
-
-    i_should_be_on "/#{APP_SLUG}/types", :ignore_query => true
-
-    within_section 'completed question 1' do
-      page.should have_content("Education")
-      page.should have_content("Hospitality and Catering")
-    end
-    within_section 'completed question 2' do
-      page.should have_content("Start-up")
-    end
-    within_section 'completed question 3' do
-      page.should have_content("Under 10")
-    end
-
-    within '.current-question' do
-      page.should have_content("What type of support are you interested in?")
-
-      check "Finance (any)"
-      check "Grant"
-      check "Loan"
-
-      click_on 'Next step'
-    end
-
-    i_should_be_on "/#{APP_SLUG}/location", :ignore_query => true
-
-    within_section 'completed question 1' do
-      page.should have_content("Education")
-      page.should have_content("Hospitality and Catering")
-    end
-    within_section 'completed question 2' do
-      page.should have_content("Start-up")
-    end
-    within_section 'completed question 3' do
-      page.should have_content("Under 10")
-    end
-    within_section 'completed question 4' do
-      page.should have_content("Finance (any)")
-      page.should have_content("Grant")
-      page.should have_content("Loan")
-    end
-
-    within '.current-question' do
-      page.should have_content("Where is your business located?")
-
-      select 'Wales', :from => "Select a location"
-      click_on 'Find support'
-    end
-
-    i_should_be_on "/#{APP_SLUG}/support-options", :ignore_query => true
-
-    within '.results' do
-      page.should have_content("Available support")
-
-      page.all("li a").map(&:text).should == ["Graduate start-up scheme", "Manufacturing Services scheme - Wales"]
-    end
+  it "should show all available schemes by default" do
+    page.should have_selector('.filter-results-summary h3 span', text: '2')
+    page.should have_content 'Graduate start-up scheme'
+    page.should have_content 'Manufacturing Services scheme - Wales'
   end
 end

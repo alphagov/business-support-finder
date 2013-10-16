@@ -26,6 +26,10 @@ class BusinessSupportController < ApplicationController
   def start
   end
 
+  def search
+    @schemes = Scheme.lookup
+  end
+
   def sectors
     @sectors = Sector.all
     @picked_sectors = Sector.find_by_slugs(params[:sectors].to_s.split("_"))
