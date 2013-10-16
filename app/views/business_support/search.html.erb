@@ -107,18 +107,18 @@
       </div>
 
       <% if @schemes.count == 0 %>
-      <div class="no-matching-schemes">
-        <h2>There are no matching schemes.</h2>
-        <p>Try making your search broader and try again.</p>
-      </div>  
+        <div class="no-matching-schemes">
+          <h2>There are no matching schemes.</h2>
+          <p>Try making your search broader and try again.</p>
+        </div>
       <% else %>
         <!-- Results -->
         <ul class="results-list">
           <% @schemes.each do |scheme| %>
-          <li class="scheme">
-            <h3><a href="<%= scheme.web_url %>"><%= scheme.title %></a></h3>
-            <p><%= scheme.short_description %></p>
-          </li>
+            <li class="scheme">
+              <h3><a href="<%= scheme.web_url %>"><%= scheme.title %></a></h3>
+              <p><%= scheme.short_description %></p>
+            </li>
           <% end %>
         </ul>
       <% end %>
