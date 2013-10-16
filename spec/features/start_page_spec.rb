@@ -9,7 +9,6 @@ describe "Start page" do
     within '#content' do
       within 'header' do
         page.should have_content("Finance and support for your business")
-        pending
         page.should have_content("Quick answer")
       end
 
