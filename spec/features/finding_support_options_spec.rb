@@ -68,20 +68,7 @@ describe "Finding support options" do
     page.should have_selector('.filter-results-summary h3 span', text: '2') # result count
   end
 
-  it "should allow filtering" do
-    uncheck("loan")
-    uncheck("recognition-award")
-    select "London", :from => "location"
-    select "249", :from => "size"
-    select "Education", :from => "sector"
-    select "Grow", :from => "stage"
-    click_on "Refresh results"
-    page.assert_selector('li.scheme', count: 1)
-    page.should have_content 'Graduate start-up scheme'
-    page.should have_selector('.filter-results-summary h3 span', text: '1') # result count
-  end
-
-  it "should show 'no matching' if none checked" do
+  it "should show 'no matching' if all checkboxes unchecked" do
     uncheck("recognition-award")
     uncheck("finance")
     uncheck("equity")
@@ -94,16 +81,16 @@ describe "Finding support options" do
     page.should have_selector('.filter-results-summary h3 span', text: '0') # result count
   end
 
-  it "should show message if no matching schemes" do
-    uncheck("recognition-award")
-    uncheck("finance")
-    uncheck("equity")
+  it "should allow filtering" do
     uncheck("loan")
-    uncheck("grant")
-    select "Exiting", :from => "stage"
+    uncheck("recognition-award")
+    select "London", :from => "location"
+    select "249", :from => "size"
+    select "Education", :from => "sector"
+    select "Grow", :from => "stage"
     click_on "Refresh results"
-    page.assert_selector('li.scheme', count: 0)
-    page.should have_content('no matching schemes')
-    page.should have_selector('.filter-results-summary h3 span', text: '0') # result count
+    page.assert_selector('li.scheme', count: 1)
+    page.should have_content 'Graduate start-up scheme'
+    page.should have_selector('.filter-results-summary h3 span', text: '1') # result count
   end
 end
