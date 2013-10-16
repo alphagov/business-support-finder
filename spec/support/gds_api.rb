@@ -10,9 +10,9 @@ RSpec.configure do |config|
     stub_imminence_default_business_support_schemes
   end
 
-  config.include GdsApi::TestHelpers::ContentApi, :type => :request
-  config.include GdsApi::TestHelpers::Imminence, :type => :request
-  config.before(:each, :type => :request) do
+  config.include GdsApi::TestHelpers::ContentApi, :type => :feature
+  config.include GdsApi::TestHelpers::Imminence, :type => :feature
+  config.before(:each, :type => :feature) do
     stub_content_api_default_artefact
     stub_imminence_default_business_support_schemes
     setup_content_api_business_support_schemes_stubs
