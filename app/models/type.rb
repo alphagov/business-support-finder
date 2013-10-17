@@ -15,14 +15,4 @@ class Type < OpenStruct
   def self.all
     HARDCODED_DATA
   end
-
-  def self.find_by_slugs(slugs)
-    HARDCODED_DATA.select do |type|
-      slugs.include?(type.slug)
-    end
-  end
-  
-  def to_s
-    name
-  end
 end

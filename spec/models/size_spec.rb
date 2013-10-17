@@ -13,19 +13,4 @@ describe Size do
     end
   end
 
-  describe "find_by_slug" do
-    it "should return the instances that matches the slug" do
-      size = Size.find_by_slug('under-10')
-
-      size.name.should == "0 - 9"
-    end
-
-    it "should return nil for a non-existing slug" do
-      Size.find_by_slug('non-existing').should == nil
-    end
-  end
-
-  it "should return the name for to_s" do
-    Size.new(:name => "Fooey").to_s.should == "Fooey"
-  end
 end

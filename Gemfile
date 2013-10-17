@@ -36,7 +36,6 @@ group :development, :test do
   gem 'simplecov-rcov'
   gem 'webmock', :require => false
   gem 'nokogiri'
-  gem 'poltergeist', '1.4.1'
 end
 
 gem 'govuk_frontend_toolkit', '0.32.2'
