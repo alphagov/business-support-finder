@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for?(:page_title) ? yield(:page_title) : "Business finance and support finder" %> - GOV.UK</title>
-    <%= stylesheet_link_tag 'business-support-finder.css' %>
-    <%= javascript_include_tag 'business-support-finder.js', :defer => true %>
+    <title><%= content_for?(:page_title) ? yield(:page_title) : "Finance and support for your business" %> - GOV.UK</title>
+    <%= stylesheet_link_tag 'application' %>
     <%= yield :head %>
   </head>
   <body class="mainstream">
@@ -11,7 +10,7 @@
       <main id="content" role="main">
         <header class="page-header group">
           <div>
-            <h1><span>Quick answer</span> Business finance and support finder</h1>
+            <h1><span>Quick answer</span>Finance and support for your business</h1>
           </div>
         </header>
         <%= yield %>

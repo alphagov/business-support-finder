@@ -18,8 +18,8 @@ class Location < OpenStruct
     "Wales" => { "wales" => "All of Wales" },
     "Northern Ireland" => { "northern-ireland" => "All of Northern Ireland" },
   }.map do |name, regions|
-    new(:name => name, :regions => regions.map { |slug, name| 
-      new(:slug => slug, :name => name) 
+    new(:name => name, :regions => regions.map { |slug, name|
+      new(:slug => slug, :name => name)
     })
   end
 
@@ -27,13 +27,4 @@ class Location < OpenStruct
     HARDCODED_DATA
   end
 
-  def self.find_by_slug(slug)
-    HARDCODED_DATA.map(&:regions).flatten.find do |region|
-      region.slug == slug
-    end
-  end
-
-  def to_s
-    name
-  end
 end

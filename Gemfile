@@ -8,7 +8,7 @@ gem 'plek', '1.1.0'
 if ENV['API_DEV']
   gem 'gds-api-adapters', :path => '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '4.1.3'
+  gem 'gds-api-adapters', '7.8.0'
 end
 
 gem 'exception_notification'
@@ -30,13 +30,12 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '2.11.0'
-  gem 'capybara', '1.1.2'
+  gem 'rspec-rails', '2.14.0'
+  gem 'capybara', '2.1.0'
   gem 'simplecov'
   gem 'simplecov-rcov'
   gem 'webmock', :require => false
   gem 'nokogiri'
-  gem 'poltergeist', '0.7.0'
 end
 
 gem 'govuk_frontend_toolkit', '0.32.2'

@@ -1,0 +1,128 @@
+<% content_for :page_class do %>search-page<% end %>
+
+<div class="article-container group business-support-index">
+
+  <div class="block-2 filter-form">
+    <div class="inner-block">
+      <div class="filter-block">
+        <h2>You can use the filters to only show schemes that you are eligible for</h2>
+
+        <form method="get" action="search#filtered-results" id="document-filter" class="js-document-filter">
+          <fieldset>
+            <legend class="visuallyhidden">Filter available support</legend>
+
+            <!-- Available support -->
+            <div class="filter" id="support-filter">
+              <h3 class="title">Available support</h3>
+              <% { "finance" => "Finance",
+                   "equity" => "Equity",
+                   "grant" => "Grants",
+                   "loan" => "Loans and guarantees",
+                   "expertise-and-advice" => "Expertise and advice",
+                   "recognition-award" => "Recognition awards" }.each do |support_type, display_name| %>
+                <div class="filter-inner checkbox">
+                  <label for="<%= support_type %>"><%= display_name %></label>
+                  <input name="support_types[]" id="<%= support_type %>" type="checkbox"
+                          <% if !params["support_types_submitted"] || params["support_types"] && params["support_types"].include?(support_type) %>
+                            checked="checked"
+                          <% end %>
+                          value="<%= support_type %>">
+                </div>
+              <% end %>
+              <input name="support_types_submitted" type="hidden" value="true">
+            </div>
+
+            <!-- Business location -->
+            <div class="filter business-location" id="location-filter">
+              <div class="filter-inner">
+                <label for="select-location">Business location</label>
+                <%= select_tag :location,
+                      option_groups_from_collection_for_select(@locations, :regions, :name, :slug, :name, params[:location]),
+                      :prompt => 'Any location',
+                      :id => "select-location",
+                      :class => "single-row-select"
+                %>
+              </div>
+            </div>
+
+            <!-- Number of employees -->
+            <div class="filter" id="employee-count-filter">
+              <div class="filter-inner">
+                <label for="employee-count-option">Number of employees</label>
+                <%= select_tag :size,
+                      options_from_collection_for_select(@sizes, :slug, :name, params[:size]),
+                      :prompt => 'Any number of employees',
+                      :id => "employee-count-option",
+                      :class => "single-row-select"
+                %>
+              </div>
+            </div>
+
+            <!-- Activity or business type -->
+            <div class="filter" id="business-type-filter">
+              <div class="filter-inner">
+                <label for="business-type-option">Activity or business type</label>
+                <%= select_tag :sector,
+                      options_from_collection_for_select(@sectors, :slug, :name, params[:sector]),
+                      :prompt => 'All activities and business types',
+                      :id => "employee-count-option",
+                      :class => "single-row-select"
+                %>
+              </div>
+            </div>
+
+            <!-- Business stage -->
+            <div class="filter" id="business-stage-filter">
+              <div class="filter-inner">
+                <label for="business-stage-option">Business stage</label>
+                <%= select_tag :stage,
+                      options_from_collection_for_select(@stages, :slug, :name, params[:stage]),
+                      :prompt => 'All business stages',
+                      :id => "business-stage-option",
+                      :class => "single-row-select"
+                %>
+              </div>
+            </div>
+
+            <div class="filter" id="filter-submit">
+              <div class="filter-inner">
+                <div class="submit">
+                  <button class="button" name="commit" type="submit">Refresh results</button>
+                </div>
+              </div>
+            </div>
+
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="block-4 filtered-results" id="filtered-results">
+    <div class="inner-block">
+
+      <!-- Summary -->
+      <div class="filter-results-summary" aria-live="polite" aria-atomic="true">
+        <h3>Available schemes<br /><span><%= @schemes.count %></span></h3>
+      </div>
+
+      <% if @schemes.count == 0 %>
+        <div class="no-matching-schemes">
+          <h2>There are no matching schemes.</h2>
+          <p>Try making your search broader and try again.</p>
+        </div>
+      <% else %>
+        <!-- Results -->
+        <ul class="results-list">
+          <% @schemes.each do |scheme| %>
+            <li class="scheme">
+              <h3><a href="<%= scheme.web_url %>"><%= scheme.title %></a></h3>
+              <p><%= scheme.short_description %></p>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+
+    </div>
+  </div>
+</div>
