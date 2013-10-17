@@ -26,13 +26,4 @@ class Sector < OpenStruct
     HARDCODED_SECTORS
   end
 
-  def self.find_by_slugs(slugs)
-    HARDCODED_SECTORS.select do |sector|
-      slugs.include?(sector.slug)
-    end
-  end
-
-  def to_s
-    name
-  end
 end

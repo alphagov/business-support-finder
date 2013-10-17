@@ -8,13 +8,13 @@ describe "Start page" do
 
     within '#content' do
       within 'header' do
-        page.should have_content("Business finance and support finder")
+        page.should have_content("Finance and support for your business")
         page.should have_content("Quick answer")
       end
 
       within 'article[role=article]' do
         within 'section.intro' do
-          page.should have_link("Get started", :href => "/#{APP_SLUG}/sectors")
+          page.should have_link("Get started", :href => "/#{APP_SLUG}/search")
         end
       end
 

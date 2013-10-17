@@ -6,10 +6,12 @@ class ApplicationController < ActionController::Base
   rescue_from GdsApi::TimedOutException, :with => :error_503
   before_filter :reject_invalid_utf8
 
-  protected
 
   def error_503(e = nil); error(503, e); end
   def error_404; error(404); end
+  def error_403; error(403); end
+
+  protected
 
   def error(status_code, exception = nil)
     if exception and Rails.application.config.middleware.detect{ |x| x.klass == ExceptionNotifier }
