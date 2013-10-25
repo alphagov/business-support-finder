@@ -12,6 +12,7 @@
       
       filter.$results = $('.results-list', $filtered_list);
       filter.$form = $('form.js-filter', $filtered_list);
+      filter.$count = $('.results-count', $filtered_list);
       
       filter.$form.find('input,select').click( filter.refresh_filter );
     },
@@ -55,6 +56,8 @@
           $item.show();
           total_matches++;
         }
+        
+        filter.$count.text(total_matches);
       });
     }
     

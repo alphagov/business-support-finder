@@ -103,7 +103,7 @@
 
       <!-- Summary -->
       <div class="filter-results-summary" aria-live="polite" aria-atomic="true">
-        <h3>Available schemes<br /><%= @schemes.count %></h3>
+        <h3>Available schemes<br /><span class='results-count'><%= @schemes.count %></span></h3>
       </div>
 
       <% if @schemes.count == 0 %>
