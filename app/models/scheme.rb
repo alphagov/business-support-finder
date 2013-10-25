@@ -20,6 +20,12 @@ class Scheme < OpenStruct
     schemes = content_api.business_support_schemes(identifiers)
 
     schemes["results"].sort_by { |s| identifiers.index(s["identifier"]) }.map do |s|
+      imminence_data_for_scheme = possible_schemes["results"].find{ |data| data["business_support_identifier"] == s["identifier"] }
+      facets_for_scheme = {}
+      [:business_sizes, :locations, :sectors, :stages, :support_types].each do |k|
+        facets_for_scheme[k] = imminence_data_for_scheme[k.to_s]
+      end
+      s = s.merge(facets_for_scheme)
       self.new(s)
     end
   end
