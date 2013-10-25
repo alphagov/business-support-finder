@@ -1,13 +1,13 @@
 <% content_for :page_class do %>search-page<% end %>
 
-<div class="article-container group business-support-index">
+<div class="article-container group business-support-index js-filtered-list">
 
-  <div class="block-2 filter-form">
+  <div class="block-2">
     <div class="inner-block">
       <div class="filter-block">
         <h2>You can use the filters to only show schemes that you are eligible for</h2>
 
-        <form method="get" action="search#filtered-results" id="document-filter" class="js-document-filter">
+        <form method="get" action="search#filtered-results" id="document-filter" class="js-filter">
           <fieldset>
             <legend class="visuallyhidden">Filter available support</legend>
 
@@ -103,7 +103,7 @@
 
       <!-- Summary -->
       <div class="filter-results-summary" aria-live="polite" aria-atomic="true">
-        <h3>Available schemes<br /><span><%= @schemes.count %></span></h3>
+        <h3>Available schemes<br /><%= @schemes.count %></h3>
       </div>
 
       <% if @schemes.count == 0 %>
