@@ -6,6 +6,7 @@
 
   var filter = {
     _types: {},
+    _options: {},
     
     init: function() {
       var $filtered_list = $('.js-filtered-list');
@@ -26,6 +27,9 @@
       $('#support-filter input', filter.$form).each( function() {
         filter._types[this.value] = this.checked;
       });
+      $('.filter-exclusive select', filter.$form).each( function() {
+        filter._options[this.name] = this.value;
+      });
     },
     
     update_results: function() {
@@ -45,6 +49,19 @@
               // only needs one type to match, not all (OR)
               found = true;
               break support_types;
+            }
+          }
+        }
+        
+        support_options:
+        if ( found ) {
+          for ( var key in filter._options ) {
+            var value = filter._options[key];
+            
+            if ( $item.data(key).indexOf(value) < 0 ) {
+              // all must match (AND)
+              found = false;
+              break support_options;
             }
           }
         }

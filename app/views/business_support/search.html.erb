@@ -12,7 +12,7 @@
             <legend class="visuallyhidden">Filter available support</legend>
 
             <!-- Available support -->
-            <div class="filter" id="support-filter">
+            <div class="filter filter-inclusive" id="support-filter">
               <h3 class="title">Available support</h3>
               <% { "finance" => "Finance",
                    "equity" => "Equity",
@@ -33,7 +33,7 @@
             </div>
 
             <!-- Business location -->
-            <div class="filter business-location" id="location-filter">
+            <div class="filter business-location filter-exclusive" id="location-filter">
               <div class="filter-inner">
                 <label for="select-location">Business location</label>
                 <%= select_tag :location,
@@ -46,7 +46,7 @@
             </div>
 
             <!-- Number of employees -->
-            <div class="filter" id="employee-count-filter">
+            <div class="filter filter-exclusive" id="employee-count-filter">
               <div class="filter-inner">
                 <label for="employee-count-option">Number of employees</label>
                 <%= select_tag :size,
@@ -59,7 +59,7 @@
             </div>
 
             <!-- Activity or business type -->
-            <div class="filter" id="business-type-filter">
+            <div class="filter filter-exclusive" id="business-type-filter">
               <div class="filter-inner">
                 <label for="business-type-option">Activity or business type</label>
                 <%= select_tag :sector,
@@ -72,7 +72,7 @@
             </div>
 
             <!-- Business stage -->
-            <div class="filter" id="business-stage-filter">
+            <div class="filter filter-exclusive" id="business-stage-filter">
               <div class="filter-inner">
                 <label for="business-stage-option">Business stage</label>
                 <%= select_tag :stage,
@@ -115,7 +115,7 @@
         <!-- Results -->
         <ul class="results-list">
           <% @schemes.each do |scheme| %>
-            <li class="scheme" data-sectors='<%= scheme.sectors.join(' ') %>' data-locations='<%= scheme.locations.join(' ') %>' data-sizes='<%= scheme.business_sizes.join(' ') %>' data-types='<%= scheme.support_types.join(' ') %>' data-stages='<%= scheme.stages.join(' ') %>'>
+            <li class="scheme" data-sector='<%= scheme.sectors.join(' ') %>' data-location='<%= scheme.locations.join(' ') %>' data-size='<%= scheme.business_sizes.join(' ') %>' data-types='<%= scheme.support_types.join(' ') %>' data-stage='<%= scheme.stages.join(' ') %>'>
               <h3><a href="<%= scheme.web_url %>"><%= scheme.title %></a></h3>
               <p><%= scheme.short_description %></p>
             </li>
