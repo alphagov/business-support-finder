@@ -16,6 +16,7 @@
       filter.$count = $('.results-count', $filtered_list);
       
       filter.$form.find('input,select').click( filter.refresh_filter );
+      filter.$form.find('#filter-submit').hide();
     },
     
     refresh_filter: function() {
