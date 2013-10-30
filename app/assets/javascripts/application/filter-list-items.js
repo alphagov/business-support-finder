@@ -34,8 +34,6 @@
     },
     
     update_results: function() {
-      console.log('update_results', filter.$results);
-      
       var total_matches = 0;
       
       $('li', filter.$results).each( function() {
@@ -78,8 +76,6 @@
         filter.$count.text(total_matches);
       });
     }
-    
-    
   };
   
   root.GOVUK.filterListItems = filter;
