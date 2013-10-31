@@ -14,7 +14,8 @@ namespace :panopticon do
         title: "Business finance and support finder",
         description: "Find business finance, support, grants and loans backed by the government.",
         need_id: "B1017",
-        prefixes: [APP_SLUG],
+        paths: [],
+        prefixes: ["/#{APP_SLUG}"],
         state: "live",
         indexable_content: "Business finance and support finder")
     registerer.register(record)
