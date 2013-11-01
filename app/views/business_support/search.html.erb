@@ -115,7 +115,7 @@
         <!-- Results -->
         <ul class="results-list">
           <% @schemes.each do |scheme| %>
-            <li class="scheme" data-sector='<%= scheme.sectors.join(' ') %>' data-location='<%= scheme.locations.join(' ') %>' data-size='<%= scheme.business_sizes.join(' ') %>' data-types='<%= scheme.support_types.join(' ') %>' data-stage='<%= scheme.stages.join(' ') %>'>
+            <li class="scheme" data-sector='<%= formatted_facet_values(scheme.sectors) %>' data-location='<%= formatted_facet_values(scheme.locations) %>' data-size='<%= formatted_facet_values(scheme.business_sizes) %>' data-types='<%= formatted_facet_values(scheme.support_types) %>' data-stage='<%= formatted_facet_values(scheme.stages) %>'>
               <h3><a href="<%= scheme.web_url %>"><%= scheme.title %></a></h3>
               <p><%= scheme.short_description %></p>
             </li>

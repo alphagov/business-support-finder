@@ -30,7 +30,7 @@ describe Scheme do
           :locations => "wales").
         and_return("results" => [])
 
-      Scheme.lookup(:sector => @sector, :stage => @stage, :size => @size, :support_types => @support_types, :location => @location)
+      Scheme.lookup(:sectors => @sector, :stages => @stage, :business_sizes => @size, :support_types => @support_types.join(','), :locations => @location)
     end
 
     it "should fetch the imminence schemes from content_api" do
@@ -43,18 +43,33 @@ describe Scheme do
       GdsApi::ContentApi.any_instance.should_receive(:business_support_schemes).with(%w(scheme-1 scheme-3 scheme-2)).
         and_return("results" => [])
 
-      Scheme.lookup(:sectors => @sector, :stage => @stage, :size => @size, :support_types => @support_types, :location => @location)
+      Scheme.lookup(:sectors => @sector, :stages => @stage, :business_sizes => @size, :support_types => @support_types, :locations => @location)
     end
 
     it "should construct instances of Scheme for each result and return them" do
-      GdsApi::Imminence.any_instance.stub(:business_support_schemes).
-        and_return("results" => [{"business_support_identifier" => "scheme-1"}])
-      GdsApi::ContentApi.any_instance.stub(:business_support_schemes).
-        and_return("results" => [:artefact1, :artefact2])
-      Scheme.should_receive(:new).with(:artefact1).and_return(:scheme1)
-      Scheme.should_receive(:new).with(:artefact2).and_return(:scheme2)
+      facets = {
+        'business_sizes' => [], 'locations' => ['england'],
+        'sectors' => ['manufacturing'], 'stages' => [], 'support_types' => ['grant']
+      }
 
-      schemes = Scheme.lookup(:sectors => @sector, :stage => @stage, :size=> @size, :support_types => @support_types, :location => @location)
+      GdsApi::Imminence.any_instance.stub(:business_support_schemes).
+        and_return("results" => [
+          {'business_support_identifier' => '666'}.merge(facets),
+          {'business_support_identifier' => '999'}.merge(facets)
+        ])
+     
+        artefact1 = {'identifier' => '666', 'title' => 'artefact1'}
+        artefact2 = {'identifier' => '999', 'title' => 'artefact2'}
+        
+        GdsApi::ContentApi.any_instance.stub(:business_support_schemes).
+        and_return("results" => [artefact1, artefact2])
+      
+      
+      Scheme.should_receive(:new).with(artefact1.merge(facets)).and_return(:scheme1)
+      Scheme.should_receive(:new).with(artefact2.merge(facets)).and_return(:scheme2)
+
+      schemes = Scheme.lookup(:sectors => @sector, :stage => @stage, :size=> @size,
+                              :support_types => @support_types, :locations => @location)
       schemes.should == [:scheme1, :scheme2]
     end
 
@@ -65,20 +80,28 @@ describe Scheme do
       artefact3 = {"identifier" => "3", "title" => "artefact3"}
       artefact4 = {"identifier" => "4", "title" => "artefact4"}
 
+      facets = {
+        'business_sizes' => [@size],
+        'locations' => [@location],
+        'sectors' => [@sector],
+        'stages' => [@stage],
+        'support_types' => @support_types
+      }
+
       GdsApi::Imminence.any_instance.stub(:business_support_schemes).
         and_return("results" => [
-                   {"business_support_identifier" => "4"},
-                   {"business_support_identifier" => "1"},
-                   {"business_support_identifier" => "3"},
-                   {"business_support_identifier" => "2"}])
+                   {"business_support_identifier" => "4"}.merge(facets),
+                   {"business_support_identifier" => "1"}.merge(facets),
+                   {"business_support_identifier" => "3"}.merge(facets),
+                   {"business_support_identifier" => "2"}.merge(facets)])
 
       GdsApi::ContentApi.any_instance.stub(:business_support_schemes).
         and_return("results" => [artefact1, artefact2, artefact3, artefact4])
 
-      Scheme.should_receive(:new).with(artefact1).and_return(:scheme1)
-      Scheme.should_receive(:new).with(artefact2).and_return(:scheme2)
-      Scheme.should_receive(:new).with(artefact3).and_return(:scheme3)
-      Scheme.should_receive(:new).with(artefact4).and_return(:scheme4)
+      Scheme.should_receive(:new).with(artefact1.merge(facets)).and_return(:scheme1)
+      Scheme.should_receive(:new).with(artefact2.merge(facets)).and_return(:scheme2)
+      Scheme.should_receive(:new).with(artefact3.merge(facets)).and_return(:scheme3)
+      Scheme.should_receive(:new).with(artefact4.merge(facets)).and_return(:scheme4)
 
       schemes = Scheme.lookup(:sectors => @sector, :stage => @stage, :size => @size, :support_types => @support_types, :location => @location)
       schemes.should == [:scheme4, :scheme1, :scheme3, :scheme2]
