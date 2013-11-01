@@ -51,7 +51,7 @@ GEM
       actionmailer (>= 3.0.4)
     execjs (1.4.0)
       multi_json (~> 1.0)
-    gds-api-adapters (7.8.0)
+    gds-api-adapters (7.17.1)
       link_header
       lrucache (~> 0.1.1)
       null_logger
@@ -171,7 +171,7 @@ DEPENDENCIES
   aws-ses
   capybara (= 2.1.0)
   exception_notification
-  gds-api-adapters (= 7.8.0)
+  gds-api-adapters (= 7.17.1)
   govuk_frontend_toolkit (= 0.32.2)
   lograge (= 0.2.0)
   nokogiri
