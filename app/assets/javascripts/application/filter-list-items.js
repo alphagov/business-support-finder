@@ -15,7 +15,7 @@
       filter.$form = $('form.js-filter', $filtered_list);
       filter.$count = $('.results-count', $filtered_list);
       
-      filter.$form.find('input,select').click( filter.refresh_filter );
+      filter.$form.find('input,select').bind( 'change click', filter.refresh_filter );
       filter.$form.find('#filter-submit').hide();
     },
     
@@ -51,12 +51,11 @@
             }
           }
         }
-        
+
         support_options:
         if ( found ) {
           for ( var key in filter._options ) {
             var value = filter._options[key];
-            
             if ( $item.data(key).indexOf(value) < 0 ) {
               // all must match (AND)
               found = false;
