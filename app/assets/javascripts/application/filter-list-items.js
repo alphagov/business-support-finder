@@ -9,18 +9,28 @@
     _options: {},
     
     init: function() {
+      var has_history_api = window.history
+                            && window.history.pushState
+                            && window.history.replaceState;
+      
+      if ( !has_history_api )
+        return false;
+      
       var $filtered_list = $('.js-filtered-list');
       
       filter.$results = $('.results-list', $filtered_list);
       filter.$form = $('form.js-filter', $filtered_list);
       filter.$count = $('.results-count', $filtered_list);
       
-      filter.$form.find('input,select').bind( 'change click', filter.refresh_filter );
+      filter.initialise_history_api();
+      filter.$form.find('input,select').on( 'change', filter.refresh_filter );
+      
       filter.$form.find('#filter-submit').hide();
     },
     
     refresh_filter: function() {
       filter.get_options();
+      filter.update_history_api();
       filter.update_results();
     },
     
@@ -74,6 +84,50 @@
         
         filter.$count.text(total_matches);
       });
+    },
+    
+    initialise_history_api: function() {
+      history.replaceState( filter.current_page_state(), null );
+      $(window).on('popstate', filter.handle_popstate);
+    },
+    handle_popstate: function(jq_ev) {
+      var event = jq_ev.originalEvent,
+          state = event.state;
+      
+      if ( state == null )
+        return false;
+      
+      filter.$form.find('select').each( function() {
+        var $this = $(this);
+        $this.attr( 'value', state[ $this.attr('id') ] );
+      });
+      filter.$form.find('input[type=checkbox]').each( function() {
+        var $this = $(this);
+        $this.attr( 'checked', state[ $this.attr('id') ] );
+      });
+      
+      filter.get_options();
+      filter.update_results();
+    },
+    current_page_state: function() {
+      var state = {};
+      
+      filter.$form.find('select').each( function() {
+        var $this = $(this);
+        state[ $this.attr('id') ] = $this.attr('value');
+      });
+      filter.$form.find('input[type=checkbox]').each( function() {
+        var $this = $(this);
+        state[ $this.attr('id') ] = $this.attr('checked');
+      });
+      
+      return state;
+    },
+    update_history_api: function() {
+      var new_url = filter.$form.attr('action')
+                    + '?' +  filter.$form.serialize();
+      
+      history.pushState( filter.current_page_state(), null, new_url );
     }
   };
   
