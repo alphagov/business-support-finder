@@ -5,21 +5,14 @@ class Scheme < OpenStruct
   extend GdsApi::Helpers
 
   def self.lookup(facets={})
-    facets_hash = {}
-    facets_hash[:stages] = facets[:stage] if facets[:stage]
-    facets_hash[:business_sizes] = facets[:size] if facets[:size]
-    facets_hash[:locations] = facets[:location] if facets[:location]
-    facets_hash[:sectors] = facets[:sector] if facets[:sector]
-    facets_hash[:support_types] = facets[:support_types].join(',') if facets[:support_types]
-
-    possible_schemes = imminence_api.business_support_schemes(facets_hash)
-
+    possible_schemes = imminence_api.business_support_schemes(facets)
     return [] if possible_schemes["results"].empty?
-
-    identifiers = possible_schemes["results"].map {|s| s["business_support_identifier"] }
-    schemes = content_api.business_support_schemes(identifiers)
-
-    schemes["results"].sort_by { |s| identifiers.index(s["identifier"]) }.map do |s|
+    
+    imminence_data = map_schemes_by_identifier(possible_schemes)
+    schemes = content_api.business_support_schemes(imminence_data.keys)
+    
+    schemes["results"].sort_by { |s| imminence_data.keys.index(s["identifier"]) }.map do |s|
+      s = s.merge(imminence_facets_for_scheme(imminence_data, s))
       self.new(s)
     end
   end
@@ -34,5 +27,24 @@ class Scheme < OpenStruct
     artefact.each do |k,v|
       self.send("#{k}=", v)
     end
+  end
+
+  private
+
+  def self.map_schemes_by_identifier(schemes)
+    ohash = ActiveSupport::OrderedHash.new
+    schemes["results"].map do |s|
+      ohash[s["business_support_identifier"]] = s
+    end
+    ohash
+  end
+
+  def self.imminence_facets_for_scheme(imminence_data, scheme)
+    imminence_data_for_scheme = imminence_data[scheme["identifier"]]
+    facets = {}
+    [:business_sizes, :locations, :sectors, :stages, :support_types].each do |k|
+      facets[k.to_s] = imminence_data_for_scheme[k.to_s] || []
+    end
+    facets
   end
 end

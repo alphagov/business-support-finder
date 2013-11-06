@@ -8,7 +8,7 @@ gem 'plek', '1.1.0'
 if ENV['API_DEV']
   gem 'gds-api-adapters', :path => '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '7.8.0'
+  gem 'gds-api-adapters', '7.17.1'
 end
 
 gem 'exception_notification'
@@ -36,6 +36,7 @@ group :development, :test do
   gem 'simplecov-rcov'
   gem 'webmock', :require => false
   gem 'nokogiri'
+  gem 'poltergeist', '1.4.1'
 end
 
 gem 'govuk_frontend_toolkit', '0.32.2'
