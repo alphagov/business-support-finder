@@ -2,7 +2,10 @@
 <html>
   <head>
     <title><%= content_for?(:page_title) ? yield(:page_title) : "Finance and support for your business" %> - GOV.UK</title>
-    <%= stylesheet_link_tag 'application' %>
+    <!--[if gt IE 8]><!--><%= stylesheet_link_tag 'application' %><!--<![endif]-->
+    <!--[if IE 6]><%= stylesheet_link_tag "application-ie6.css" %><![endif]-->
+    <!--[if IE 7]><%= stylesheet_link_tag "application-ie7.css" %><![endif]-->
+    <!--[if IE 8]><%= stylesheet_link_tag "application-ie8.css" %><![endif]-->
     <%= yield :head %>
   </head>
   <body class="mainstream">
