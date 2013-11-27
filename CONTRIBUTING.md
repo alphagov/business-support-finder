@@ -14,8 +14,8 @@
 
 ## Code ##
 
+- Must be readable with meaningful naming, eg no short hand single character variable names
 - Follow our [Ruby style guide](https://github.com/alphagov/styleguides/blob/master/ruby.md)
-- Must be readable with meaningful naming, no short hand single character variable names
 
 ## Testing ##
 
