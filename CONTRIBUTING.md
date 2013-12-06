@@ -9,7 +9,7 @@
 
 ## Copy ##
 
-- Follow the [style guide](https://www.gov.uk/designprinciples/styleguide)
+- Follow the [style guide](https://www.gov.uk/design-principles/style-guide)
 - URLs should use hyphens, not underscores
 
 ## Code ##
