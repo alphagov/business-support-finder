@@ -18,11 +18,11 @@ class BusinessSupportController < ApplicationController
     @types = Type.all
 
     if params[:support_types] # At least one support type selected so apply the filters requested
-      @schemes = Scheme.lookup(@facets)
+      @schemes = business_support_api.schemes(@facets)
     elsif params[:support_types_submitted] # User has unticked everything and we should show them no schemes
       @schemes = []
     else # By default get all the schemes for first time landing on page
-      @schemes = Scheme.lookup
+      @schemes = business_support_api.schemes
     end
   end
 

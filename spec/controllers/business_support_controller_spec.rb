@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe BusinessSupportController do
-
   describe "GET 'start'" do
     it "returns http success" do
       get 'start'
@@ -16,6 +15,10 @@ describe BusinessSupportController do
   end
 
   describe "GET 'search'" do
+    before(:each) do
+      business_support_api_has_scheme(:scheme1)
+    end
+
     it "returns http success" do
       get :search
       response.should be_success
