@@ -17,11 +17,11 @@ class BusinessSupportController < ApplicationController
     @sizes = Size.all
     @types = Type.all
 
-    if params[:support_types] # At least one support type selected so apply the filters requested
+    if params[:support_types] # Filtered by facets
       @schemes = business_support_api.schemes(@facets)
-    elsif params[:support_types_submitted] # User has unticked everything and we should show them no schemes
+    elsif params[:commit] # With JS disabled not facets selected and results refreshed
       @schemes = []
-    else # By default get all the schemes for first time landing on page
+    else # Initial state so get everything
       @schemes = business_support_api.schemes
     end
   end
