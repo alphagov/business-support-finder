@@ -17,12 +17,10 @@ class BusinessSupportController < ApplicationController
     @sizes = Size.all
     @types = Type.all
 
-    if params[:support_types] # Filtered by facets
-      @schemes = business_support_api.schemes(@facets)
-    elsif params[:commit] # With JS disabled not facets selected and results refreshed
+    if @facets.empty? and params[:commit]
       @schemes = []
-    else # Initial state so get everything
-      @schemes = business_support_api.schemes
+    else
+      @schemes = Scheme.lookup(@facets)
     end
   end
 
