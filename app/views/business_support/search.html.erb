@@ -14,22 +14,13 @@
             <!-- Available support -->
             <div class="filter filter-inclusive" id="support-filter">
               <h3 class="title">Available support</h3>
-              <% { "finance" => "Finance",
-                   "equity" => "Equity",
-                   "grant" => "Grants",
-                   "loan" => "Loans and guarantees",
-                   "expertise-and-advice" => "Expertise and advice",
-                   "recognition-award" => "Recognition awards" }.each do |support_type, display_name| %>
+              <% @types.each do |type| %>
                 <div class="filter-inner checkbox">
-                  <label for="<%= support_type %>"><%= display_name %></label>
-                  <input name="support_types[]" id="<%= support_type %>" type="checkbox"
-                          <% if !params["support_types_submitted"] || params["support_types"] && params["support_types"].include?(support_type) %>
-                            checked="checked"
-                          <% end %>
-                          value="<%= support_type %>">
+                  <label for="<%= type.name %>"><%= type.name %></label>
+                  <% checked = (!params["commit"] or (params["support_types"] and params["support_types"].include?(type.slug))) -%>
+                  <%= check_box_tag "support_types[]", type.slug, checked, :id => type.slug %>
                 </div>
               <% end %>
-              <input name="support_types_submitted" type="hidden" value="true">
             </div>
 
             <!-- Business location -->
