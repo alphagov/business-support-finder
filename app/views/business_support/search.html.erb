@@ -27,8 +27,8 @@
             <div class="filter business-location filter-exclusive" id="location-filter">
               <div class="filter-inner">
                 <label for="select-location">Business location</label>
-                <%= select_tag :location,
-                      option_groups_from_collection_for_select(@locations, :regions, :name, :slug, :name, params[:location]),
+                <%= select_tag :locations,
+                      option_groups_from_collection_for_select(@locations, :regions, :name, :slug, :name, params[:locations]),
                       :prompt => 'Any location',
                       :id => "select-location",
                       :class => "single-row-select"
@@ -40,8 +40,8 @@
             <div class="filter filter-exclusive" id="employee-count-filter">
               <div class="filter-inner">
                 <label for="employee-count-option">Number of employees</label>
-                <%= select_tag :size,
-                      options_from_collection_for_select(@sizes, :slug, :name, params[:size]),
+                <%= select_tag :business_sizes,
+                      options_from_collection_for_select(@sizes, :slug, :name, params[:business_sizes]),
                       :prompt => 'Any number of employees',
                       :id => "employee-count-option",
                       :class => "single-row-select"
@@ -53,8 +53,8 @@
             <div class="filter filter-exclusive" id="business-type-filter">
               <div class="filter-inner">
                 <label for="business-type-option">Activity or business type</label>
-                <%= select_tag :sector,
-                      options_from_collection_for_select(@sectors, :slug, :name, params[:sector]),
+                <%= select_tag :sectors,
+                      options_from_collection_for_select(@sectors, :slug, :name, params[:sectors]),
                       :prompt => 'All activities and business types',
                       :id => "business-type-option",
                       :class => "single-row-select"
@@ -66,8 +66,8 @@
             <div class="filter filter-exclusive" id="business-stage-filter">
               <div class="filter-inner">
                 <label for="business-stage-option">Business stage</label>
-                <%= select_tag :stage,
-                      options_from_collection_for_select(@stages, :slug, :name, params[:stage]),
+                <%= select_tag :stages,
+                      options_from_collection_for_select(@stages, :slug, :name, params[:stages]),
                       :prompt => 'All business stages',
                       :id => "business-stage-option",
                       :class => "single-row-select"
@@ -106,7 +106,7 @@
         <!-- Results -->
         <ul class="results-list">
           <% @schemes.each do |scheme| %>
-            <li class="scheme" data-sector='<%= formatted_facet_values(scheme.sectors) %>' data-location='<%= formatted_facet_values(scheme.locations) %>' data-size='<%= formatted_facet_values(scheme.business_sizes) %>' data-types='<%= formatted_facet_values(scheme.support_types) %>' data-stage='<%= formatted_facet_values(scheme.stages) %>'>
+            <li class="scheme" data-sectors='<%= formatted_facet_values(scheme.sectors) %>' data-locations='<%= formatted_facet_values(scheme.locations) %>' data-business_sizes='<%= formatted_facet_values(scheme.business_sizes) %>' data-types='<%= formatted_facet_values(scheme.support_types) %>' data-stages='<%= formatted_facet_values(scheme.stages) %>'>
               <h3><a href="<%= scheme.web_url %>"><%= scheme.title %></a></h3>
               <p><%= scheme.short_description %></p>
             </li>
