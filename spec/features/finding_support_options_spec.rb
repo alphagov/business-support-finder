@@ -70,10 +70,10 @@ describe "Finding support options" do
     it "should allow filtering" do
       uncheck("loan")
       uncheck("recognition-award")
-      select "London", :from => "location"
-      select "10 - 249", :from => "size"
-      select "Education", :from => "sector"
-      select "Grow and sustain", :from => "stage"
+      select "London", :from => "locations"
+      select "10 - 249", :from => "business_sizes"
+      select "Education", :from => "sectors"
+      select "Grow and sustain", :from => "stages"
       click_on "Refresh results"
       page.assert_selector('li.scheme', count: 1)
       page.should have_content 'Graduate start-up'
@@ -106,32 +106,32 @@ describe "Finding support options" do
 
       uncheck("loan")
       uncheck("recognition-award")
-      select "London", :from => "location"
-      select "10 - 249", :from => "size"
-      select "Education", :from => "sector"
-      select "Grow and sustain", :from => "stage"
+      select "London", :from => "locations"
+      select "10 - 249", :from => "business_sizes"
+      select "Education", :from => "sectors"
+      select "Grow and sustain", :from => "stages"
 
       page.should have_selector('.filter-results-summary h3 span', text: '1')
       page.find('li.scheme h3').text.should == "Graduate start-up"
 
-      select "Scotland", :from => "location"
-      select "1000+", :from => "size"
+      select "Scotland", :from => "locations"
+      select "1000+", :from => "business_sizes"
 
       page.should have_selector('.filter-results-summary h3 span', text: '0')
 
-      select "Wales", :from => "location"
-      select "0 - 9", :from => "size"
-      select "Manufacturing", :from => "sector"
+      select "Wales", :from => "locations"
+      select "0 - 9", :from => "business_sizes"
+      select "Manufacturing", :from => "sectors"
 
       page.should have_selector('.filter-results-summary h3 span', text: '1')
       page.find('li.scheme h3').text.should == "Manufacturing Services - Wales"
 
       check "loan"
       check "recognition-award"
-      select "Any location", :from => "location"
-      select "Any number of employees", :from => "size"
-      select "All", :from => "sector"
-      select "All", :from => "stage"
+      select "Any location", :from => "locations"
+      select "Any number of employees", :from => "business_sizes"
+      select "All", :from => "sectors"
+      select "All", :from => "stages"
 
       page.should have_selector('.filter-results-summary h3 span', text: '2')
       assert page.find('li.scheme', :text => "Graduate start-up")
