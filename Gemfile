@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://BnrJb6FZyzspBboNJzYZ@gem.fury.io/govuk/'
 
-gem 'rails', '3.2.16'
+gem 'rails', '3.2.17'
 
 gem 'slimmer', '3.25.0'
 gem 'plek', '1.1.0'
