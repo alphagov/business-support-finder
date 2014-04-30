@@ -15,6 +15,7 @@ gem 'exception_notification'
 gem 'aws-ses', :require => 'aws/ses'
 
 gem 'logstasher', '0.4.8'
+gem 'airbrake', '3.1.15'
 gem 'unicorn'
 
 # Gems used only for assets and not required
