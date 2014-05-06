@@ -11,9 +11,6 @@ else
   gem 'gds-api-adapters', '8.2.1'
 end
 
-gem 'exception_notification'
-gem 'aws-ses', :require => 'aws/ses'
-
 gem 'logstasher', '0.4.8'
 gem 'airbrake', '3.1.15'
 gem 'unicorn'
