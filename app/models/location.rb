@@ -20,7 +20,7 @@ class Location < OpenStruct
   }.map do |name, regions|
     new(name: name, regions: regions.map { |slug, name|
       new(slug: slug, name: name)
-    })
+    },)
   end
 
   def self.all

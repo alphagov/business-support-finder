@@ -8,7 +8,7 @@ describe "Finding support options" do
         [
           {"title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up"},
           {"title" => "Manufacturing Services - Wales", "business_support_identifier" => "manufacturing-services-wales"},
-        ]
+        ],
       )
       business_support_api_has_schemes(
         [
@@ -19,7 +19,7 @@ describe "Finding support options" do
         ],
         {
           "support_types" => "finance,equity,grant,loan,expertise-and-advice,recognition-award",
-        }
+        },
       )
       business_support_api_has_schemes(
         [
@@ -33,7 +33,7 @@ describe "Finding support options" do
               "sectors" => "education",
               "locations" => "london",
               "support_types" => "finance,equity,grant,expertise-and-advice",
-        }
+        },
       )
 
       visit "/#{APP_SLUG}/search"
@@ -87,13 +87,23 @@ describe "Finding support options" do
 
       business_support_api_has_schemes(
         [
-          { "title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up",
-            "stages" => ["grow-and-sustain"], "business_sizes" => ["up-to-249"], "sectors" => ["education"],
-            "locations" => ["london"], "support_types" => %w(finance equity grant expertise-and-advice) },
-          { "title" => "Manufacturing Services - Wales", "business_support_identifier" => "manufacturing-services-wales",
-            "stages" => ["grow-and-sustain"], "business_sizes" => ["under-10"], "sectors" => ["manufacturing"],
-            "locations" => ["wales"], "support_types" => %w(finance equity grant expertise-and-advice) }
-        ]
+          { "title"                       => "Graduate start-up",
+            "business_support_identifier" => "graduate-start-up",
+            "stages"                      => ["grow-and-sustain"],
+            "business_sizes"              => ["up-to-249"],
+            "sectors"                     => ["education"],
+            "locations"                   => ["london"],
+            "support_types"               => %w(finance equity grant expertise-and-advice),
+          },
+          { "title"                       => "Manufacturing Services - Wales",
+            "business_support_identifier" => "manufacturing-services-wales",
+            "stages"                      => ["grow-and-sustain"],
+            "business_sizes"              => ["under-10"],
+            "sectors"                     => ["manufacturing"],
+            "locations"                   => ["wales"],
+            "support_types"               => %w(finance equity grant expertise-and-advice),
+          },
+        ],
       )
 
       visit "/#{APP_SLUG}/search"

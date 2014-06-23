@@ -31,9 +31,7 @@ class BusinessSupportController < ApplicationController
   end
 
   def send_slimmer_headers
-    set_slimmer_headers(
-      format: "finder"
-    )
+    set_slimmer_headers(format: "finder")
     set_slimmer_artefact(@artefact)
   end
 

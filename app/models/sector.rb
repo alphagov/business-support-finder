@@ -17,7 +17,7 @@ class Sector < OpenStruct
     "transport-and-distribution" => "Transport and Distribution",
     "travel-and-leisure" => "Travel and Leisure",
     "utilities" => "Utilities",
-    "wholesale-and-retail" => "Wholesale and Retail"
+    "wholesale-and-retail" => "Wholesale and Retail",
   }.map do |slug, name|
     new(slug: slug, name: name)
   end
