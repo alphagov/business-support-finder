@@ -1,5 +1,5 @@
-require 'gds_api/helpers'
-require 'slimmer/headers'
+require "gds_api/helpers"
+require "slimmer/headers"
 
 class BusinessSupportController < ApplicationController
   include GdsApi::Helpers
@@ -17,7 +17,7 @@ class BusinessSupportController < ApplicationController
     @sizes = Size.all
     @types = Type.all
 
-    if @facets.empty? and params[:commit]
+    if @facets.empty? && params[:commit]
       @schemes = []
     else
       @schemes = Scheme.lookup(@facets)
@@ -32,14 +32,14 @@ class BusinessSupportController < ApplicationController
 
   def send_slimmer_headers
     set_slimmer_headers(
-      :format => 'finder'
+      format: "finder"
     )
     set_slimmer_artefact(@artefact)
   end
 
   def prepare_facets
     @facets = {}
-    @facets[:support_types] = params[:support_types].join(',') if params[:support_types]
+    @facets[:support_types] = params[:support_types].join(",") if params[:support_types]
     @facets[:business_sizes] = params[:business_sizes] if params[:business_sizes].present?
     @facets[:locations] = params[:locations] if params[:locations].present?
     @facets[:sectors] = params[:sectors] if params[:sectors].present?

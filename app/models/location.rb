@@ -1,4 +1,4 @@
-require 'ostruct'
+require "ostruct"
 
 class Location < OpenStruct
   HARDCODED_DATA = {
@@ -18,8 +18,8 @@ class Location < OpenStruct
     "Wales" => { "wales" => "All of Wales" },
     "Northern Ireland" => { "northern-ireland" => "All of Northern Ireland" },
   }.map do |name, regions|
-    new(:name => name, :regions => regions.map { |slug, name|
-      new(:slug => slug, :name => name)
+    new(name: name, regions: regions.map { |slug, name|
+      new(slug: slug, name: name)
     })
   end
 

@@ -1,4 +1,4 @@
-require 'ostruct'
+require "ostruct"
 
 class Type < OpenStruct
   HARDCODED_DATA = {
@@ -9,7 +9,7 @@ class Type < OpenStruct
     "expertise-and-advice" => "Expertise and advice",
     "recognition-award" => "Recognition award",
   }.map do |slug, name|
-    new(:slug => slug, :name => name)
+    new(slug: slug, name: name)
   end
 
   def self.all

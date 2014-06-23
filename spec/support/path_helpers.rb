@@ -12,4 +12,4 @@ module PathHelpers
 
 end
 
-RSpec.configuration.include PathHelpers, :type => :request
+RSpec.configuration.include PathHelpers, type: :request

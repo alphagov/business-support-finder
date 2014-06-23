@@ -1,9 +1,9 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe BusinessSupportController do
   describe "GET 'start'" do
     it "returns http success" do
-      get 'start'
+      get "start"
       response.should be_success
     end
 
@@ -34,7 +34,7 @@ describe BusinessSupportController do
   describe "common stuff for all actions" do
     controller(BusinessSupportController) do
       def index
-        render :text => "something"
+        render text: "something"
       end
     end
 
@@ -61,7 +61,7 @@ describe BusinessSupportController do
     end
 
     it "should return 404 for invalid UTF-8 in params" do
-      get :index, "sectors"=>"travel-and-leisure", "stage"=>"pre-start", "size"=>"under-10", "types"=>"acux10764\xC0\xBEz1\xC0\xBCz2a\x90bcxuca10764"
+      get :index, "sectors" => "travel-and-leisure", "stage" => "pre-start", "size" => "under-10", "types" => "acux10764\xC0\xBEz1\xC0\xBCz2a\x90bcxuca10764"
 
       response.status.should == 404
     end

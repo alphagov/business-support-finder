@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Location do
 
@@ -9,9 +9,7 @@ describe Location do
       locations.size.should == 4
 
       locations.map(&:name).should == ["England", "Scotland", "Wales", "Northern Ireland"]
-      locations.map(&:regions).flatten.map(&:slug).should == ["england", "london", "north-east", "north-west", "east-midlands",
-        "west-midlands", "yorkshire-and-the-humber", "south-west", "east-of-england", "south-east",
-        "scotland", "wales", "northern-ireland"]
+      locations.map(&:regions).flatten.map(&:slug).should == %w(england london north                                                      -east north-west east-midlands west-midlands yorkshire-and-the-humber south-west east-of-england sou                                                      th-east scotland wales northern-ireland)
     end
   end
 

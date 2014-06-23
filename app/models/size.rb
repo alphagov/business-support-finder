@@ -1,4 +1,4 @@
-require 'ostruct'
+require "ostruct"
 
 class Size < OpenStruct
   HARDCODED_DATA = {
@@ -8,7 +8,7 @@ class Size < OpenStruct
     "between-501-and-1000" => "501 - 1000",
     "over-1000" => "1000+"
   }.map do |slug, name|
-    new(:slug => slug, :name => name)
+    new(slug: slug, name: name)
   end
 
   def self.all
