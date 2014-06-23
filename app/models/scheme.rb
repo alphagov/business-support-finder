@@ -1,4 +1,4 @@
-require 'gds_api/helpers'
+require "gds_api/helpers"
 
 class Scheme
   extend GdsApi::Helpers

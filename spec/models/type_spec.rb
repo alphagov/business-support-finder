@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Type do
 
@@ -8,7 +8,7 @@ describe Type do
 
       types.size.should == 6
       types.map(&:name).should == ["Finance (any)", "Equity", "Grant", "Loan (including guarantees)", "Expertise and advice", "Recognition award"]
-      types.map(&:slug).should == ["finance", "equity", "grant", "loan", "expertise-and-advice", "recognition-award"]
+      types.map(&:slug).should == %w(finance equity grant loan expertise-and-advice recognition-award)
     end
   end
 

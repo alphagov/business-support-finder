@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe "Start page" do
 
@@ -6,14 +6,14 @@ describe "Start page" do
 
     visit "/#{APP_SLUG}"
 
-    within '#content' do
-      within 'header' do
+    within "#content" do
+      within "header" do
         page.should have_content("Finance and support for your business")
       end
 
-      within 'article[role=article]' do
-        within 'section.intro' do
-          page.should have_link("Get started", :href => "/#{APP_SLUG}/search")
+      within "article[role=article]" do
+        within "section.intro" do
+          page.should have_link("Get started", href: "/#{APP_SLUG}/search")
         end
       end
 

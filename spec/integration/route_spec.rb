@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe "Redirecting the root URL" do
   it "should redirect to the start page" do

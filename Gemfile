@@ -35,6 +35,7 @@ group :development, :test do
   gem 'webmock', :require => false
   gem 'nokogiri'
   gem 'poltergeist', '1.4.1'
+  gem 'rubocop'
 end
 
 gem 'govuk_frontend_toolkit', '0.32.2'
