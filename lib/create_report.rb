@@ -8,25 +8,25 @@ TODAY = Date.today.strftime("%Y-%m-%d")
 CSV_HEADERS = "id|title|web_url|short_description"
 
 def write_csv_file(filename, data)
-	 File.open(filename, "w") do |data_file|
- 		 data_file.puts(CSV_HEADERS)
- 		 data_file.puts(data)
- 	end
+  File.open(filename, "w") do |data_file|
+    data_file.puts(CSV_HEADERS)
+    data_file.puts(data)
+  end
 end
 
 def all_schemes_for_location(location_name, location_query_string, ids_to_remove = [])
-	 url = "https://imminence.production.alphagov.co.uk/business_support_schemes.json?locations=" + location_query_string
-	 json_data = JSON.parse(open(url).read)
-	 id_arr = json_data["results"].map { |s| s["business_support_identifier"] }
-	 id_arr_final = id_arr - ids_to_remove
-	 id_list = id_arr_final.join(",")
-	 total = id_arr_final.length
-	 all_schemes_url = "https://www.gov.uk/api/business_support_schemes.json?identifiers=" + id_list
-	 all_schemes_json = JSON.parse(open(all_schemes_url).read)
-	 published_schemes_csv = all_schemes_json["results"].map { |s| s["identifier"] + "|" + s["title"] + "|" + s["web_url"] + "|" + s["short_description"] }
-	 filename = location_name + TODAY + ".csv"
-	 puts (filename + ":" + total.to_s)
-	 write_csv_file(filename, published_schemes_csv)
+  url = "https://imminence.production.alphagov.co.uk/business_support_schemes.json?locations=" + location_query_string
+  json_data = JSON.parse(open(url).read)
+  id_arr = json_data["results"].map { |s| s["business_support_identifier"] }
+  id_arr_final = id_arr - ids_to_remove
+  id_list = id_arr_final.join(",")
+  total = id_arr_final.length
+  all_schemes_url = "https://www.gov.uk/api/business_support_schemes.json?identifiers=" + id_list
+  all_schemes_json = JSON.parse(open(all_schemes_url).read)
+  published_schemes_csv = all_schemes_json["results"].map { |s| s["identifier"] + "|" + s["title"] + "|" + s["web_url"] + "|" + s["short_description"] }
+  filename = location_name + TODAY + ".csv"
+  puts (filename + ":" + total.to_s)
+  write_csv_file(filename, published_schemes_csv)
 end
 
 all_schemes_for_location("Scotland", "scotland")
