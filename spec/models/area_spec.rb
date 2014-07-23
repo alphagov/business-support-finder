@@ -1,9 +1,7 @@
 require 'spec_helper'
-require 'gds_api/test_helpers/imminence'
 
 describe Area do
 
-  include GdsApi::TestHelpers::Imminence
   include ImminenceApiHelper
 
   before do
@@ -14,9 +12,7 @@ describe Area do
                 {slug: "wales", name: "Wales", type: "EUR", country_name: "Wales"},
                 {slug: "northern-ireland", name: "Northern Ireland", type: "EUR", country_name: "Northern Ireland"}]
 
-    stub_request(:get, %r{\A#{Plek.current.find('imminence')}/areas/EUR.json}).to_return(
-      body: areas_response(@regions)
-    )
+    stub_imminence_areas_request(@regions)
   end
 
   describe "all" do
