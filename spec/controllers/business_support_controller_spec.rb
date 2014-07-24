@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe BusinessSupportController do
+
+  include ImminenceApiHelper
+
+  before do
+    stub_imminence_areas_request([])
+  end
   describe "GET 'start'" do
     it "returns http success" do
       get 'start'
