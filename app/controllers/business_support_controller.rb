@@ -11,12 +11,10 @@ class BusinessSupportController < ApplicationController
   after_filter :send_slimmer_headers
 
   def search
-    @areas = Area.all
     @sectors = Sector.all
     @stages = Stage.all
     @sizes = Size.all
     @types = Type.all
-
     if @facets.empty? and params[:commit]
       @schemes = []
     else
@@ -39,9 +37,9 @@ class BusinessSupportController < ApplicationController
 
   def prepare_facets
     @facets = {}
+    @facets[:postcode] = params[:postcode] if params[:postcode].present?
     @facets[:support_types] = params[:support_types].join(',') if params[:support_types]
     @facets[:business_sizes] = params[:business_sizes] if params[:business_sizes].present?
-    @facets[:areas] = params[:areas] if params[:areas].present?
     @facets[:sectors] = params[:sectors] if params[:sectors].present?
     @facets[:stages] = params[:stages] if params[:stages].present?
   end

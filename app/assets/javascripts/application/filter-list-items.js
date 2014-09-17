@@ -23,8 +23,7 @@
       filter.$count = $('.results-count', $filtered_list);
       
       filter.initialise_history_api();
-      filter.$form.find('input,select').on( 'change', filter.refresh_filter );
-      
+      filter.$form.find('.filter-inclusive input, .filter-exclusive select').on('change', filter.refresh_filter );
       filter.$form.find('#filter-submit').hide();
     },
     

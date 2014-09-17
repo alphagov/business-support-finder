@@ -24,15 +24,10 @@
             </div>
 
             <!-- Business location -->
-            <div class="filter business-location filter-exclusive" id="location-filter">
+            <div class="business-postcode filter">
               <div class="filter-inner">
-                <label for="select-location">Business location</label>
-                <%= select_tag :areas,
-                      option_groups_from_collection_for_select(@areas, :regions, :name, :slug, :name, params[:areas]),
-                      :prompt => 'Any location',
-                      :id => "select-location",
-                      :class => "single-row-select"
-                %>
+                <label for="postcode">Business postcode</label>
+                <%= text_field_tag :postcode, params[:postcode], placeholder: "e.g. SW1A 2AA"  %>
               </div>
             </div>
 
@@ -106,7 +101,7 @@
         <!-- Results -->
         <ul class="results-list">
           <% @schemes.each do |scheme| %>
-            <li class="scheme" data-sectors='<%= formatted_facet_values(scheme.sectors) %>' data-areas='<%= formatted_facet_values(scheme.areas) %>' data-business_sizes='<%= formatted_facet_values(scheme.business_sizes) %>' data-types='<%= formatted_facet_values(scheme.support_types) %>' data-stages='<%= formatted_facet_values(scheme.stages) %>'>
+            <li class="scheme" data-sectors='<%= formatted_facet_values(scheme.sectors) %>' data-business_sizes='<%= formatted_facet_values(scheme.business_sizes) %>' data-types='<%= formatted_facet_values(scheme.support_types) %>' data-stages='<%= formatted_facet_values(scheme.stages) %>'>
               <h3><a href="<%= scheme.web_url %>"><%= scheme.title %></a></h3>
               <p><%= scheme.short_description %></p>
             </li>
