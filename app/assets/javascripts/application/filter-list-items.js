@@ -24,6 +24,9 @@
       
       filter.initialise_history_api();
       filter.$form.find('.filter-inclusive input, .filter-exclusive select').on('change', filter.refresh_filter );
+      filter.$form.submit(function(e) {
+        filter.track(filter.$form.find('#postcode').val());
+      });
       filter.$form.find('#filter-submit').hide();
     },
     
@@ -128,6 +131,12 @@
       
       history.pushState( filter.current_page_state(), null, new_url );
       window._gaq && _gaq.push(['_trackPageview', new_url]);
+    },
+    track: function(search) {
+      var pagePath = window.location.pathname.split('/').pop();
+      if (pagePath) {
+        window._gaq && _gaq.push(['_trackEvent', 'searchBoxFilter', search, pagePath, 0, true]);
+      }
     }
   };
   
