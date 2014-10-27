@@ -11,7 +11,7 @@ namespace :panopticon do
 
     record = OpenStruct.new(
         slug: APP_SLUG,
-        title: "Business finance and support finder",
+        title: "Finance and support for your business",
         description: "Find business finance, support, grants and loans backed by the government.",
         need_id: "100115",
         paths: [],
