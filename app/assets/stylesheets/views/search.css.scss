@@ -83,7 +83,7 @@ $right-to-left: false !default;
   label {
     @include ig-core-14;
 
-    &.title {  
+    &.title {
       @include copy-19;
       font-weight: bold;
       display:block;
@@ -313,7 +313,7 @@ ul.results-list {
       }
 
       a:hover {
-        text-decoration:underline; 
+        text-decoration:underline;
       }
     }
 
@@ -509,22 +509,24 @@ ul.results-list {
 
 // CUSTOM STYLES AND OVERRIDES
 // WRITTEN FOR THIS PROTOTYPE
-.search-page main {
-  header.page-header {
-    div {
-      margin:0;
-      margin-left:-4px;
-    }
+.search-page main header.page-header div {
+  margin-bottom: $gutter-half;
+  @include media(tablet){
+    margin-bottom: $gutter*2;
   }
 }
 
 .search-page .article-container {
-  margin-right:0; 
+  margin-right:0;
   max-width:none;
 }
 
 .business-support-index {
+  margin: 0 -$gutter-half;
+
   @include media(tablet) {
+    margin: 0 -$gutter;
+
     .block-2 {
       float: left;
       width: 33.333%;
