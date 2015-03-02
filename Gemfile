@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-source 'https://BnrJb6FZyzspBboNJzYZ@gem.fury.io/govuk/'
 
 gem 'rails', '3.2.17'
 
@@ -37,4 +36,4 @@ group :development, :test do
   gem 'poltergeist', '1.4.1'
 end
 
-gem 'govuk_frontend_toolkit', '0.32.2'
+gem 'govuk_frontend_toolkit', '1.3.0'
