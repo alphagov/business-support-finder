@@ -130,7 +130,7 @@
                     + '?' +  filter.$form.serialize();
       
       history.pushState( filter.current_page_state(), null, new_url );
-      window._gaq && _gaq.push(['_trackPageview', new_url]);
+      GOVUK.analytics.trackPageview(new_url);
     },
     track: function(search) {
       var pagePath = window.location.pathname.split('/').pop();
