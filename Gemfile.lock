@@ -182,7 +182,6 @@ DEPENDENCIES
   poltergeist (= 1.4.1)
   rails (= 3.2.17)
   rspec-rails (= 2.14.0)
-  sass (= 3.2.0)
   sass-rails (= 3.2.6)
   simplecov
   simplecov-rcov
