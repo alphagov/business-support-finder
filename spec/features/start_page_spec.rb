@@ -16,8 +16,6 @@ describe "Start page" do
           page.should have_link("Get started", :href => "/#{APP_SLUG}/search")
         end
       end
-
-      page.should have_selector(".article-container #test-report_a_problem")
     end
     page.should have_selector("#test-related")
   end
