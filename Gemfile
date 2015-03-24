@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.17'
 
-gem 'slimmer', '7.0.0'
+gem 'slimmer', '8.1.0'
 gem 'plek', '1.1.0'
 if ENV['API_DEV']
   gem 'gds-api-adapters', :path => '../gds-api-adapters'
