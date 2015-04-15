@@ -7,4 +7,4 @@ Built as a Rails frontend client to a separate API.
 ## Requirements
 
 * [Business Support API](https://github.com/alphagov/business-support-api)
-* Ruby 1.9.3
+* Ruby 2.1.5
