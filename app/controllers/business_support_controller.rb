@@ -1,9 +1,10 @@
 require 'gds_api/helpers'
-require 'slimmer/headers'
+require 'slimmer'
 
 class BusinessSupportController < ApplicationController
   include GdsApi::Helpers
   include Slimmer::Headers
+  include Slimmer::SharedTemplates
 
   before_filter :load_artefact
   before_filter :set_expiry

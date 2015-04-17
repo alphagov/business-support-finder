@@ -51,7 +51,7 @@ $right-to-left: false !default;
   }
 
   display: block;
-  
+
 
   h2 {
     @include core-16;
@@ -187,7 +187,7 @@ $right-to-left: false !default;
     }
   }
 
-  
+
 
   .disabled {
     opacity: 0.3;
@@ -290,12 +290,12 @@ $right-to-left: false !default;
 }
 
 ul.results-list {
-  
+
   list-style:none;
   margin:0; padding:0;
   margin-bottom: 60px;
   margin-top: 25px;
-  
+
   li {
     margin:0 0 35px 0;
 
@@ -333,7 +333,7 @@ ul.results-list {
           padding:0; margin:0;
           margin-top:2px;
         }
-        
+
       }
     }
   }
@@ -397,7 +397,7 @@ ul.results-list {
   //   margin-left: 0;
   //   width: 100%;
   // }
-      
+
   position: relative;
   overflow: hidden;
   margin-top: $gutter*2;
@@ -494,6 +494,14 @@ ul.results-list {
       background: transparent image-url("loading-2b2c2d.gif") no-repeat 0 50%;
     }
   }
+}
+
+.govuk-beta-label {
+  border-bottom: none;
+  border-top: 1px solid $border-colour;
+  padding-top: $gutter;
+  margin-top: $gutter;
+  margin-bottom: $gutter*3;
 }
 
 .business-support-finder .js-hidden { display: none; }
