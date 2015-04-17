@@ -496,6 +496,14 @@ ul.results-list {
   }
 }
 
+.govuk-beta-label {
+  border-bottom: none;
+  border-top: 1px solid $border-colour;
+  padding-top: $gutter;
+  margin-top: $gutter;
+  margin-bottom: $gutter*3;
+}
+
 .business-support-finder .js-hidden { display: none; }
 
 // <---------------------
