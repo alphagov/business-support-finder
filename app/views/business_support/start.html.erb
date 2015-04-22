@@ -29,6 +29,23 @@
   <%= render partial: 'govuk_component/beta_label', locals: { message: "You can also use the <a href='https://www.find-business-support.service.gov.uk/bdt/diagnosticForm'>beta service to find funding and help</a>."} %>
 </div>
 
+<script id="bfsf_cross_domain_analytics">
+  if (typeof window.ga === "function") {
+    ga('create', 'UA-53250464-6', 'auto', {'name': 'transactionTracker'});
+
+    // Load the plugin.
+    ga('require', 'linker');
+    ga('transactionTracker.require', 'linker');
+
+    // Define which domains to autoLink.
+    ga('linker:autoLink', ['service.gov.uk']);
+    ga('transactionTracker.linker:autoLink', ['service.gov.uk']);
+
+    ga('transactionTracker.set', 'anonymizeIp', true);
+    ga('transactionTracker.send', 'pageview');
+  }
+</script>
+
 <% content_for :after_content do %>
   <div id="related-items"></div>
 <% end %>
