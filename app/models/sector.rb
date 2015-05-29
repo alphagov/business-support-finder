@@ -2,19 +2,19 @@ require 'ostruct'
 
 class Sector < OpenStruct
   HARDCODED_SECTORS = {
-    "agriculture" => "Agriculture",
-    "business-and-finance" => "Business and Finance",
+    "agriculture" => "Agriculture, fishing and forestry",
+    "business-and-finance" => "Financial services and business consultancy",
     "construction" => "Construction",
     "education" => "Education",
-    "health" => "Health",
-    "hospitality-and-catering" => "Hospitality and Catering",
-    "manufacturing" => "Manufacturing",
-    "mining" => "Mining",
-    "real-estate" => "Real Estate",
-    "science-and-technology" => "Science and Technology",
-    "transport-and-distribution" => "Transport and Distribution",
-    "utilities" => "Utilities",
-    "wholesale-and-retail" => "Wholesale and Retail"
+    "health" => "Medical, mental health, addiction and social work",
+    "hospitality-and-catering" => "Accommodation and food services",
+    "manufacturing" => "Manufacturing and engineering",
+    "mining" => "Mining and quarrying",
+    "real-estate" => "Real estate, renting and property development",
+    "science-and-technology" => "Research and development",
+    "transport-and-distribution" => "Transport, travel, storage and distribution",
+    "utilities" => "Electricity, gas and water supply",
+    "wholesale-and-retail" => "Wholesale, retail and repairs"
   }.map do |slug, name|
     new(:slug => slug, :name => name)
   end
@@ -24,3 +24,6 @@ class Sector < OpenStruct
   end
 
 end
+
+
+
