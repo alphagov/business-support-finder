@@ -6,13 +6,13 @@ describe Sector do
     it "should return all the hardcoded sectors with slugs" do
       sectors = Sector.all
 
-      sectors.size.should == 16
+      sectors.size.should == 20
 
-      sectors[0].name.should == "Agriculture"
+      sectors[0].name.should == "Agriculture, fishing and forestry"
       sectors[0].slug.should == "agriculture"
 
-      sectors[6].name.should == "Information, Communication and Media"
-      sectors[6].slug.should == "information-communication-and-media"
+      sectors[6].name.should == "Medical, mental health, addiction and social work"
+      sectors[6].slug.should == "health"
     end
   end
 
