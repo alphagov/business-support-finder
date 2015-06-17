@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.17'
+gem 'rails', '3.2.22'
 
 gem 'slimmer', '8.2.1'
 gem 'plek', '1.10.0'
