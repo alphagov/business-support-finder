@@ -102,6 +102,13 @@ describe "Finding support options" do
         click_on "Refresh results"
         page.assert_selector('li.scheme', count: 1)
       end
+
+      it "should strip postcodes of non-alphanumerics (except non-trailing spaces and underscores) before searching" do
+        # Not stripping underscores is a feature of the regex `\w`.
+        fill_in "Business postcode", :with => "WC2B 6SE] "
+        click_on "Refresh results"
+        page.assert_selector('li.scheme', count: 1)
+      end
     end
   end
 
