@@ -38,7 +38,9 @@ class BusinessSupportController < ApplicationController
 
   def prepare_facets
     @facets = {}
-    @facets[:postcode] = params[:postcode] if params[:postcode].present?
+    if params[:postcode].present?
+      @facets[:postcode] = params[:postcode].gsub(/[^\w\s]/i, '').strip
+    end
     @facets[:support_types] = params[:support_types].join(',') if params[:support_types]
     @facets[:business_sizes] = params[:business_sizes] if params[:business_sizes].present?
     @facets[:sectors] = params[:sectors] if params[:sectors].present?
