@@ -6,6 +6,10 @@ describe "Start page" do
 
     visit "/#{APP_SLUG}"
 
+    within 'head', visible: :all do
+      page.should have_selector("meta[@name='description']", visible: false)
+    end
+
     within '#content' do
       within 'header' do
         page.should have_content("Finance and support for your business")
