@@ -14,7 +14,7 @@ else
 end
 
 gem 'logstasher', '0.4.8'
-gem 'airbrake', '3.1.15'
+gem 'airbrake', '~> 4.3.0'
 gem 'unicorn'
 
 group :development, :test do
