@@ -13,7 +13,7 @@ else
   gem 'gds-api-adapters', '20.1.1'
 end
 
-gem 'logstasher', '0.4.8'
+gem 'logstasher', '0.6.2'
 gem 'airbrake', '~> 4.3.0'
 gem 'unicorn'
 
