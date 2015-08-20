@@ -30,20 +30,5 @@ module BusinessSupportFinder
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
-
-    # Enable the asset pipeline
-    config.assets.enabled = true
-
-    # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
-
-    config.assets.prefix = '/businesssupportfinder' # this has to match the path configured in puppet and deploy scripts.
-
-    # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-    config.assets.precompile += %w(
-      application-ie6.css
-      application-ie7.css
-      application-ie8.css
-    )
   end
 end
