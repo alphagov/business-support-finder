@@ -112,10 +112,8 @@ RSpec.describe "Finding support options" do
     end
   end
 
-  describe "with javascript enabled" do
+  describe "with javascript enabled", :js => true do
     before do
-      Capybara.current_driver = Capybara.javascript_driver
-
       business_support_api_has_schemes([{ 
         "title" => "Graduate start-up", "business_support_identifier" => "graduate-start-up",
         "stages" => ["grow-and-sustain"], "business_sizes" => ["up-to-249"], "sectors" => ["education"],
