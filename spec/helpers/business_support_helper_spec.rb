@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe BusinessSupportHelper do
   describe "formatted_facet_values" do

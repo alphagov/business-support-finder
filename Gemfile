@@ -26,13 +26,13 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '2.14.0'
-  gem 'capybara', '2.1.0'
+  gem 'rspec-rails', '~> 3.3'
+  gem 'capybara', '~> 2.4.4'
   gem 'simplecov'
   gem 'simplecov-rcov'
   gem 'webmock', :require => false
   gem 'nokogiri'
-  gem 'poltergeist', '1.4.1'
+  gem 'poltergeist', '~> 1.6.0'
 end
 
 gem 'govuk_frontend_toolkit', '1.3.0'
