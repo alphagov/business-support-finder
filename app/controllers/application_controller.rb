@@ -1,7 +1,7 @@
 require 'gds_api/exceptions'
 
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  protect_from_forgery with: :null_session
 
   rescue_from GdsApi::TimedOutException, :with => :error_503
   before_filter :reject_invalid_utf8

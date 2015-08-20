@@ -1,4 +1,4 @@
-BusinessSupportFinder::Application.routes.draw do
+Rails.application.routes.draw do
 
   with_options :format => false do |routes|
     routes.get "/#{APP_SLUG}" => "business_support#start", :as => :start
