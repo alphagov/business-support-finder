@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "Finding support options" do
+RSpec.describe "Finding support options" do
 
   include ImminenceApiHelper
 
@@ -33,18 +33,18 @@ describe "Finding support options" do
         visit "/#{APP_SLUG}/search"
       end
       it "should show all available schemes by default" do
-        page.should have_content 'Graduate start-up'
-        page.should have_content 'Manufacturing Services - Wales'
-        page.assert_selector('li.scheme', count: 2)
-        page.should have_selector('.filter-results-summary h3 span', text: '2') # result count
+        expect(page).to have_content 'Graduate start-up'
+        expect(page).to have_content 'Manufacturing Services - Wales'
+        expect(page).to have_selector('li.scheme', count: 2)
+        expect(page).to have_selector('.filter-results-summary h3 span', text: '2') # result count
       end
 
       it "should show all available schemes if unchanged form submitted" do
         click_on "Refresh results"
-        page.should have_content 'Graduate start-up'
-        page.should have_content 'Manufacturing Services - Wales'
-        page.assert_selector('li.scheme', count: 2)
-        page.should have_selector('.filter-results-summary h3 span', text: '2') # result count
+        expect(page).to have_content 'Graduate start-up'
+        expect(page).to have_content 'Manufacturing Services - Wales'
+        expect(page).to have_selector('li.scheme', count: 2)
+        expect(page).to have_selector('.filter-results-summary h3 span', text: '2') # result count
       end
 
       it "should show 'no matching' if all checkboxes unchecked" do
@@ -55,9 +55,9 @@ describe "Finding support options" do
         uncheck("expertise-and-advice")
         uncheck("grant")
         click_on "Refresh results"
-        page.assert_selector('li.scheme', count: 0)
-        page.should have_content('no matching schemes')
-        page.should have_selector('.filter-results-summary h3 span', text: '0') # result count
+        expect(page).to have_selector('li.scheme', count: 0)
+        expect(page).to have_content('no matching schemes')
+        expect(page).to have_selector('.filter-results-summary h3 span', text: '0') # result count
       end
     end
     describe "with facet filtering" do
@@ -86,28 +86,28 @@ describe "Finding support options" do
         select "Education", :from => "sectors"
         select "Grow and sustain", :from => "stages"
         click_on "Refresh results"
-        page.assert_selector('li.scheme', count: 1)
-        page.should have_content 'Graduate start-up'
-        page.should have_selector('.filter-results-summary h3 span', text: '1') # result count
+        expect(page).to have_selector('li.scheme', count: 1)
+        expect(page).to have_content 'Graduate start-up'
+        expect(page).to have_selector('.filter-results-summary h3 span', text: '1') # result count
       end
 
       it "should return no results for incomplete postcodes" do
         fill_in "Business postcode", :with => "WC2B"
         click_on "Refresh results"
-        page.assert_selector('li.scheme', count: 0)
+        expect(page).to have_selector('li.scheme', count: 0)
       end
 
       it "should filter results with a valid postcode" do
         fill_in "Business postcode", :with => "WC2B 6SE"
         click_on "Refresh results"
-        page.assert_selector('li.scheme', count: 1)
+        expect(page).to have_selector('li.scheme', count: 1)
       end
 
       it "should strip postcodes of non-alphanumerics (except non-trailing spaces and underscores) before searching" do
         # Not stripping underscores is a feature of the regex `\w`.
         fill_in "Business postcode", :with => "WC2B 6SE] "
         click_on "Refresh results"
-        page.assert_selector('li.scheme', count: 1)
+        expect(page).to have_selector('li.scheme', count: 1)
       end
     end
   end
@@ -131,7 +131,7 @@ describe "Finding support options" do
     end
 
     it "should filter results in the DOM" do
-      page.should have_selector('.filter-results-summary h3 span', text: '2')
+      expect(page).to have_selector('.filter-results-summary h3 span', text: '2')
 
       uncheck("loan")
       uncheck("recognition-award")
@@ -139,18 +139,18 @@ describe "Finding support options" do
       select "Education", :from => "sectors"
       select "Grow and sustain", :from => "stages"
 
-      page.should have_selector('.filter-results-summary h3 span', text: '1')
-      page.find('li.scheme h3').text.should == "Graduate start-up"
+      expect(page).to have_selector('.filter-results-summary h3 span', text: '1')
+      expect(page).to have_selector('li.scheme h3', text: "Graduate start-up")
 
       select "1000+", :from => "business_sizes"
 
-      page.should have_selector('.filter-results-summary h3 span', text: '0')
+      expect(page).to have_selector('.filter-results-summary h3 span', text: '0')
 
       select "0 - 9", :from => "business_sizes"
       select "Manufacturing", :from => "sectors"
 
-      page.should have_selector('.filter-results-summary h3 span', text: '1')
-      page.find('li.scheme h3').text.should == "Manufacturing Services - Wales"
+      expect(page).to have_selector('.filter-results-summary h3 span', text: '1')
+      expect(page).to have_selector('li.scheme h3', text: "Manufacturing Services - Wales")
 
       check "loan"
       check "recognition-award"
@@ -158,17 +158,17 @@ describe "Finding support options" do
       select "All", :from => "sectors"
       select "All", :from => "stages"
 
-      page.should have_selector('.filter-results-summary h3 span', text: '2')
-      assert page.find('li.scheme', :text => "Graduate start-up")
-      assert page.find('li.scheme', :text => "Manufacturing Services - Wales")
+      expect(page).to have_selector('.filter-results-summary h3 span', text: '2')
+      expect(page).to have_selector('li.scheme', :text => "Graduate start-up")
+      expect(page).to have_selector('li.scheme', :text => "Manufacturing Services - Wales")
     end
 
     it "shouldn't filter when the postcode field is changed" do
-      page.should have_selector('.filter-results-summary h3 span', text: '2')
+      expect(page).to have_selector('.filter-results-summary h3 span', text: '2')
 
       fill_in "Business postcode", :with => "WC2B 6SE"
 
-      page.should have_selector('.filter-results-summary h3 span', text: '2')
+      expect(page).to have_selector('.filter-results-summary h3 span', text: '2')
     end
 
     it "should filter by postcode on form submission" do
@@ -177,8 +177,8 @@ describe "Finding support options" do
       # The submit button is hidden with js enabled, so mimick the return keypress.
       page.execute_script("$('#document-filter').submit()")
 
-      assert page.find('.filter-results-summary h3 span', text: '1')
-      assert page.find('li.scheme', :text => "Graduate start-up")
+      expect(page).to have_selector('.filter-results-summary h3 span', text: '1')
+      expect(page).to have_selector('li.scheme', :text => "Graduate start-up")
     end
   end
 end

@@ -1,18 +1,18 @@
 require 'rails_helper'
 
-describe Sector do
+RSpec.describe Sector do
 
   describe "all" do
     it "should return all the hardcoded sectors with slugs" do
       sectors = Sector.all
 
-      sectors.size.should == 16
+      expect(sectors.size).to eq(16)
 
-      sectors[0].name.should == "Agriculture"
-      sectors[0].slug.should == "agriculture"
+      expect(sectors[0].name).to eq("Agriculture")
+      expect(sectors[0].slug).to eq("agriculture")
 
-      sectors[6].name.should == "Information, Communication and Media"
-      sectors[6].slug.should == "information-communication-and-media"
+      expect(sectors[6].name).to eq("Information, Communication and Media")
+      expect(sectors[6].slug).to eq("information-communication-and-media")
     end
   end
 
