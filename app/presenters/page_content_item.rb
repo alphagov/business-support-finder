@@ -6,7 +6,8 @@ class PageContentItem
 
   def payload
     {
-      title: 'Finance and support for your business',
+      title: data[:title],
+      description: data[:description],
       content_id: data[:content_id],
       format: 'placeholder_business_support_finder',
       publishing_app: 'businesssupportfinder',
