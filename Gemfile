@@ -25,6 +25,7 @@ group :development, :test do
   gem 'webmock', :require => false
   gem 'nokogiri'
   gem 'poltergeist', '~> 1.6.0'
+  gem 'govuk-content-schema-test-helpers'
 end
 
 gem 'govuk_frontend_toolkit', '1.3.0'
