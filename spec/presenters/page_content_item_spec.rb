@@ -12,6 +12,7 @@ RSpec.describe PageContentItem do
       payload = PageContentItem.new.payload
 
       expect(payload[:title]).to eql('Finance and support for your business')
+      expect(payload[:content_id]).to be_a(String)
     end
   end
 

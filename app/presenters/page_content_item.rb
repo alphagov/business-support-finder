@@ -7,6 +7,7 @@ class PageContentItem
   def payload
     {
       title: 'Finance and support for your business',
+      content_id: data[:content_id],
       format: 'placeholder_business_support_finder',
       publishing_app: 'businesssupportfinder',
       rendering_app: 'businesssupportfinder',
@@ -17,5 +18,11 @@ class PageContentItem
         { type: 'exact', path: base_path }
       ]
     }
+  end
+
+private
+
+  def data
+    BusinessSupportPage::DATA
   end
 end
