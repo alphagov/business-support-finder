@@ -7,10 +7,10 @@ RSpec.describe PublishingApiNotifier do
 
       PublishingApiNotifier.new.publish
 
-      expect(Services.publishing_api).to have_received(:put_content_item).with(
-        "/business-finance-support-finder",
-        be_valid_against_schema('placeholder')
-      )
+      expect(Services.publishing_api).to have_received(:put_content_item) do |path, payload|
+        expect(path).to eql("/business-finance-support-finder")
+        expect(payload).to be_valid_against_schema('placeholder')
+      end
     end
   end
 end
