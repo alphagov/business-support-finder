@@ -1,6 +1,9 @@
 require 'gds_api/exceptions'
 
 class ApplicationController < ActionController::Base
+  include Slimmer::Template
+  slimmer_template 'wrapper'
+
   protect_from_forgery with: :null_session
 
   rescue_from GdsApi::TimedOutException, :with => :error_503
