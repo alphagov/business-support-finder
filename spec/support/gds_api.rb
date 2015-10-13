@@ -10,7 +10,6 @@ RSpec.configure do |config|
   config.before(:each, :type => :controller) do
     stub_content_api_default_artefact
     setup_business_support_api_schemes_stubs
-    stub_imminence_default_business_support_schemes
   end
 
   config.include GdsApi::TestHelpers::BusinessSupportApi, :type => :feature
@@ -19,7 +18,6 @@ RSpec.configure do |config|
   config.before(:each, :type => :feature) do
     stub_content_api_default_artefact
     setup_business_support_api_schemes_stubs
-    stub_imminence_default_business_support_schemes
     setup_content_api_business_support_schemes_stubs
   end
 end
