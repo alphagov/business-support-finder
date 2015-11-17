@@ -6,9 +6,10 @@ class PageContentItem
 
   def payload
     {
+      base_path: base_path,
       title: data[:title],
       description: data[:description],
-      content_id: data[:content_id],
+      content_id: content_id,
       format: 'placeholder_business_support_finder',
       publishing_app: 'businesssupportfinder',
       rendering_app: 'businesssupportfinder',
@@ -19,6 +20,10 @@ class PageContentItem
         { type: 'exact', path: base_path }
       ]
     }
+  end
+
+  def content_id
+    data[:content_id]
   end
 
 private
