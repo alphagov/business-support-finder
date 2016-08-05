@@ -9,11 +9,13 @@ class PageContentItem
       base_path: base_path,
       title: data[:title],
       description: data[:description],
-      format: 'placeholder_business_support_finder',
+      document_type: 'placeholder_business_support_finder',
+      schema_name: 'placeholder_business_support_finder',
       publishing_app: 'businesssupportfinder',
       rendering_app: 'businesssupportfinder',
       locale: 'en',
       public_updated_at: Time.now.iso8601,
+      details: {},
       routes: [
         { type: 'exact', path: base_path }
       ]
