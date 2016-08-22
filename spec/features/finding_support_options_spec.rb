@@ -2,20 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Finding support options" do
 
-  include ImminenceApiHelper
-
   describe "without javascript" do
-    before do
-      @regions = [{slug: "london", name: "London", type: "EUR", country_name: "England"},
-                  {slug: "south-east", name: "South East", type: "EUR", country_name: "England"},
-                  {slug: "england", name: "England", type: "EUR", country_name: "England"},
-                  {slug: "scotland", name: "Scotland", type: "EUR", country_name: "Scotland"},
-                  {slug: "wales", name: "Wales", type: "EUR", country_name: "Wales"},
-                  {slug: "northern-ireland", name: "Northern Ireland", type: "EUR", country_name: "Northern Ireland"}]
-
-      stub_imminence_areas_request(@regions)
-    end
-
     describe "with no facet filtering" do
       before do
         business_support_api_has_schemes(
