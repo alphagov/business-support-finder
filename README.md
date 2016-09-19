@@ -33,6 +33,8 @@ The schemes themselves (eg [gov.uk/bridge-to-employment-northern-ireland](https:
 - [govuk_content_api](https://github.com/alphagov/govuk_content_api): Provides artefact content and metadata
 - [publishing-api](https://github.com/alphagov/publishing-api): Sends `content_id` to `content-store`
 - [static](https://github.com/alphagov/static): Provides shared GOV.UK assets and templates.
+- [panopticon](https://github.com/alphagov/panopticon): this app sends data to panopticon to register URLs.
+- [rummager](https://github.com/alphagov/rummager): this app indexes its pages for search via Rummager.
 
 ### Running the application
 
@@ -55,6 +57,14 @@ The app will run at [localhost:3024](http://localhost:3024) - or [businesssuppor
 ```
 $ bundle exec rake
 ```
+
+### Publishing to GOV.UK
+
+- `bundle exec rake panopticon:register` will send the business support finder pages to panopticon. Panopticon will register the URL.
+
+### Search indexing
+
+- `bundle exec rake rummager:index_all` will send the data to Rummager for indexing in search.
 
 ## Licence
 
