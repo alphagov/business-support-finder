@@ -7,19 +7,25 @@
     <!--[if IE 7]><%= stylesheet_link_tag "application-ie7.css" %><![endif]-->
     <!--[if IE 8]><%= stylesheet_link_tag "application-ie8.css" %><![endif]-->
     <%= yield :head %>
+    <%= render partial: 'govuk_component/analytics_meta_tags', locals: { content_item: @content_item } %>
+    <% if @meta_section %>
+      <meta name="govuk:section" content="<%= @meta_section %>">
+    <% end %>
   </head>
   <body class="mainstream">
+    <div class="header-context"><!-- Deliberately empty. This will prevent Slimmer from adding the artefact-breadcrumb. --></div>
     <div id="wrapper" class="answer business-support-finder <%= yield :page_class %>">
+      <%= render partial: 'govuk_component/breadcrumbs', locals: @navigation_helpers.breadcrumbs %>
       <% if content_for?(:after_content) %><div class="grid-row"><% end %>
-      <main id="content" role="main">
-        <header class="page-header group">
-          <div>
-            <h1>Finance and support for your business</h1>
-          </div>
-        </header>
-        <%= yield %>
-      </main>
-      <%= yield :after_content %>
+        <main id="content" role="main">
+          <header class="page-header group">
+            <div>
+              <h1>Finance and support for your business</h1>
+            </div>
+          </header>
+          <%= yield %>
+        </main>
+        <%= yield :after_content %>
       <% if content_for?(:after_content) %></div><% end %>
     </div>
     <%= javascript_include_tag "application" %>

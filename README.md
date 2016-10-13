@@ -30,7 +30,7 @@ The schemes themselves (eg [gov.uk/bridge-to-employment-northern-ireland](https:
 ### Dependencies
 
 - [business-support-api](https://github.com/alphagov/business-support-api): Provides scheme filtering/results
-- [govuk_content_api](https://github.com/alphagov/govuk_content_api): Provides artefact content and metadata
+- [content-store](https://github.com/alphagov/content-store): Provides content and metadata
 - [publishing-api](https://github.com/alphagov/publishing-api): Sends `content_id` to `content-store`
 - [static](https://github.com/alphagov/static): Provides shared GOV.UK assets and templates.
 - [panopticon](https://github.com/alphagov/panopticon): this app sends data to panopticon to register URLs.

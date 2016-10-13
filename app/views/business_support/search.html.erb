@@ -101,9 +101,9 @@
         <!-- Results -->
         <ul class="results-list">
           <% @schemes.each do |scheme| %>
-            <li class="scheme" data-sectors='<%= formatted_facet_values(scheme.sectors) %>' data-business_sizes='<%= formatted_facet_values(scheme.business_sizes) %>' data-types='<%= formatted_facet_values(scheme.support_types) %>' data-stages='<%= formatted_facet_values(scheme.stages) %>'>
-              <h3><a href="<%= scheme.web_url %>"><%= scheme.title %></a></h3>
-              <p><%= scheme.short_description %></p>
+            <li class="scheme" data-sectors='<%= formatted_facet_values(scheme["sectors"]) %>' data-business_sizes='<%= formatted_facet_values(scheme["business_sizes"]) %>' data-types='<%= formatted_facet_values(scheme["support_types"]) %>' data-stages='<%= formatted_facet_values(scheme["stages"]) %>'>
+              <h3><a href="<%= scheme["web_url"] %>"><%= scheme["title"] %></a></h3>
+              <p><%= scheme["short_description"] %></p>
             </li>
           <% end %>
         </ul>
