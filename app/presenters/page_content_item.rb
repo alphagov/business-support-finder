@@ -9,7 +9,7 @@ class PageContentItem
       base_path: base_path,
       title: data[:title],
       description: data[:description],
-      document_type: 'placeholder_business_support_finder',
+      document_type: 'business_support_finder',
       schema_name: 'placeholder_business_support_finder',
       publishing_app: 'businesssupportfinder',
       rendering_app: 'businesssupportfinder',

@@ -1,20 +1,13 @@
 require 'webmock'
 require 'gds_api/test_helpers/business_support_api'
-require 'gds_api/test_helpers/content_api'
+require 'gds_api/test_helpers/business_support_helper'
+require 'gds_api/test_helpers/content_store'
 
 RSpec.configure do |config|
-  config.include GdsApi::TestHelpers::BusinessSupportApi, :type => :controller
-  config.include GdsApi::TestHelpers::ContentApi, :type => :controller
-  config.before(:each, :type => :controller) do
-    stub_content_api_default_artefact
+  config.include GdsApi::TestHelpers::BusinessSupportApi
+  config.include GdsApi::TestHelpers::ContentStore
+  config.before(:each) do
+    content_store_has_item("/#{APP_SLUG}")
     setup_business_support_api_schemes_stubs
-  end
-
-  config.include GdsApi::TestHelpers::BusinessSupportApi, :type => :feature
-  config.include GdsApi::TestHelpers::ContentApi, :type => :feature
-  config.before(:each, :type => :feature) do
-    stub_content_api_default_artefact
-    setup_business_support_api_schemes_stubs
-    setup_content_api_business_support_schemes_stubs
   end
 end

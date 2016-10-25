@@ -2,6 +2,7 @@ require 'gds_api/exceptions'
 
 class ApplicationController < ActionController::Base
   include Slimmer::Template
+  include Slimmer::SharedTemplates
   slimmer_template 'wrapper'
 
   protect_from_forgery with: :null_session

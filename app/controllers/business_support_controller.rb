@@ -1,15 +1,8 @@
-require 'gds_api/helpers'
-require 'slimmer'
-
 class BusinessSupportController < ApplicationController
-  include GdsApi::Helpers
-  include Slimmer::Headers
-  include Slimmer::SharedTemplates
 
-  before_filter :load_artefact
+  before_filter :load_content_item
   before_filter :set_expiry
   before_filter :prepare_facets
-  after_filter :send_slimmer_headers
 
   def search
     @sectors = Sector.all
@@ -25,15 +18,20 @@ class BusinessSupportController < ApplicationController
 
   private
 
-  def load_artefact
-    @artefact = content_api.artefact(APP_SLUG)
-  end
+  def load_content_item
+    @content_item = Services.content_store.content_item("/#{APP_SLUG}").to_hash
+    # Remove the organisations from the content item - this will prevent the
+    # govuk:analytics:organisations meta tag from being generated until there is
+    # a better way of doing this.
+    if @content_item["links"]
+      @content_item["links"].delete("organisations")
+    end
 
-  def send_slimmer_headers
-    set_slimmer_headers(
-      :format => 'finder'
-    )
-    set_slimmer_artefact(@artefact)
+    @navigation_helpers = GovukNavigationHelpers::NavigationHelper.new(@content_item)
+    section_name = @content_item.dig("links", "parent", 0, "title")
+    if section_name
+      @meta_section = section_name.downcase
+    end
   end
 
   def prepare_facets
