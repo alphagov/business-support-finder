@@ -5,8 +5,12 @@ class BusinessSupportPage
     title: "Finance and support for your business",
     description: "Find business finance, support, grants and loans backed by the government.",
     need_id: "100115",
+
+    # Sending an empty array for `paths` and `prefixes` will make sure we don't
+    # register routes in Panopticon.
     paths: [],
-    prefixes: ["/#{APP_SLUG}"],
+    prefixes: [],
+
     state: "live",
     indexable_content: "Business finance and support finder"
   }

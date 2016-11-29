@@ -5,7 +5,7 @@ RSpec.describe PageContentItem do
     it 'is valid against the schema' do
       payload = PageContentItem.new.payload
 
-      expect(payload).to be_valid_against_schema('placeholder')
+      expect(payload).to be_valid_against_schema('generic')
     end
 
     it 'has the correct data' do
