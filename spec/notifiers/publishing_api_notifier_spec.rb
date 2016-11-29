@@ -10,7 +10,7 @@ RSpec.describe PublishingApiNotifier do
 
       expect(Services.publishing_api).to have_received(:put_content) do |content_id, payload|
         expect(content_id).to eql("6f34c053-2f99-48a3-81e3-955fae00df69")
-        expect(payload).to be_valid_against_schema('placeholder')
+        expect(payload).to be_valid_against_schema('generic')
       end
 
       expect(Services.publishing_api).to have_received(:publish)
