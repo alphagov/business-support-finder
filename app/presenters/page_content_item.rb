@@ -10,14 +10,14 @@ class PageContentItem
       title: data[:title],
       description: data[:description],
       document_type: 'business_support_finder',
-      schema_name: 'placeholder_business_support_finder',
+      schema_name: 'generic',
       publishing_app: 'businesssupportfinder',
       rendering_app: 'businesssupportfinder',
       locale: 'en',
       public_updated_at: Time.now.iso8601,
       details: {},
       routes: [
-        { type: 'exact', path: base_path }
+        { type: 'prefix', path: base_path }
       ]
     }
   end
