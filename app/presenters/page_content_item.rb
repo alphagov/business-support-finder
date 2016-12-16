@@ -26,6 +26,12 @@ class PageContentItem
     data[:content_id]
   end
 
+  def links
+    {
+      meets_user_needs: ["713b3524-1c48-418c-baa2-25fb35395401"]
+    }
+  end
+
 private
 
   def data
