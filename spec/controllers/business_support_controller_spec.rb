@@ -34,12 +34,12 @@ RSpec.describe BusinessSupportController do
   describe "common stuff for all actions" do
     controller(BusinessSupportController) do
       def index
-        render :text => "something"
+        render text: "something"
       end
     end
 
     it "should return 404 for invalid UTF-8 in params" do
-      get :index, "sectors"=>"travel-and-leisure", "stage"=>"pre-start", "size"=>"under-10", "types"=>"acux10764\xC0\xBEz1\xC0\xBCz2a\x90bcxuca10764"
+      get :index, "sectors" => "travel-and-leisure", "stage" => "pre-start", "size" => "under-10", "types" => "acux10764\xC0\xBEz1\xC0\xBCz2a\x90bcxuca10764"
 
       expect(response.status).to eq(404)
     end

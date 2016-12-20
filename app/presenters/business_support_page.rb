@@ -13,5 +13,5 @@ class BusinessSupportPage
 
     state: "live",
     indexable_content: "Business finance and support finder"
-  }
+  }.freeze
 end

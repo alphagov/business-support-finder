@@ -15,7 +15,7 @@ require "sprockets/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-APP_SLUG = 'business-finance-support-finder'
+APP_SLUG = 'business-finance-support-finder'.freeze
 
 module BusinessSupportFinder
   class Application < Rails::Application
