@@ -7,18 +7,20 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :null_session
 
-  rescue_from GdsApi::TimedOutException, :with => :error_503
+  rescue_from GdsApi::TimedOutException, with: :error_503
   before_filter :reject_invalid_utf8
 
 
   def error_503(e = nil); error(503, e); end
+
   def error_404; error(404); end
+
   def error_403; error(403); end
 
-  protected
+protected
 
   def error(status_code, exception = nil)
-    if exception and defined? Airbrake
+    if exception && defined? Airbrake
       env["airbrake.error_id"] = notify_airbrake(exception)
     end
     render status: status_code, text: "#{status_code} error"
@@ -26,7 +28,7 @@ class ApplicationController < ActionController::Base
 
   def set_expiry(duration = 30.minutes)
     unless Rails.env.development?
-      expires_in(duration, :public => true)
+      expires_in(duration, public: true)
     end
   end
 

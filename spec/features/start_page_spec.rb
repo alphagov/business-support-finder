@@ -7,7 +7,6 @@ RSpec.describe "Start page" do
   end
 
   specify "Inspecting the start page" do
-
     visit "/#{APP_SLUG}"
 
     within 'head', visible: :all do
@@ -21,7 +20,7 @@ RSpec.describe "Start page" do
 
       within 'article[role=article]' do
         within 'section.intro' do
-          expect(page).to have_link("Get started", :href => "/#{APP_SLUG}/search")
+          expect(page).to have_link("Get started", href: "/#{APP_SLUG}/search")
         end
       end
     end

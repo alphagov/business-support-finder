@@ -1,5 +1,4 @@
 class BusinessSupportController < ApplicationController
-
   before_filter :load_content_item
   before_filter :set_expiry
   before_filter :prepare_facets
@@ -9,14 +8,14 @@ class BusinessSupportController < ApplicationController
     @stages = Stage.all
     @sizes = Size.all
     @types = Type.all
-    if @facets.empty? and params[:commit]
-      @schemes = []
-    else
-      @schemes = Scheme.lookup(@facets)
-    end
+    @schemes = if @facets.empty? && params[:commit]
+                 []
+               else
+                 Scheme.lookup(@facets)
+               end
   end
 
-  private
+private
 
   def load_content_item
     @content_item = Services.content_store.content_item("/#{APP_SLUG}").to_hash
