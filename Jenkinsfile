@@ -1,6 +1,7 @@
 #!/usr/bin/env groovy
 
 REPOSITORY = 'business-support-finder'
+APPLICATION_NAME = 'businesssupportfinder'
 
 node {
   def govuk = load '/var/lib/jenkins/groovy_scripts/govuk_jenkinslib.groovy'
@@ -59,7 +60,7 @@ node {
         govuk.pushTag(REPOSITORY, env.BRANCH_NAME, 'release_' + env.BUILD_NUMBER)
       }
 
-      govuk.deployIntegration(REPOSITORY, env.BRANCH_NAME, 'release', 'deploy')
+      govuk.deployIntegration(APPLICATION_NAME, env.BRANCH_NAME, 'release', 'deploy')
     }
 
   } catch (e) {
