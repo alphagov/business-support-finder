@@ -9,7 +9,6 @@ Faceted search application for finding business support and finance options.
 ![Finder Results](docs/assets/bsf-finder.png)
 
 
-
 ## Live examples
 
 - [gov.uk/business-finance-support-finder](https://www.gov.uk/business-finance-support-finder)
@@ -29,11 +28,10 @@ The schemes themselves (eg [gov.uk/bridge-to-employment-northern-ireland](https:
 
 ### Dependencies
 
-- [business-support-api](https://github.com/alphagov/business-support-api): Provides scheme filtering/results
-- [content-store](https://github.com/alphagov/content-store): Provides content and metadata
-- [publishing-api](https://github.com/alphagov/publishing-api): Sends `content_id` to `content-store`
+- [business-support-api](https://github.com/alphagov/business-support-api): Provides scheme filtering/results.
+- [content-store](https://github.com/alphagov/content-store): Provides content and metadata.
+- [publishing-api](https://github.com/alphagov/publishing-api): this app sends data to the content-store.
 - [static](https://github.com/alphagov/static): Provides shared GOV.UK assets and templates.
-- [panopticon](https://github.com/alphagov/panopticon): this app sends data to panopticon to register URLs.
 - [rummager](https://github.com/alphagov/rummager): this app indexes its pages for search via Rummager.
 
 ### Running the application
@@ -60,7 +58,7 @@ $ bundle exec rake
 
 ### Publishing to GOV.UK
 
-- `bundle exec rake panopticon:register` will send the business support finder pages to panopticon. Panopticon will register the URL.
+- `bundle exec rake publishing_api:publish` will send the business support finder pages to the publishing-api.
 
 ### Search indexing
 
