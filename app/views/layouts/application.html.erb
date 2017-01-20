@@ -13,7 +13,6 @@
     <% end %>
   </head>
   <body class="mainstream">
-    <div class="header-context"><!-- Deliberately empty. This will prevent Slimmer from adding the artefact-breadcrumb. --></div>
     <div id="wrapper" class="answer business-support-finder <%= yield :page_class %>">
       <%= render partial: 'govuk_component/breadcrumbs', locals: @navigation_helpers.breadcrumbs %>
       <% if content_for?(:after_content) %><div class="grid-row"><% end %>
