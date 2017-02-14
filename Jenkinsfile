@@ -1,6 +1,8 @@
 #!/usr/bin/env groovy
 
 REPOSITORY = 'business-support-finder'
+APPLICATION_NAME = 'businesssupportfinder'
+DEFAULT_SCHEMA_BRANCH = 'deployed-to-production'
 
 node {
   def govuk = load '/var/lib/jenkins/groovy_scripts/govuk_jenkinslib.groovy'
@@ -17,10 +19,30 @@ node {
       maxConcurrentTotal: 0,
       paramsToUseForLimit: 'business-support-finder',
       throttleEnabled: true,
-      throttleOption: 'category']
+      throttleOption: 'category'],
+    [$class: 'ParametersDefinitionProperty',
+      parameterDefinitions: [
+        [$class: 'BooleanParameterDefinition',
+          name: 'IS_SCHEMA_TEST',
+          defaultValue: false,
+          description: 'Identifies whether this build is being triggered to test a change to the content schemas'],
+        [$class: 'StringParameterDefinition',
+          name: 'SCHEMA_BRANCH',
+          defaultValue: DEFAULT_SCHEMA_BRANCH,
+          description: 'The branch of govuk-content-schemas to test against']]
+    ],
   ])
 
   try {
+    govuk.initializeParameters([
+      'IS_SCHEMA_TEST': 'false',
+      'SCHEMA_BRANCH': DEFAULT_SCHEMA_BRANCH,
+    ])
+
+    if (!govuk.isAllowedBranchBuild(env.BRANCH_NAME)) {
+      return
+    }
+
     stage("Configure environment") {
       govuk.setEnvar("RAILS_ENV", "test")
     }
@@ -38,7 +60,7 @@ node {
     }
 
     stage("Set up content schema dependency") {
-      govuk.contentSchemaDependency()
+      govuk.contentSchemaDependency(env.SCHEMA_BRANCH)
       govuk.setEnvar("GOVUK_CONTENT_SCHEMAS_PATH", "tmp/govuk-content-schemas")
     }
 
@@ -59,7 +81,7 @@ node {
         govuk.pushTag(REPOSITORY, env.BRANCH_NAME, 'release_' + env.BUILD_NUMBER)
       }
 
-      govuk.deployIntegration(REPOSITORY, env.BRANCH_NAME, 'release', 'deploy')
+      govuk.deployIntegration(APPLICATION_NAME, env.BRANCH_NAME, 'release', 'deploy')
     }
 
   } catch (e) {
