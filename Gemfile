@@ -5,7 +5,7 @@ gem 'rails', '~> 4.2', '>= 4.2.7.1'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 2.7.2'
 
-gem 'slimmer', '10.0.0'
+gem 'slimmer', '~> 10.1.3'
 gem 'plek', '1.10.0'
 if ENV['API_DEV']
   gem 'gds-api-adapters', path: '../gds-api-adapters'
