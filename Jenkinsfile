@@ -73,7 +73,7 @@ node {
     stage("bundle install") {
       // TODO: Reinstate
       // govuk.bundleApp()
-      bundleApp()
+      bundleApp(REPOSITORY)
     }
 
     stage("rubylinter") {
