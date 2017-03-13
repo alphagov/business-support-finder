@@ -5,16 +5,19 @@ APPLICATION_NAME = 'businesssupportfinder'
 DEFAULT_SCHEMA_BRANCH = 'deployed-to-production'
 
 node {
+  def govuk = load '/var/lib/jenkins/groovy_scripts/govuk_jenkinslib.groovy'
+
   properties([
     buildDiscarder(
       logRotator(numToKeepStr: '10')
       ),
     [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false],
     [$class: 'ThrottleJobProperty',
-      categories: ["business-support-finder"],
-      limitOneJobWithMatchingParams: false,
+      categories: [],
+      limitOneJobWithMatchingParams: true,
       maxConcurrentPerNode: 1,
       maxConcurrentTotal: 0,
+      paramsToUseForLimit: 'business-support-finder',
       throttleEnabled: true,
       throttleOption: 'category'],
     [$class: 'ParametersDefinitionProperty',
@@ -29,8 +32,6 @@ node {
           description: 'The branch of govuk-content-schemas to test against']]
     ],
   ])
-
-  def govuk = load '/var/lib/jenkins/groovy_scripts/govuk_jenkinslib.groovy'
 
   try {
     govuk.initializeParameters([
