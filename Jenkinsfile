@@ -4,6 +4,12 @@ REPOSITORY = 'business-support-finder'
 APPLICATION_NAME = 'businesssupportfinder'
 DEFAULT_SCHEMA_BRANCH = 'deployed-to-production'
 
+// TODO: Delete
+def bundleApp() {
+  echo 'Bundling'
+  sh("bundle install --path ${JENKINS_HOME}/bundles/${JOB_NAME} --deployment --without development")
+}
+
 node {
   def govuk = load '/var/lib/jenkins/groovy_scripts/govuk_jenkinslib.groovy'
 
@@ -65,9 +71,9 @@ node {
     }
 
     stage("bundle install") {
+      // TODO: Reinstate
       // govuk.bundleApp()
-      echo 'Bundling'
-      sh("bundle install --path ${JENKINS_HOME}/bundles/${REPOSITORY} --deployment --without development")
+      bundleApp()
     }
 
     stage("rubylinter") {
