@@ -13,7 +13,7 @@ node {
     [$class: 'ThrottleJobProperty',
       limitOneJobWithMatchingParams: false,
       maxConcurrentPerNode: 1,
-      maxConcurrentTotal: 0,
+      maxConcurrentTotal: 5,
       throttleEnabled: true,
       throttleOption: 'project'],
     [$class: 'ParametersDefinitionProperty',
