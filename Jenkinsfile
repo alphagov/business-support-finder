@@ -65,7 +65,9 @@ node {
     }
 
     stage("bundle install") {
-      govuk.bundleApp()
+      // govuk.bundleApp()
+      echo 'Bundling'
+      sh("bundle install --path ${JENKINS_HOME}/bundles/${REPOSITORY} --deployment --without development")
     }
 
     stage("rubylinter") {
