@@ -13,14 +13,6 @@ node {
         logRotator(numToKeepStr: '10')
         ),
       [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false],
-      [$class: 'ThrottleJobProperty',
-        categories: [],
-        limitOneJobWithMatchingParams: true,
-        maxConcurrentPerNode: 1,
-        maxConcurrentTotal: 0,
-        paramsToUseForLimit: 'business-support-finder',
-        throttleEnabled: true,
-        throttleOption: 'category'],
       [$class: 'ParametersDefinitionProperty',
         parameterDefinitions: [
           [$class: 'BooleanParameterDefinition',
