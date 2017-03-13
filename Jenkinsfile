@@ -17,9 +17,9 @@ node {
       limitOneJobWithMatchingParams: true,
       maxConcurrentPerNode: 1,
       maxConcurrentTotal: 0,
-      paramsToUseForLimit: 'business-support-finder',
+      paramsToUseForLimit: '',
       throttleEnabled: true,
-      throttleOption: 'category'],
+      throttleOption: 'project'],
     [$class: 'ParametersDefinitionProperty',
       parameterDefinitions: [
         [$class: 'BooleanParameterDefinition',
