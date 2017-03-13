@@ -4,33 +4,31 @@ REPOSITORY = 'business-support-finder'
 APPLICATION_NAME = 'businesssupportfinder'
 DEFAULT_SCHEMA_BRANCH = 'deployed-to-production'
 
-properties([
-  buildDiscarder(
-    logRotator(numToKeepStr: '10')
-    ),
-  [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false],
-  [$class: 'ThrottleJobProperty',
-    categories: [],
-    limitOneJobWithMatchingParams: true,
-    maxConcurrentPerNode: 1,
-    maxConcurrentTotal: 0,
-    paramsToUseForLimit: '',
-    throttleEnabled: true,
-    throttleOption: 'project'],
-  [$class: 'ParametersDefinitionProperty',
-    parameterDefinitions: [
-      [$class: 'BooleanParameterDefinition',
-        name: 'IS_SCHEMA_TEST',
-        defaultValue: false,
-        description: 'Identifies whether this build is being triggered to test a change to the content schemas'],
-      [$class: 'StringParameterDefinition',
-        name: 'SCHEMA_BRANCH',
-        defaultValue: DEFAULT_SCHEMA_BRANCH,
-        description: 'The branch of govuk-content-schemas to test against']]
-  ],
-])
-
 node {
+  properties([
+    buildDiscarder(
+      logRotator(numToKeepStr: '10')
+      ),
+    [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false],
+    [$class: 'ThrottleJobProperty',
+      limitOneJobWithMatchingParams: false,
+      maxConcurrentPerNode: 1,
+      maxConcurrentTotal: 0,
+      throttleEnabled: true,
+      throttleOption: 'project'],
+    [$class: 'ParametersDefinitionProperty',
+      parameterDefinitions: [
+        [$class: 'BooleanParameterDefinition',
+          name: 'IS_SCHEMA_TEST',
+          defaultValue: false,
+          description: 'Identifies whether this build is being triggered to test a change to the content schemas'],
+        [$class: 'StringParameterDefinition',
+          name: 'SCHEMA_BRANCH',
+          defaultValue: DEFAULT_SCHEMA_BRANCH,
+          description: 'The branch of govuk-content-schemas to test against']]
+    ],
+  ])
+
   def govuk = load '/var/lib/jenkins/groovy_scripts/govuk_jenkinslib.groovy'
 
   try {
