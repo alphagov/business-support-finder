@@ -43,6 +43,12 @@ node {
       return
     }
 
+    stage("Sleep") {
+      // Deliberately slow down the build to check what happens when multiple
+      // builds are triggered simultaneously
+      sleep(60)
+    }
+
     stage("Configure environment") {
       govuk.setEnvar("RAILS_ENV", "test")
     }
