@@ -5,9 +5,9 @@ APPLICATION_NAME = 'businesssupportfinder'
 DEFAULT_SCHEMA_BRANCH = 'deployed-to-production'
 
 // TODO: Delete
-def bundleApp() {
+def bundleApp(String gemDirectory = JOB_NAME) {
   echo 'Bundling'
-  sh("bundle install --path ${JENKINS_HOME}/bundles/${JOB_NAME} --deployment --without development")
+  sh("bundle install --path ${JENKINS_HOME}/bundles/${gemDirectory} --deployment --without development")
 }
 
 node {
