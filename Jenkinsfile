@@ -4,25 +4,10 @@ REPOSITORY = 'business-support-finder'
 APPLICATION_NAME = 'businesssupportfinder'
 DEFAULT_SCHEMA_BRANCH = 'deployed-to-production'
 
-def projectName() {
-  JOB_NAME.split('/')[0]
-}
-
 // TODO: Delete
 def bundleApp() {
   echo 'Bundling'
-  sh("bundle install --path ${JENKINS_HOME}/bundles/${projectName()} --deployment --without development")
-}
-
-def extractName(input) {
-  parts = input.split('/')
-  if (parts.length > 2) {
-    error("Cannot determine the project name of job '$input'. Expected " +
-    "top-level job like 'project_name' or singly nested job like " +
-    "'project_name/branch_name'")
-  } else {
-    parts[0]
-  }
+  sh("bundle install --deployment --without development")
 }
 
 node {
@@ -64,14 +49,6 @@ node {
       return
     }
 
-    echo "'foo/bar': ${extractName('foo/bar')}"
-    echo "'foo': ${extractName('foo')}"
-    // echo "'foo/bar/baz': ${extractName('foo/bar/baz')}"
-    // echo "'foo/bar/baz/qux': ${extractName('foo/bar/baz/qux')}"
-    echo "'': ${extractName('')}"
-
-    sh 'env'
-
     stage("Configure environment") {
       govuk.setEnvar("RAILS_ENV", "test")
     }
@@ -97,6 +74,7 @@ node {
       // TODO: Reinstate
       // govuk.bundleApp()
       bundleApp()
+      sh("bundle show --paths")
     }
 
     stage("rubylinter") {
