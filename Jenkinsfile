@@ -4,10 +4,14 @@ REPOSITORY = 'business-support-finder'
 APPLICATION_NAME = 'businesssupportfinder'
 DEFAULT_SCHEMA_BRANCH = 'deployed-to-production'
 
+def projectName() {
+  JOB_NAME.split('/')[0]
+}
+
 // TODO: Delete
-def bundleApp(String gemDirectory = JOB_NAME) {
+def bundleApp() {
   echo 'Bundling'
-  sh("bundle install --path ${JENKINS_HOME}/bundles/${gemDirectory} --deployment --without development")
+  sh("bundle install --path ${JENKINS_HOME}/bundles/${projectName()} --deployment --without development")
 }
 
 node {
@@ -73,7 +77,7 @@ node {
     stage("bundle install") {
       // TODO: Reinstate
       // govuk.bundleApp()
-      bundleApp(REPOSITORY)
+      bundleApp()
     }
 
     stage("rubylinter") {
