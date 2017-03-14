@@ -7,7 +7,7 @@ DEFAULT_SCHEMA_BRANCH = 'deployed-to-production'
 // TODO: Delete
 def bundleApp() {
   echo 'Bundling'
-  sh("bundle install --deployment --without development")
+  sh("bundle install --path ${JENKINS_HOME}/bundles --deployment --without development")
 }
 
 node {
