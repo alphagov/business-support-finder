@@ -70,6 +70,8 @@ node {
     // echo "'foo/bar/baz/qux': ${extractName('foo/bar/baz/qux')}"
     echo "'': ${extractName('')}"
 
+    sh 'env'
+
     stage("Configure environment") {
       govuk.setEnvar("RAILS_ENV", "test")
     }
