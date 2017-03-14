@@ -18,7 +18,7 @@ def extractName(input) {
   parts = input.split('/')
   if (parts.length == 0 || parts.length > 2) {
     error("Cannot determine the project name of job name '$input'. Expected " +
-    "top-level job name like 'project_name' or singly nested job name like " +
+    "top-level job like 'project_name' or singly nested job like " +
     "'project_name/branch_name'")
   } else {
     parts[0]
@@ -66,8 +66,8 @@ node {
 
     echo "'foo/bar': ${extractName('foo/bar')}"
     echo "'foo': ${extractName('foo')}"
-    echo "'foo/bar/baz': ${extractName('foo/bar/baz')}"
-    echo "'foo/bar/baz/qux': ${extractName('foo/bar/baz/qux')}"
+    // echo "'foo/bar/baz': ${extractName('foo/bar/baz')}"
+    // echo "'foo/bar/baz/qux': ${extractName('foo/bar/baz/qux')}"
     echo "'': ${extractName('')}"
 
     stage("Configure environment") {
