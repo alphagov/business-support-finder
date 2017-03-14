@@ -14,6 +14,10 @@ def bundleApp() {
   sh("bundle install --path ${JENKINS_HOME}/bundles/${projectName()} --deployment --without development")
 }
 
+def extractName(input) {
+  input.split('/')[0]
+}
+
 node {
   def govuk = load '/var/lib/jenkins/groovy_scripts/govuk_jenkinslib.groovy'
 
@@ -52,6 +56,11 @@ node {
     if (!govuk.isAllowedBranchBuild(env.BRANCH_NAME)) {
       return
     }
+
+    echo "'foo/bar': ${extractName('foo/bar')}"
+    echo "'foo': ${extractName('foo')}"
+    echo "'foo/bar/baz': ${extractName('foo/bar/baz')}"
+    echo "'': ${extractName('')}"
 
     stage("Configure environment") {
       govuk.setEnvar("RAILS_ENV", "test")
