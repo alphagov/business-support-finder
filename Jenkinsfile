@@ -15,7 +15,13 @@ def bundleApp() {
 }
 
 def extractName(input) {
-  input.split('/')[0]
+  parts = input.split('/')
+  if (parts.length > 1) {
+    throw new RuntimeException("Cannot determine the project name of nested job name '$input'. " +
+    "Expected job name with just zero or one directories like 'project_name' or 'project_name/branch_name'")
+  } else {
+    parts[0]
+  }
 }
 
 node {
@@ -60,6 +66,7 @@ node {
     echo "'foo/bar': ${extractName('foo/bar')}"
     echo "'foo': ${extractName('foo')}"
     echo "'foo/bar/baz': ${extractName('foo/bar/baz')}"
+    echo "'foo/bar/baz/qux': ${extractName('foo/bar/baz/qux')}"
     echo "'': ${extractName('')}"
 
     stage("Configure environment") {
