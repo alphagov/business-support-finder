@@ -16,10 +16,10 @@ def bundleApp() {
 
 def extractName(input) {
   parts = input.split('/')
-  if (parts.length > 1) {
-    error("Cannot determine the project name of nested job name '$input'. " +
-    "Expected job name with just zero or one directories like 'project_name' " +
-    "or 'project_name/branch_name'")
+  if (parts.length == 0 || parts.length > 2) {
+    error("Cannot determine the project name of job name '$input'. Expected " +
+    "top-level job name like 'project_name' or singly nested job name like " +
+    "'project_name/branch_name'")
   } else {
     parts[0]
   }
